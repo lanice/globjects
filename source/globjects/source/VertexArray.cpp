@@ -104,7 +104,7 @@ std::vector<VertexAttributeBinding *> VertexArray::bindings()
 {
 	std::vector<VertexAttributeBinding *> bindings;
 
-    for (const std::pair<const GLuint, std::unique_ptr<VertexAttributeBinding, HeapOnlyDeleter>> & pair: m_bindings)
+    for (const std::pair<const GLuint, std::unique_ptr<VertexAttributeBinding>> & pair: m_bindings)
         bindings.push_back(pair.second.get());
 
 	return bindings;
@@ -114,7 +114,7 @@ std::vector<const VertexAttributeBinding*> VertexArray::bindings() const
 {
     std::vector<const VertexAttributeBinding*> bindings;
 
-    for (const std::pair<const GLuint, std::unique_ptr<VertexAttributeBinding, HeapOnlyDeleter>> & pair: m_bindings)
+    for (const std::pair<const GLuint, std::unique_ptr<VertexAttributeBinding>> & pair: m_bindings)
     {
         bindings.push_back(pair.second.get());
     }

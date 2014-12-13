@@ -5,7 +5,6 @@
 #include <glbinding/gl/types.h>
 
 #include <globjects/base/ChangeListener.h>
-#include <globjects/base/HeapOnly.h>
 
 #include <globjects/globjects_api.h>
 
@@ -13,7 +12,7 @@ namespace globjects
 {
 class AbstractStringSource;
 
-class GLOBJECTS_API NamedString : public HeapOnly, protected ChangeListener
+class GLOBJECTS_API NamedString : protected ChangeListener
 {
 public:
     static NamedString * create(const std::string & name, AbstractStringSource * string);

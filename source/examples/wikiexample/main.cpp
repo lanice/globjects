@@ -102,11 +102,11 @@ public:
     }
 
 private:
-    std::unique_ptr<VertexArray, globjects::HeapOnlyDeleter> m_vao;
-    std::unique_ptr<Buffer, globjects::HeapOnlyDeleter> m_cornerBuffer;
-    std::unique_ptr<Program, globjects::HeapOnlyDeleter> m_program;
-    std::unique_ptr<Shader, globjects::HeapOnlyDeleter> m_vertexShader;
-    std::unique_ptr<Shader, globjects::HeapOnlyDeleter> m_fragmentShader;
+    std::unique_ptr<VertexArray> m_vao;
+    std::unique_ptr<Buffer> m_cornerBuffer;
+    std::unique_ptr<Program> m_program;
+    std::unique_ptr<Shader> m_vertexShader;
+    std::unique_ptr<Shader> m_fragmentShader;
 };
 
 

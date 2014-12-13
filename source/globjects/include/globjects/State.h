@@ -7,7 +7,6 @@
 
 #include <globjects/globjects_api.h>
 #include <globjects/AbstractState.h>
-#include <globjects/base/HeapOnly.h>
 
 namespace globjects
 {
@@ -16,7 +15,7 @@ class StateSetting;
 class Capability;
 
 
-class GLOBJECTS_API State : public AbstractState, public HeapOnly
+class GLOBJECTS_API State : public AbstractState
 {
 public:
     enum Mode
@@ -27,6 +26,7 @@ public:
 
 public:
     State(Mode = ImmediateMode);
+    virtual ~State();
 
     static State * currentState();
 
@@ -59,8 +59,6 @@ protected:
     const Capability * getCapability(gl::GLenum capability) const;
 
 protected:
-    virtual ~State();
-
     Mode m_mode;
     std::unordered_map<gl::GLenum, Capability *> m_capabilities;
     std::unordered_map<StateSettingType, StateSetting *> m_settings;

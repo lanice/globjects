@@ -4,8 +4,6 @@
 
 #include <glbinding/gl/types.h>
 
-#include <globjects/base/HeapOnly.h>
-
 #include <globjects/globjects_api.h>
 
 namespace globjects 
@@ -23,7 +21,7 @@ class Framebuffer;
     \see TextureAttachment
     \see RenderBufferAttachment
 */
-class GLOBJECTS_API FramebufferAttachment : public HeapOnly
+class GLOBJECTS_API FramebufferAttachment
 {
 public:
     FramebufferAttachment(Framebuffer * fbo, gl::GLenum attachment);

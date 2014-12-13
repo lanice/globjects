@@ -67,8 +67,8 @@ public:
     }
 
 protected:
-    std::unique_ptr<Texture, globjects::HeapOnlyDeleter> m_texture;
-    std::unique_ptr<ScreenAlignedQuad, globjects::HeapOnlyDeleter> m_quad;
+    std::unique_ptr<Texture> m_texture;
+    std::unique_ptr<ScreenAlignedQuad> m_quad;
 };
 
 

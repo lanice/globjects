@@ -9,10 +9,6 @@
 
 #include <glbinding/gl/gl.h>
 
-#include <globjects/base/HeapOnly.h>
-#include <globjects/base/HeapOnlyDeleter.h>
-
-
 namespace globjects
 {
 
@@ -22,7 +18,7 @@ class Buffer;
 }
 
 
-class Icosahedron : public globjects::HeapOnly
+class Icosahedron
 {
 public:
     using Face = std::array<gl::GLushort, 3>;
@@ -44,6 +40,8 @@ public:
     ,   const gl::GLint positionLocation = 0
     ,   const gl::GLint normalLocation = 1);
 
+    virtual ~Icosahedron();
+
     /** draws the icosahedron as single triangles (TODO: generate set of triangle strips?)
     */
     void draw();
@@ -61,13 +59,10 @@ protected:
     ,   std::unordered_map<glm::uint, gl::GLushort> & cache);
 
 protected:
-    virtual ~Icosahedron();
+    std::unique_ptr<globjects::VertexArray> m_vao;
 
-protected:
-    std::unique_ptr<globjects::VertexArray, globjects::HeapOnlyDeleter> m_vao;
-
-    std::unique_ptr<globjects::Buffer, globjects::HeapOnlyDeleter> m_vertices;
-    std::unique_ptr<globjects::Buffer, globjects::HeapOnlyDeleter> m_indices;
+    std::unique_ptr<globjects::Buffer> m_vertices;
+    std::unique_ptr<globjects::Buffer> m_indices;
 
     gl::GLsizei m_size;
 };

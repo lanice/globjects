@@ -9,7 +9,6 @@
 
 #include <globjects/globjects_api.h>
 
-#include <globjects/base/HeapOnly.h>
 #include <globjects/LocationIdentity.h>
 #include <globjects/TextureHandle.h>
 
@@ -26,7 +25,7 @@ template<typename T> class Uniform;
  * \see Uniform
  * \see Program
  */
-class GLOBJECTS_API AbstractUniform : public HeapOnly
+class GLOBJECTS_API AbstractUniform
 {
 	friend class Program; ///< Programs (de)register themselves.
 
@@ -42,6 +41,8 @@ public:
 public:
     AbstractUniform(gl::GLint location);
 	AbstractUniform(const std::string & name);
+
+    virtual ~AbstractUniform();
 
 	const std::string & name() const;
     gl::GLint location() const;
@@ -60,9 +61,7 @@ public:
     template<typename T> const Uniform<T> * as() const;
 
 protected:
-    virtual ~AbstractUniform();
-
-	void registerProgram(Program * program);
+    void registerProgram(Program * program);
 	void deregisterProgram(Program * program);
 
 	/** Iterates over all programs attached to and calls update.

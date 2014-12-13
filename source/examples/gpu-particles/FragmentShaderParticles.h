@@ -2,8 +2,6 @@
 
 #include <memory>
 
-#include <globjects/base/HeapOnlyDeleter.h>
-
 #include "AbstractParticleTechnique.h"
 
 namespace globjects
@@ -36,13 +34,13 @@ protected:
     std::vector<glm::vec4> m_positionsFilled;
     std::vector<glm::vec4> m_velocitiesFilled;
 
-    std::unique_ptr<globjects::Texture, globjects::HeapOnlyDeleter> m_positionsTex;
-    std::unique_ptr<globjects::Texture, globjects::HeapOnlyDeleter> m_velocitiesTex;
+    std::unique_ptr<globjects::Texture> m_positionsTex;
+    std::unique_ptr<globjects::Texture> m_velocitiesTex;
 
-    std::unique_ptr<globjects::Framebuffer, globjects::HeapOnlyDeleter> m_updateFbo;
-    std::unique_ptr<ScreenAlignedQuad, globjects::HeapOnlyDeleter> m_updateQuad;
+    std::unique_ptr<globjects::Framebuffer> m_updateFbo;
+    std::unique_ptr<ScreenAlignedQuad> m_updateQuad;
 
-    std::unique_ptr<globjects::VertexArray, globjects::HeapOnlyDeleter> m_vao;
+    std::unique_ptr<globjects::VertexArray> m_vao;
 
     glm::ivec2 m_workGroupSize;
 };

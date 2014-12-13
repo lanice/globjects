@@ -243,9 +243,9 @@ public:
     }
 
 protected:
-    std::unique_ptr<Program, globjects::HeapOnlyDeleter> m_sphere;
+    std::unique_ptr<Program> m_sphere;
 
-    std::unique_ptr<Icosahedron, globjects::HeapOnlyDeleter> m_icosahedron;
+    std::unique_ptr<Icosahedron> m_icosahedron;
 
     Camera m_camera;
     WorldInHandNavigation m_nav;

@@ -8,9 +8,6 @@
 #include <glbinding/gl/boolean.h>
 #include <glbinding/gl/enum.h>
 
-#include <globjects/base/HeapOnly.h>
-#include <globjects/base/HeapOnlyDeleter.h>
-
 #include <globjects/VertexArray.h>
 #include <globjects/Buffer.h>
 
@@ -22,7 +19,7 @@ class VertexAttributeBinding;
 }
 
 
-class VertexDrawable : public globjects::HeapOnly
+class VertexDrawable
 {
 public:
     class AttributeFormat
@@ -72,7 +69,7 @@ public:
     void draw() const;
 
 protected:
-    std::unique_ptr<globjects::VertexArray, globjects::HeapOnlyDeleter> m_vao;
+    std::unique_ptr<globjects::VertexArray> m_vao;
     globjects::Buffer * m_vbo;
 
     std::vector<gl::GLint> m_attributeIndices;

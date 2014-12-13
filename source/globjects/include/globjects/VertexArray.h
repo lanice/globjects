@@ -8,7 +8,6 @@
 
 #include <globjects/globjects_api.h>
 #include <globjects/Object.h>
-#include <globjects/base/HeapOnlyDeleter.h>
 
 namespace globjects 
 {
@@ -31,6 +30,7 @@ public:
 
 public:
     VertexArray();
+    virtual ~VertexArray();
 
     static VertexArray * fromId(gl::GLuint id);
     static VertexArray * defaultVAO();
@@ -101,10 +101,9 @@ public:
 
 protected:
     VertexArray(IDResource * resource);
-    virtual ~VertexArray();
 
 protected:
-    std::map<gl::GLuint, std::unique_ptr<VertexAttributeBinding, HeapOnlyDeleter>> m_bindings;
+    std::map<gl::GLuint, std::unique_ptr<VertexAttributeBinding>> m_bindings;
 
 };
 

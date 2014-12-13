@@ -7,7 +7,6 @@
 
 #include <globjects/globjects_api.h>
 
-#include <globjects/base/HeapOnly.h>
 #include <globjects/base/ChangeListener.h>
 #include <globjects/base/Changeable.h>
 
@@ -23,11 +22,13 @@ class AbstractStringSource;
  * \see Program
  * \see http://www.opengl.org/registry/specs/ARB/get_program_binary.txt
  */
-class GLOBJECTS_API ProgramBinary : public HeapOnly, public Changeable, protected ChangeListener
+class GLOBJECTS_API ProgramBinary : public Changeable, protected ChangeListener
 {
 public:
     ProgramBinary(gl::GLenum binaryFormat, const std::vector<char> & binaryData);
     ProgramBinary(gl::GLenum binaryFormat, AbstractStringSource * dataSource);
+
+    virtual ~ProgramBinary();
 
     gl::GLenum format() const;
     const void * data() const;
@@ -36,8 +37,6 @@ public:
      virtual void notifyChanged(const Changeable* sender) override;
 
 protected:
-    virtual ~ProgramBinary();
-
     void validate() const;
 
 protected:

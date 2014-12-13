@@ -54,6 +54,9 @@ public:
 
 public:
     Framebuffer();
+
+    virtual ~Framebuffer();
+
     static Framebuffer * fromId(gl::GLuint id);
 
     static Framebuffer * defaultFBO();
@@ -124,7 +127,6 @@ public:
 
 protected:
     Framebuffer(IDResource * resource);
-    virtual ~Framebuffer();
 
     void addAttachment(FramebufferAttachment * attachment);
 

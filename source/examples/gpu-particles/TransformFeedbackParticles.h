@@ -2,8 +2,6 @@
 
 #include <memory>
 
-#include <globjects/base/HeapOnlyDeleter.h>
-
 #include "AbstractParticleTechnique.h"
 
 namespace globjects
@@ -33,13 +31,13 @@ protected:
     virtual void draw_impl() override;
 
 protected:
-    std::unique_ptr<globjects::TransformFeedback, globjects::HeapOnlyDeleter> m_transformFeedback;
-    std::unique_ptr<globjects::Program, globjects::HeapOnlyDeleter> m_transformFeedbackProgram;
+    std::unique_ptr<globjects::TransformFeedback> m_transformFeedback;
+    std::unique_ptr<globjects::Program> m_transformFeedbackProgram;
 
-    std::unique_ptr<globjects::Buffer, globjects::HeapOnlyDeleter> m_sourcePositions;
-    std::unique_ptr<globjects::Buffer, globjects::HeapOnlyDeleter> m_sourceVelocities;
-    std::unique_ptr<globjects::Buffer, globjects::HeapOnlyDeleter> m_targetPositions;
-    std::unique_ptr<globjects::Buffer, globjects::HeapOnlyDeleter> m_targetVelocities;
+    std::unique_ptr<globjects::Buffer> m_sourcePositions;
+    std::unique_ptr<globjects::Buffer> m_sourceVelocities;
+    std::unique_ptr<globjects::Buffer> m_targetPositions;
+    std::unique_ptr<globjects::Buffer> m_targetVelocities;
 
-    std::unique_ptr<globjects::VertexArray, globjects::HeapOnlyDeleter> m_vao;
+    std::unique_ptr<globjects::VertexArray> m_vao;
 };

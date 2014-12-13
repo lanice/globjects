@@ -128,17 +128,17 @@ public:
     }
 
 protected:
-    std::unique_ptr<VertexArray, globjects::HeapOnlyDeleter> m_vao;
-    std::unique_ptr<Buffer, globjects::HeapOnlyDeleter> m_buffer;
-    std::unique_ptr<Program, globjects::HeapOnlyDeleter> m_shaderProgram;
+    std::unique_ptr<VertexArray> m_vao;
+    std::unique_ptr<Buffer> m_buffer;
+    std::unique_ptr<Program> m_shaderProgram;
 
-    std::unique_ptr<State, globjects::HeapOnlyDeleter> m_defaultPointSizeState;
-    std::unique_ptr<State, globjects::HeapOnlyDeleter> m_thinnestPointSizeState;
-    std::unique_ptr<State, globjects::HeapOnlyDeleter> m_thinPointSizeState;
-    std::unique_ptr<State, globjects::HeapOnlyDeleter> m_normalPointSizeState;
-    std::unique_ptr<State, globjects::HeapOnlyDeleter> m_thickPointSizeState;
-    std::unique_ptr<State, globjects::HeapOnlyDeleter> m_disableRasterizerState;
-    std::unique_ptr<State, globjects::HeapOnlyDeleter> m_enableRasterizerState;
+    std::unique_ptr<State> m_defaultPointSizeState;
+    std::unique_ptr<State> m_thinnestPointSizeState;
+    std::unique_ptr<State> m_thinPointSizeState;
+    std::unique_ptr<State> m_normalPointSizeState;
+    std::unique_ptr<State> m_thickPointSizeState;
+    std::unique_ptr<State> m_disableRasterizerState;
+    std::unique_ptr<State> m_enableRasterizerState;
 };
 
 

@@ -3,8 +3,6 @@
 #include <glbinding/gl/types.h>
 #include <glbinding/gl/boolean.h>
 
-#include <globjects/base/HeapOnly.h>
-
 #include <globjects/globjects_api.h>
 
 namespace globjects 
@@ -14,7 +12,7 @@ class Buffer;
 class VertexArray;
 
 
-class GLOBJECTS_API VertexAttributeBinding : public HeapOnly
+class GLOBJECTS_API VertexAttributeBinding
 {
     friend class AbstractVertexAttributeBindingImplementation;
 
@@ -22,6 +20,8 @@ public:
 	VertexAttributeBinding(
         VertexArray * vao
     ,   const gl::GLint bindingIndex);
+
+    virtual ~VertexAttributeBinding();
 
     const VertexArray * vao() const;
     VertexArray * vao();
@@ -51,9 +51,6 @@ public:
     gl::GLint attributeIndex() const;
     gl::GLint bindingIndex() const;
     const Buffer * buffer() const;
-
-protected:
-    virtual ~VertexAttributeBinding();
 
 protected:
     VertexArray * m_vao; // TODO: weak_ptr?

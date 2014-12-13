@@ -6,8 +6,6 @@
 
 #include <glm/glm.hpp>
 
-#include <globjects/base/HeapOnlyDeleter.h>
-
 namespace globjects
 {
 class Framebuffer;
@@ -60,11 +58,11 @@ protected:
 
     bool m_paused;
 
-    std::unique_ptr<globjects::Framebuffer, globjects::HeapOnlyDeleter> m_fbo;
-    std::unique_ptr<globjects::Texture, globjects::HeapOnlyDeleter> m_color;
+    std::unique_ptr<globjects::Framebuffer> m_fbo;
+    std::unique_ptr<globjects::Texture> m_color;
 
-    std::unique_ptr<globjects::Program, globjects::HeapOnlyDeleter> m_drawProgram;
+    std::unique_ptr<globjects::Program> m_drawProgram;
 
-    std::unique_ptr<ScreenAlignedQuad, globjects::HeapOnlyDeleter> m_quad;
-    std::unique_ptr<ScreenAlignedQuad, globjects::HeapOnlyDeleter> m_clear;
+    std::unique_ptr<ScreenAlignedQuad> m_quad;
+    std::unique_ptr<ScreenAlignedQuad> m_clear;
 };

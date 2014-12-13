@@ -63,6 +63,9 @@ class GLOBJECTS_API Query : public Object
 {
 public:
     Query();
+
+    virtual ~Query();
+
     static Query * fromId(gl::GLuint id);
 
     static Query * current(gl::GLenum target);
@@ -106,7 +109,6 @@ public:
 protected:
 
     Query(IDResource * resource);
-    virtual ~Query();
 
     static gl::GLuint genQuery();
 

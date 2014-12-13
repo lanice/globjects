@@ -8,6 +8,7 @@
 #include <globjects/VertexArray.h>
 #include <globjects/Framebuffer.h>
 #include <globjects/Texture.h>
+#include <globjects/Buffer.h>
 
 #include <globjects/base/File.h>
 

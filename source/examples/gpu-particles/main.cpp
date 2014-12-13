@@ -340,7 +340,7 @@ protected:
     };
     std::vector<Attribute> m_attributes;
 
-    std::unique_ptr<Texture, globjects::HeapOnlyDeleter> m_forces;
+    std::unique_ptr<Texture> m_forces;
 };
 
 

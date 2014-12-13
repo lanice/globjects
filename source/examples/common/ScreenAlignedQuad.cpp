@@ -129,6 +129,10 @@ ScreenAlignedQuad::ScreenAlignedQuad(Program * program)
     initialize();
 }
 
+ScreenAlignedQuad::~ScreenAlignedQuad()
+{
+}
+
 void ScreenAlignedQuad::initialize()
 {
 	// By default, counterclockwise polygons are taken to be front-facing.

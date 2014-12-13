@@ -175,16 +175,16 @@ public:
     }
 
 protected:
-    std::unique_ptr<Program, globjects::HeapOnlyDeleter> m_shaderProgram;
-    std::unique_ptr<Program, globjects::HeapOnlyDeleter> m_transformFeedbackProgram;
+    std::unique_ptr<Program> m_shaderProgram;
+    std::unique_ptr<Program> m_transformFeedbackProgram;
 	
-    std::unique_ptr<VertexArray, globjects::HeapOnlyDeleter> m_vao;
+    std::unique_ptr<VertexArray> m_vao;
 
-    std::unique_ptr<TransformFeedback, globjects::HeapOnlyDeleter> m_transformFeedback;
+    std::unique_ptr<TransformFeedback> m_transformFeedback;
 	
-    std::unique_ptr<Buffer, globjects::HeapOnlyDeleter> m_vertexBuffer1;
-    std::unique_ptr<Buffer, globjects::HeapOnlyDeleter> m_vertexBuffer2;
-    std::unique_ptr<Buffer, globjects::HeapOnlyDeleter> m_colorBuffer;
+    std::unique_ptr<Buffer> m_vertexBuffer1;
+    std::unique_ptr<Buffer> m_vertexBuffer2;
+    std::unique_ptr<Buffer> m_colorBuffer;
 
     Timer m_timer;
 };

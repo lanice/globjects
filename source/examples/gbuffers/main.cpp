@@ -300,19 +300,19 @@ public:
     }
 
 protected:
-    std::unique_ptr<Icosahedron, globjects::HeapOnlyDeleter> m_icosahedron;
-    std::unique_ptr<Program, globjects::HeapOnlyDeleter> m_sphere;
-    std::unique_ptr<Texture, globjects::HeapOnlyDeleter> m_colorTexture;
-    std::unique_ptr<Texture, globjects::HeapOnlyDeleter> m_normalTexture;
-    std::unique_ptr<Texture, globjects::HeapOnlyDeleter> m_geometryTexture;
-    std::unique_ptr<Texture, globjects::HeapOnlyDeleter> m_depthTexture;
-    std::unique_ptr<Framebuffer, globjects::HeapOnlyDeleter> m_sphereFBO;
+    std::unique_ptr<Icosahedron> m_icosahedron;
+    std::unique_ptr<Program> m_sphere;
+    std::unique_ptr<Texture> m_colorTexture;
+    std::unique_ptr<Texture> m_normalTexture;
+    std::unique_ptr<Texture> m_geometryTexture;
+    std::unique_ptr<Texture> m_depthTexture;
+    std::unique_ptr<Framebuffer> m_sphereFBO;
 
-    std::unique_ptr<ScreenAlignedQuad, globjects::HeapOnlyDeleter> m_postprocessing;
-    std::unique_ptr<Texture, globjects::HeapOnlyDeleter> m_postprocessedTexture;
-    std::unique_ptr<Framebuffer, globjects::HeapOnlyDeleter> m_postprocessingFBO;
+    std::unique_ptr<ScreenAlignedQuad> m_postprocessing;
+    std::unique_ptr<Texture> m_postprocessedTexture;
+    std::unique_ptr<Framebuffer> m_postprocessingFBO;
 
-    std::unique_ptr<ScreenAlignedQuad, globjects::HeapOnlyDeleter> m_gBufferChoice;
+    std::unique_ptr<ScreenAlignedQuad> m_gBufferChoice;
 
     Camera m_camera;
     WorldInHandNavigation m_nav;

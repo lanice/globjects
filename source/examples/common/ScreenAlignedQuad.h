@@ -2,9 +2,6 @@
 
 #include <memory>
 
-#include <globjects/base/HeapOnly.h>
-#include <globjects/base/HeapOnlyDeleter.h>
-
 namespace globjects
 {
 
@@ -17,7 +14,7 @@ class Shader;
 }
 
 
-class ScreenAlignedQuad : public globjects::HeapOnly
+class ScreenAlignedQuad
 {
 public:
     ScreenAlignedQuad(globjects::Shader * fragmentShader, globjects::Texture * texture);
@@ -25,6 +22,8 @@ public:
     ScreenAlignedQuad(globjects::Texture * texture);
     ScreenAlignedQuad(globjects::Shader  * fragmentShader);
     ScreenAlignedQuad(globjects::Program * program);
+
+    ~ScreenAlignedQuad();
 
     void draw();
 
@@ -42,16 +41,16 @@ protected:
     void initialize();
 
 protected:
-    std::unique_ptr<globjects::VertexArray, globjects::HeapOnlyDeleter> m_vao;
+    std::unique_ptr<globjects::VertexArray> m_vao;
 
-    std::unique_ptr<globjects::Buffer, globjects::HeapOnlyDeleter> m_buffer;
+    std::unique_ptr<globjects::Buffer> m_buffer;
 
-    std::unique_ptr<globjects::Shader, globjects::HeapOnlyDeleter> m_vertexShader;
+    std::unique_ptr<globjects::Shader> m_vertexShader;
     globjects::Shader * m_fragmentShader;
-    std::unique_ptr<globjects::Shader, globjects::HeapOnlyDeleter> m_ownFragmentShader;
+    std::unique_ptr<globjects::Shader> m_ownFragmentShader;
 
     globjects::Program * m_program;
-    std::unique_ptr<globjects::Program, globjects::HeapOnlyDeleter> m_ownProgram;
+    std::unique_ptr<globjects::Program> m_ownProgram;
     globjects::Texture * m_texture;
 
     int m_samplerIndex;

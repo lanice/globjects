@@ -60,6 +60,8 @@ public:
     Shader(const gl::GLenum type);
     Shader(const gl::GLenum type, AbstractStringSource * source, const IncludePaths & includePaths = IncludePaths());
 
+    virtual ~Shader();
+
     virtual void accept(ObjectVisitor& visitor) override;
 
 	gl::GLenum type() const;
@@ -88,8 +90,6 @@ public:
     static std::string typeString(gl::GLenum type);
 
 protected:
-    virtual ~Shader();
-
     virtual void notifyChanged(const Changeable * changeable) override;
 
 protected:

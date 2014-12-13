@@ -6,8 +6,6 @@
 
 #include <globjects/globjects_api.h>
 
-#include <globjects/base/HeapOnly.h>
-
 namespace globjects 
 {
 
@@ -20,7 +18,7 @@ class IDResource;
     The OpenGL name (id) of the OpenGL resource that was provided in the constructor can be queried using id().
     Additionally, an Object can have meaningful name wich can be get and set using name() and setName().
  */
-class GLOBJECTS_API Object : public HeapOnly
+class GLOBJECTS_API Object
 {
     friend class AbstractObjectNameImplementation;
 

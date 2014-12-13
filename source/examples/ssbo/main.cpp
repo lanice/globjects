@@ -78,8 +78,8 @@ public:
     }
 
 protected:
-    std::unique_ptr<ScreenAlignedQuad, globjects::HeapOnlyDeleter> m_quad;
-    std::unique_ptr<Buffer, globjects::HeapOnlyDeleter> m_buffer;
+    std::unique_ptr<ScreenAlignedQuad> m_quad;
+    std::unique_ptr<Buffer> m_buffer;
 };
 
 

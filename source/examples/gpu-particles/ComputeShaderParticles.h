@@ -2,8 +2,6 @@
 
 #include <memory>
 
-#include <globjects/base/HeapOnlyDeleter.h>
-
 #include "AbstractParticleTechnique.h"
 
 namespace globjects
@@ -33,12 +31,12 @@ protected:
     virtual void draw_impl() override;
 
 protected:
-    std::unique_ptr<globjects::Buffer, globjects::HeapOnlyDeleter> m_positionsSSBO;
-    std::unique_ptr<globjects::Buffer, globjects::HeapOnlyDeleter> m_velocitiesSSBO;
+    std::unique_ptr<globjects::Buffer> m_positionsSSBO;
+    std::unique_ptr<globjects::Buffer> m_velocitiesSSBO;
 
-    std::unique_ptr<globjects::Program, globjects::HeapOnlyDeleter> m_computeProgram;
+    std::unique_ptr<globjects::Program> m_computeProgram;
 
-    std::unique_ptr<globjects::VertexArray, globjects::HeapOnlyDeleter> m_vao;
+    std::unique_ptr<globjects::VertexArray> m_vao;
 
     glm::uvec3 m_workGroupSize;
 };

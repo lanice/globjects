@@ -2,14 +2,12 @@
 
 #include <glbinding/gl/types.h>
 
-#include <globjects/base/HeapOnly.h>
-
 #include <globjects/globjects_api.h>
 
 namespace globjects
 {
 
-class GLOBJECTS_API Sync : public HeapOnly
+class GLOBJECTS_API Sync
 {
     friend class AbstractObjectNameImplementation;
 

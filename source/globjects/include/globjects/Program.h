@@ -11,7 +11,6 @@
 
 #include <globjects/globjects_api.h>
 
-#include <globjects/base/HeapOnlyDeleter.h>
 #include <globjects/Object.h>
 #include <globjects/LocationIdentity.h>
 #include <globjects/UniformBlock.h>
@@ -91,6 +90,8 @@ public:
 public:
 	Program();
     Program(ProgramBinary * binary);
+
+    virtual ~Program();
 
     virtual void accept(ObjectVisitor & visitor) override;
 
@@ -186,8 +187,6 @@ public:
     virtual gl::GLenum objectType() const override;
 
 protected:
-    virtual ~Program();
-
     bool checkLinkStatus() const;
     void checkDirty() const;
 
@@ -214,7 +213,7 @@ protected:
 
 protected:
     std::set<Shader *> m_shaders;
-    std::unique_ptr<ProgramBinary, HeapOnlyDeleter> m_binary;
+    std::unique_ptr<ProgramBinary> m_binary;
 
     std::unordered_map<LocationIdentity, AbstractUniform *> m_uniforms;
     std::unordered_map<LocationIdentity, UniformBlock> m_uniformBlocks;

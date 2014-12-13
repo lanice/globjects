@@ -144,7 +144,7 @@ public:
             return;
         }
 
-        std::unique_ptr<State, globjects::HeapOnlyDeleter> state(new State);
+        std::unique_ptr<State> state(new State);
         state->enable(GL_CULL_FACE);
         state->clearColor(0.2f, 0.3f, 0.4f, 1.f);
 
@@ -284,9 +284,9 @@ protected:
     WorldInHandNavigation m_nav;
     AxisAlignedBoundingBox m_aabb;
 
-    std::array<std::unique_ptr<Texture, globjects::HeapOnlyDeleter>, 4> m_textures;
-    std::unique_ptr<Program, globjects::HeapOnlyDeleter> m_program;
-    std::unique_ptr<VertexDrawable, globjects::HeapOnlyDeleter> m_drawable;
+    std::array<std::unique_ptr<Texture>, 4> m_textures;
+    std::unique_ptr<Program> m_program;
+    std::unique_ptr<VertexDrawable> m_drawable;
 };
 
 
