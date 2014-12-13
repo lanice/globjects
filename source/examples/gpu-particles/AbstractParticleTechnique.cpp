@@ -43,9 +43,9 @@ AbstractParticleTechnique::~AbstractParticleTechnique()
 
 void AbstractParticleTechnique::initialize(const std::string & vertexShaderSourceFilePath)
 {
-    m_fbo = new Framebuffer();
+    m_fbo.reset(new Framebuffer());
 
-    m_color = new Texture(GL_TEXTURE_2D);
+    m_color.reset(new Texture(GL_TEXTURE_2D));
     m_color->setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     m_color->setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     m_color->setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -54,16 +54,15 @@ void AbstractParticleTechnique::initialize(const std::string & vertexShaderSourc
     m_color->image2D(0, GL_RGB16F, glm::ivec2(1, 1), 0, GL_RGB, GL_FLOAT, nullptr);
 
     m_fbo->bind();
-    m_fbo->attachTexture(GL_COLOR_ATTACHMENT0, m_color);
+    m_fbo->attachTexture(GL_COLOR_ATTACHMENT0, m_color.get());
     m_fbo->setDrawBuffers({ GL_COLOR_ATTACHMENT0 });
     m_fbo->unbind();
 
+    m_clear.reset(new ScreenAlignedQuad(
+        Shader::fromFile(GL_FRAGMENT_SHADER, "data/gpu-particles/clear.frag")));
+    m_quad.reset(new ScreenAlignedQuad(m_color.get()));
 
-    m_clear = new ScreenAlignedQuad(
-        Shader::fromFile(GL_FRAGMENT_SHADER, "data/gpu-particles/clear.frag"));
-    m_quad = new ScreenAlignedQuad(m_color);
-
-    m_drawProgram = new Program();
+    m_drawProgram.reset(new Program());
     m_drawProgram->attach(
         Shader::fromFile(GL_VERTEX_SHADER, vertexShaderSourceFilePath)
       , Shader::fromFile(GL_GEOMETRY_SHADER, "data/gpu-particles/points.geom")

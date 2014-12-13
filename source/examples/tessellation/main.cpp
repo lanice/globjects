@@ -43,7 +43,7 @@ public:
 
         glClearColor(1.f, 1.f, 1.f, 0.f);
 
-        m_sphere = new Program();
+        m_sphere.reset(new Program());
         m_sphere->attach(
             Shader::fromFile(GL_VERTEX_SHADER,          "data/tessellation/sphere.vert")
         ,   Shader::fromFile(GL_TESS_CONTROL_SHADER,    "data/tessellation/sphere.tcs")
@@ -52,7 +52,7 @@ public:
         ,   Shader::fromFile(GL_FRAGMENT_SHADER,        "data/tessellation/sphere.frag")
         ,   Shader::fromFile(GL_FRAGMENT_SHADER,        "data/common/phong.frag"));
 
-        m_icosahedron = new Icosahedron();
+        m_icosahedron.reset(new Icosahedron());
 
         m_time.reset();
         m_time.start();
@@ -91,9 +91,9 @@ public:
     }
 
 protected:
-    ref_ptr<Program> m_sphere;
+    std::unique_ptr<Program, globjects::HeapOnlyDeleter> m_sphere;
 
-    ref_ptr<Icosahedron> m_icosahedron;
+    std::unique_ptr<Icosahedron, globjects::HeapOnlyDeleter> m_icosahedron;
 
     Camera m_camera;
     Timer m_time;

@@ -81,9 +81,9 @@ set(sources
 	${source_path}/base/FileRegistry.h
 	${source_path}/base/formatString.cpp
 	${source_path}/base/HeapOnly.cpp
+	${source_path}/base/HeapOnlyDeleter.cpp
 	${source_path}/base/LogMessageBuilder.cpp
 	${source_path}/base/LogMessage.cpp
-	${source_path}/base/Referenced.cpp
 	${source_path}/base/StaticStringSource.cpp
 	${source_path}/base/StringSourceDecorator.cpp
 	${source_path}/base/StringTemplate.cpp
@@ -258,13 +258,11 @@ set(api_includes
 	${include_path}/base/FunctionCall.h
 	${include_path}/base/FunctionCall.hpp
 	${include_path}/base/HeapOnly.h
+	${include_path}/base/HeapOnlyDeleter.h
 	${include_path}/base/LogMessageBuilder.h
 	${include_path}/base/LogMessageBuilder.hpp
 	${include_path}/base/LogMessage.h
 	${include_path}/base/LogMessageLevel.h
-	${include_path}/base/Referenced.h
-	${include_path}/base/ref_ptr.h
-	${include_path}/base/ref_ptr.hpp
 	${include_path}/base/Singleton.h
 	${include_path}/base/Singleton.hpp
 	${include_path}/base/StaticStringSource.h

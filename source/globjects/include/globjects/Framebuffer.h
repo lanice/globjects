@@ -4,10 +4,9 @@
 #include <string>
 #include <vector>
 #include <array>
+#include <memory>
 
 #include <glm/vec4.hpp>
-
-#include <globjects/base/ref_ptr.h>
 
 #include <globjects/globjects_api.h>
 #include <globjects/Object.h>
@@ -133,7 +132,7 @@ protected:
     static void blit(const std::array<gl::GLint, 4> & srcRect, const std::array<gl::GLint, 4> & destRect, gl::ClearBufferMask mask, gl::GLenum filter);
 
 protected:
-	std::map<gl::GLenum, ref_ptr<FramebufferAttachment>> m_attachments;
+    std::map<gl::GLenum, FramebufferAttachment *> m_attachments;
 };
 
 } // namespace globjects

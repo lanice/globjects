@@ -36,7 +36,7 @@ public:
         if (!raw.isValid())
             return;
 
-        m_texture = Texture::createDefault(GL_TEXTURE_2D);
+        m_texture.reset(Texture::createDefault(GL_TEXTURE_2D));
 
         m_texture->compressedImage2D(0, GL_COMPRESSED_RGBA_S3TC_DXT1_EXT, 
             ivec2(256, 256), 0, static_cast<GLsizei>(raw.size()), raw.data());
@@ -44,7 +44,7 @@ public:
 
     void createAndSetupGeometry()
     {
-        m_quad = new ScreenAlignedQuad(m_texture);
+        m_quad.reset(new ScreenAlignedQuad(m_texture.get()));
         m_quad->setSamplerUniform(0);
     }
 
@@ -67,8 +67,8 @@ public:
     }
 
 protected:
-    ref_ptr<Texture> m_texture;
-    ref_ptr<ScreenAlignedQuad> m_quad;
+    std::unique_ptr<Texture, globjects::HeapOnlyDeleter> m_texture;
+    std::unique_ptr<ScreenAlignedQuad, globjects::HeapOnlyDeleter> m_quad;
 };
 
 

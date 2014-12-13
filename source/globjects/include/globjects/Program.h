@@ -3,14 +3,15 @@
 #include <set>
 #include <unordered_map>
 #include <vector>
+#include <memory>
 
 #include <glm/vec3.hpp>
 
 #include <globjects/base/ChangeListener.h>
-#include <globjects/base/ref_ptr.h>
 
 #include <globjects/globjects_api.h>
 
+#include <globjects/base/HeapOnlyDeleter.h>
 #include <globjects/Object.h>
 #include <globjects/LocationIdentity.h>
 #include <globjects/UniformBlock.h>
@@ -212,10 +213,10 @@ protected:
     const UniformBlock * getUniformBlockByIdentity(const LocationIdentity & identity) const;
 
 protected:
-    std::set<ref_ptr<Shader>> m_shaders;
-    ref_ptr<ProgramBinary> m_binary;
+    std::set<Shader *> m_shaders;
+    std::unique_ptr<ProgramBinary, HeapOnlyDeleter> m_binary;
 
-    std::unordered_map<LocationIdentity, ref_ptr<AbstractUniform>> m_uniforms;
+    std::unordered_map<LocationIdentity, AbstractUniform *> m_uniforms;
     std::unordered_map<LocationIdentity, UniformBlock> m_uniformBlocks;
 
     mutable bool m_linked;

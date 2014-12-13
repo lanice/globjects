@@ -77,15 +77,15 @@ void VertexArray::unbind()
 VertexAttributeBinding * VertexArray::binding(const GLuint bindingIndex)
 {
 	if (!m_bindings[bindingIndex])
-        m_bindings[bindingIndex] = new VertexAttributeBinding(this, bindingIndex);
+        m_bindings[bindingIndex].reset(new VertexAttributeBinding(this, bindingIndex));
 
-    return m_bindings[bindingIndex];
+    return m_bindings[bindingIndex].get();
 }
 
 const VertexAttributeBinding* VertexArray::binding(const GLuint bindingIndex) const
 {
     if (m_bindings.count(bindingIndex))
-        return m_bindings.at(bindingIndex);
+        return m_bindings.at(bindingIndex).get();
 
     return nullptr;
 }
@@ -104,8 +104,8 @@ std::vector<VertexAttributeBinding *> VertexArray::bindings()
 {
 	std::vector<VertexAttributeBinding *> bindings;
 
-    for (std::pair<GLuint, ref_ptr<VertexAttributeBinding>> pair: m_bindings)
-		bindings.push_back(pair.second);
+    for (const std::pair<const GLuint, std::unique_ptr<VertexAttributeBinding, HeapOnlyDeleter>> & pair: m_bindings)
+        bindings.push_back(pair.second.get());
 
 	return bindings;
 }
@@ -114,9 +114,9 @@ std::vector<const VertexAttributeBinding*> VertexArray::bindings() const
 {
     std::vector<const VertexAttributeBinding*> bindings;
 
-    for (std::pair<GLuint, ref_ptr<VertexAttributeBinding>> pair: m_bindings)
+    for (const std::pair<const GLuint, std::unique_ptr<VertexAttributeBinding, HeapOnlyDeleter>> & pair: m_bindings)
     {
-        bindings.push_back(pair.second);
+        bindings.push_back(pair.second.get());
     }
 
     return bindings;

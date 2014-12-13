@@ -3,13 +3,14 @@
 #include <unordered_map>
 #include <array>
 #include <vector>
+#include <memory>
 
 #include <glm/glm.hpp>
 
 #include <glbinding/gl/gl.h>
 
-#include <globjects/base/Referenced.h>
-#include <globjects/base/ref_ptr.h>
+#include <globjects/base/HeapOnly.h>
+#include <globjects/base/HeapOnlyDeleter.h>
 
 
 namespace globjects
@@ -21,7 +22,7 @@ class Buffer;
 }
 
 
-class Icosahedron : public globjects::Referenced
+class Icosahedron : public globjects::HeapOnly
 {
 public:
     using Face = std::array<gl::GLushort, 3>;
@@ -63,10 +64,10 @@ protected:
     virtual ~Icosahedron();
 
 protected:
-    globjects::ref_ptr<globjects::VertexArray> m_vao;
+    std::unique_ptr<globjects::VertexArray, globjects::HeapOnlyDeleter> m_vao;
 
-    globjects::ref_ptr<globjects::Buffer> m_vertices;
-    globjects::ref_ptr<globjects::Buffer> m_indices;
+    std::unique_ptr<globjects::Buffer, globjects::HeapOnlyDeleter> m_vertices;
+    std::unique_ptr<globjects::Buffer, globjects::HeapOnlyDeleter> m_indices;
 
     gl::GLsizei m_size;
 };

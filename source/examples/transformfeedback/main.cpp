@@ -65,12 +65,12 @@ public:
 
     void createAndSetupShaders()
     {
-        m_shaderProgram = new Program();
+        m_shaderProgram.reset(new Program());
         m_shaderProgram->attach(
             Shader::fromFile(GL_VERTEX_SHADER,   "data/transformfeedback/simple.vert")
           , Shader::fromFile(GL_FRAGMENT_SHADER, "data/transformfeedback/simple.frag"));
 
-        m_transformFeedbackProgram = new Program();
+        m_transformFeedbackProgram.reset(new Program());
         m_transformFeedbackProgram->attach(
             Shader::fromFile(GL_VERTEX_SHADER, "data/transformfeedback/transformfeedback.vert"));
 
@@ -95,20 +95,20 @@ public:
           , vec4(0, 0, 1, 1)
           , vec4(0, 1, 0, 1) });
 
-        m_vertexBuffer1 = new Buffer();
+        m_vertexBuffer1.reset(new Buffer());
         m_vertexBuffer1->setData(vertexArray, GL_STATIC_DRAW);
-        m_vertexBuffer2 = new Buffer();
+        m_vertexBuffer2.reset(new Buffer());
         m_vertexBuffer2->setData(vertexArray, GL_STATIC_DRAW);
-        m_colorBuffer = new Buffer();
+        m_colorBuffer.reset(new Buffer());
         m_colorBuffer->setData(colorArray, GL_STATIC_DRAW);
 
-        m_vao = new VertexArray();
+        m_vao.reset(new VertexArray());
 
         m_vao->binding(0)->setAttribute(0);
         m_vao->binding(0)->setFormat(4, GL_FLOAT);
 
         m_vao->binding(1)->setAttribute(1);
-        m_vao->binding(1)->setBuffer(m_colorBuffer, 0, sizeof(vec4));
+        m_vao->binding(1)->setBuffer(m_colorBuffer.get(), 0, sizeof(vec4));
         m_vao->binding(1)->setFormat(4, GL_FLOAT);
 
         m_vao->enable(0);
@@ -117,8 +117,8 @@ public:
 
     void createAndSetupTransformFeedback()
     {
-        m_transformFeedback = new TransformFeedback();
-        m_transformFeedback->setVaryings(m_transformFeedbackProgram
+        m_transformFeedback.reset(new TransformFeedback());
+        m_transformFeedback->setVaryings(m_transformFeedbackProgram.get()
             , { { "next_position" } }, GL_INTERLEAVED_ATTRIBS);
     }
     
@@ -140,8 +140,8 @@ public:
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        Buffer * drawBuffer  = m_vertexBuffer1;
-        Buffer * writeBuffer = m_vertexBuffer2;
+        Buffer * drawBuffer  = m_vertexBuffer1.get();
+        Buffer * writeBuffer = m_vertexBuffer2.get();
 
         m_vao->bind();
 
@@ -175,16 +175,16 @@ public:
     }
 
 protected:
-    ref_ptr<Program> m_shaderProgram;
-    ref_ptr<Program> m_transformFeedbackProgram;
+    std::unique_ptr<Program, globjects::HeapOnlyDeleter> m_shaderProgram;
+    std::unique_ptr<Program, globjects::HeapOnlyDeleter> m_transformFeedbackProgram;
 	
-    ref_ptr<VertexArray> m_vao;
+    std::unique_ptr<VertexArray, globjects::HeapOnlyDeleter> m_vao;
 
-    ref_ptr<TransformFeedback> m_transformFeedback;
+    std::unique_ptr<TransformFeedback, globjects::HeapOnlyDeleter> m_transformFeedback;
 	
-    ref_ptr<Buffer> m_vertexBuffer1;
-    ref_ptr<Buffer> m_vertexBuffer2;
-    ref_ptr<Buffer> m_colorBuffer;
+    std::unique_ptr<Buffer, globjects::HeapOnlyDeleter> m_vertexBuffer1;
+    std::unique_ptr<Buffer, globjects::HeapOnlyDeleter> m_vertexBuffer2;
+    std::unique_ptr<Buffer, globjects::HeapOnlyDeleter> m_colorBuffer;
 
     Timer m_timer;
 };

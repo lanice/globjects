@@ -90,12 +90,12 @@ public:
 
         glClearColor(1.f, 1.f, 1.f, 0.f);
 
-        m_sphere = new Program();
+        m_sphere.reset(new Program());
         m_sphere->attach(
             Shader::fromFile(GL_VERTEX_SHADER,   "data/gbuffers/sphere.vert")
           , Shader::fromFile(GL_FRAGMENT_SHADER, "data/gbuffers/sphere.frag"));
 
-        m_icosahedron = new Icosahedron(2);
+        m_icosahedron.reset(new Icosahedron(2));
 
         m_camera.setZNear(1.f);
         m_camera.setZFar(16.f);
@@ -243,9 +243,9 @@ public:
     }
 
 protected:
-    ref_ptr<Program> m_sphere;
+    std::unique_ptr<Program, globjects::HeapOnlyDeleter> m_sphere;
 
-    ref_ptr<Icosahedron> m_icosahedron;
+    std::unique_ptr<Icosahedron, globjects::HeapOnlyDeleter> m_icosahedron;
 
     Camera m_camera;
     WorldInHandNavigation m_nav;

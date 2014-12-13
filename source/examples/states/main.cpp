@@ -39,25 +39,25 @@ public:
 
         glClearColor(0.2f, 0.3f, 0.4f, 1.f);
 
-        m_defaultPointSizeState  = new State();
+        m_defaultPointSizeState.reset(new State());
         m_defaultPointSizeState->pointSize(getFloat(GL_POINT_SIZE));
-        m_thinnestPointSizeState = new State();
+        m_thinnestPointSizeState.reset(new State());
         m_thinnestPointSizeState->pointSize(2.0f);
-        m_thinPointSizeState     = new State();
+        m_thinPointSizeState.reset(new State());
         m_thinPointSizeState->pointSize(5.0f);
-        m_normalPointSizeState   = new State();
+        m_normalPointSizeState.reset(new State());
         m_normalPointSizeState->pointSize(10.0f);
-        m_thickPointSizeState    = new State();
+        m_thickPointSizeState.reset(new State());
         m_thickPointSizeState->pointSize(20.0f);
-        m_disableRasterizerState = new State();
+        m_disableRasterizerState.reset(new State());
         m_disableRasterizerState->enable(GL_RASTERIZER_DISCARD);
-        m_enableRasterizerState  = new State();
+        m_enableRasterizerState.reset(new State());
         m_enableRasterizerState->disable(GL_RASTERIZER_DISCARD);
 
-        m_vao = new VertexArray();
-        m_buffer = new Buffer();
+        m_vao.reset(new VertexArray());
+        m_buffer.reset(new Buffer());
 
-        m_shaderProgram = new Program();
+        m_shaderProgram.reset(new Program());
         m_shaderProgram->attach(
             Shader::fromFile(GL_VERTEX_SHADER, "data/states/standard.vert")
           , Shader::fromFile(GL_FRAGMENT_SHADER, "data/states/standard.frag"));
@@ -75,7 +75,7 @@ public:
           , GL_STATIC_DRAW );
 
         m_vao->binding(0)->setAttribute(0);
-        m_vao->binding(0)->setBuffer(m_buffer, 0, sizeof(vec2));
+        m_vao->binding(0)->setBuffer(m_buffer.get(), 0, sizeof(vec2));
         m_vao->binding(0)->setFormat(2, GL_FLOAT);
         m_vao->enable(0);
     }
@@ -128,17 +128,17 @@ public:
     }
 
 protected:
-    ref_ptr<VertexArray> m_vao;
-    ref_ptr<Buffer> m_buffer;
-    ref_ptr<Program> m_shaderProgram;
+    std::unique_ptr<VertexArray, globjects::HeapOnlyDeleter> m_vao;
+    std::unique_ptr<Buffer, globjects::HeapOnlyDeleter> m_buffer;
+    std::unique_ptr<Program, globjects::HeapOnlyDeleter> m_shaderProgram;
 
-    ref_ptr<State> m_defaultPointSizeState;
-    ref_ptr<State> m_thinnestPointSizeState;
-    ref_ptr<State> m_thinPointSizeState;
-    ref_ptr<State> m_normalPointSizeState;
-    ref_ptr<State> m_thickPointSizeState;
-    ref_ptr<State> m_disableRasterizerState;
-    ref_ptr<State> m_enableRasterizerState;
+    std::unique_ptr<State, globjects::HeapOnlyDeleter> m_defaultPointSizeState;
+    std::unique_ptr<State, globjects::HeapOnlyDeleter> m_thinnestPointSizeState;
+    std::unique_ptr<State, globjects::HeapOnlyDeleter> m_thinPointSizeState;
+    std::unique_ptr<State, globjects::HeapOnlyDeleter> m_normalPointSizeState;
+    std::unique_ptr<State, globjects::HeapOnlyDeleter> m_thickPointSizeState;
+    std::unique_ptr<State, globjects::HeapOnlyDeleter> m_disableRasterizerState;
+    std::unique_ptr<State, globjects::HeapOnlyDeleter> m_enableRasterizerState;
 };
 
 

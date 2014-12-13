@@ -63,19 +63,19 @@ public:
         for (int i = 0; i < w * h * 4; ++i)
             data[i] = static_cast<unsigned char>(255 - static_cast<unsigned char>(r(generator) * 255));
 
-        m_texture = Texture::createDefault(GL_TEXTURE_2D);
+        m_texture.reset(Texture::createDefault(GL_TEXTURE_2D));
         m_texture->image2D(0, GL_RGBA8, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     }
 
     void createAndSetupGeometry()
     {
-        m_quad = new ScreenAlignedQuad(m_texture);
+        m_quad.reset(new ScreenAlignedQuad(m_texture.get()));
         m_quad->setSamplerUniform(0);
     }
 
 protected:
-    ref_ptr<Texture> m_texture;
-    ref_ptr<ScreenAlignedQuad> m_quad;
+    std::unique_ptr<Texture, globjects::HeapOnlyDeleter> m_texture;
+    std::unique_ptr<ScreenAlignedQuad, globjects::HeapOnlyDeleter> m_quad;
 };
 
 

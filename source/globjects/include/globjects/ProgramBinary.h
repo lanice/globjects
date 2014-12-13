@@ -1,15 +1,15 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 
 #include <glbinding/gl/types.h>
 
 #include <globjects/globjects_api.h>
 
-#include <globjects/base/Referenced.h>
+#include <globjects/base/HeapOnly.h>
 #include <globjects/base/ChangeListener.h>
 #include <globjects/base/Changeable.h>
-#include <globjects/base/ref_ptr.h>
 
 namespace globjects
 {
@@ -23,7 +23,7 @@ class AbstractStringSource;
  * \see Program
  * \see http://www.opengl.org/registry/specs/ARB/get_program_binary.txt
  */
-class GLOBJECTS_API ProgramBinary : public Referenced, public Changeable, protected ChangeListener
+class GLOBJECTS_API ProgramBinary : public HeapOnly, public Changeable, protected ChangeListener
 {
 public:
     ProgramBinary(gl::GLenum binaryFormat, const std::vector<char> & binaryData);
@@ -42,7 +42,7 @@ protected:
 
 protected:
     gl::GLenum m_binaryFormat;
-    ref_ptr<AbstractStringSource> m_dataSource;
+    AbstractStringSource * m_dataSource;
 
     mutable bool m_valid;
     mutable std::vector<unsigned char> m_binaryData;

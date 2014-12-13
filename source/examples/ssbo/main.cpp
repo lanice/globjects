@@ -44,7 +44,7 @@ public:
         glClearColor(0.2f, 0.3f, 0.4f, 1.f);
 
 
-        m_quad = new ScreenAlignedQuad(Shader::fromFile(GL_FRAGMENT_SHADER, "data/ssbo/ssbo.frag"));
+        m_quad.reset(new ScreenAlignedQuad(Shader::fromFile(GL_FRAGMENT_SHADER, "data/ssbo/ssbo.frag")));
 
         m_quad->program()->setUniform("maximum",     10);
         m_quad->program()->setUniform("rowCount",    10);
@@ -62,7 +62,7 @@ public:
             3,4,5,6,7,8,9,10,1,2,
             2,3,4,5,6,7,8,9,10,1 };
 
-        m_buffer = new Buffer();
+        m_buffer.reset(new Buffer());
         m_buffer->setData(sizeof(data), data, GL_STATIC_DRAW);
 
         m_buffer->bindBase(GL_SHADER_STORAGE_BUFFER, 1);
@@ -78,8 +78,8 @@ public:
     }
 
 protected:
-    ref_ptr<ScreenAlignedQuad> m_quad;
-    ref_ptr<Buffer> m_buffer;
+    std::unique_ptr<ScreenAlignedQuad, globjects::HeapOnlyDeleter> m_quad;
+    std::unique_ptr<Buffer, globjects::HeapOnlyDeleter> m_buffer;
 };
 
 

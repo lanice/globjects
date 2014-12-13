@@ -10,7 +10,6 @@
 
 #include <globjects/base/Changeable.h>
 #include <globjects/base/ChangeListener.h>
-#include <globjects/base/ref_ptr.h>
 
 #include <globjects/Object.h>
 
@@ -97,8 +96,8 @@ protected:
     std::string shaderString() const;
 
 protected:
-	gl::GLenum m_type;
-    ref_ptr<AbstractStringSource> m_source;
+    gl::GLenum m_type;
+    AbstractStringSource * m_source;
     IncludePaths m_includePaths;
 
     mutable bool m_compiled;

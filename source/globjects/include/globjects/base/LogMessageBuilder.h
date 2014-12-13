@@ -9,7 +9,6 @@
 
 #include <globjects/globjects_api.h>
 #include <globjects/base/LogMessage.h>
-#include <globjects/base/ref_ptr.h>
 
 
 namespace globjects
@@ -69,7 +68,7 @@ public:
     LogMessageBuilder & operator<<(unsigned char uc);
     LogMessageBuilder & operator<<(const void * pointer);
 
-	// manipulators
+    // manipulators
     LogMessageBuilder & operator<<(std::ostream & (*manipulator)(std::ostream&));
     LogMessageBuilder & operator<<(PrecisionManipulator manipulator);
     LogMessageBuilder & operator<<(FillManipulator manipulator);
@@ -77,13 +76,9 @@ public:
     // in Windows PrecisionManipulator = WidthManipulator
     LogMessageBuilder & operator<<(WidthManipulator manipulator);
 #endif
-	
-    // globjects base objects
+
+    // pointers
     template <typename T>
-    LogMessageBuilder & operator<<(const ref_ptr<T> & ref_pointer);
-	
-	// pointers
-	template <typename T>
     LogMessageBuilder & operator<<(const T * pointer);
 
     // array types

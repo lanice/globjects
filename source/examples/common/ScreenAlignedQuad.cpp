@@ -18,11 +18,10 @@
 #include <globjects/base/StringTemplate.h>
 
 
-using namespace gl;
-using namespace glm;
-using namespace globjects;
+namespace
+{
 
-const char * ScreenAlignedQuad::s_defaultVertexShaderSource = R"(
+const char * defaultVertexShaderSource = R"(
 #version 140
 #extension GL_ARB_explicit_attrib_location : require
 
@@ -31,12 +30,12 @@ out vec2 v_uv;
 
 void main()
 {
-	v_uv = a_vertex * 0.5 + 0.5;
+    v_uv = a_vertex * 0.5 + 0.5;
     gl_Position = vec4(a_vertex, 0.0, 1.0);
 }
 )";
 
-const char * ScreenAlignedQuad::s_defaultFagmentShaderSource = R"(
+const char * defaultFagmentShaderSource = R"(
 #version 140
 #extension GL_ARB_explicit_attrib_location : require
 
@@ -52,25 +51,56 @@ void main()
 }
 )";
 
+}
+
+
+using namespace gl;
+using namespace glm;
+using namespace globjects;
+
 ScreenAlignedQuad::ScreenAlignedQuad(
     Shader * fragmentShader
 ,   Texture * texture)
 :   m_vertexShader  (nullptr)
 ,   m_fragmentShader(fragmentShader)
-,   m_program(new Program())
+,   m_ownFragmentShader(nullptr)
+,   m_program(nullptr)
+,   m_ownProgram(nullptr)
 ,   m_texture(texture)
 ,   m_samplerIndex(0)
 {
     
-    StringTemplate * vertexShaderSource   = new StringTemplate(new StaticStringSource(s_defaultVertexShaderSource));
-    StringTemplate * fragmentShaderSource = new StringTemplate(new StaticStringSource(s_defaultFagmentShaderSource));
+    StringTemplate * vertexShaderSource   = new StringTemplate(new StaticStringSource(defaultVertexShaderSource));
+    StringTemplate * fragmentShaderSource = new StringTemplate(new StaticStringSource(defaultFagmentShaderSource));
     
-    m_vertexShader   = new Shader(GL_VERTEX_SHADER, vertexShaderSource);
+    m_vertexShader.reset(new Shader(GL_VERTEX_SHADER, vertexShaderSource));
     
-    if (!m_fragmentShader)
-        m_fragmentShader = new Shader(GL_FRAGMENT_SHADER, fragmentShaderSource);
+    if (m_fragmentShader)
+    {
+        if (m_program)
+        {
+            m_program->attach(m_vertexShader.get(), m_fragmentShader);
+        }
+        else
+        {
+            m_ownProgram.reset(new Program());
+            m_ownProgram->attach(m_vertexShader.get(), m_fragmentShader);
+        }
+    }
+    else
+    {
+        m_ownFragmentShader.reset(new Shader(GL_FRAGMENT_SHADER, fragmentShaderSource));
 
-    m_program->attach(m_vertexShader, m_fragmentShader);
+        if (m_program)
+        {
+            m_program->attach(m_vertexShader.get(), m_ownFragmentShader.get());
+        }
+        else
+        {
+            m_ownProgram.reset(new Program());
+            m_ownProgram->attach(m_vertexShader.get(), m_ownFragmentShader.get());
+        }
+    }
 
     initialize();
 }
@@ -88,7 +118,9 @@ ScreenAlignedQuad::ScreenAlignedQuad(Texture * texture)
 ScreenAlignedQuad::ScreenAlignedQuad(Program * program)
 :   m_vertexShader(nullptr)
 ,   m_fragmentShader(nullptr)
+,   m_ownFragmentShader(nullptr)
 ,   m_program(program)
+,   m_ownProgram(nullptr)
 ,   m_texture(nullptr)
 ,   m_samplerIndex(0)
 {
@@ -104,14 +136,14 @@ void ScreenAlignedQuad::initialize()
 
     static const std::array<vec2, 4> raw { { vec2(+1.f,-1.f), vec2(+1.f,+1.f), vec2(-1.f,-1.f), vec2(-1.f,+1.f) } };
 
-    m_vao = new VertexArray;
+    m_vao.reset(new VertexArray);
 
-    m_buffer = new Buffer();
+    m_buffer.reset(new Buffer());
     m_buffer->setData(raw, GL_STATIC_DRAW); //needed for some drivers
 
 	auto binding = m_vao->binding(0);
 	binding->setAttribute(0);
-	binding->setBuffer(m_buffer, 0, sizeof(vec2));
+    binding->setBuffer(m_buffer.get(), 0, sizeof(vec2));
 	binding->setFormat(2, GL_FLOAT, GL_FALSE, 0);
 	m_vao->enable(0);
 
@@ -126,9 +158,25 @@ void ScreenAlignedQuad::draw()
         m_texture->bind();
 	}
 
-    m_program->use();
+    if (m_program)
+    {
+        m_program->use();
+    }
+    else
+    {
+        m_ownProgram->use();
+    }
+
     m_vao->drawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    m_program->release();
+
+    if (m_program)
+    {
+        m_program->release();
+    }
+    else
+    {
+        m_ownProgram->release();
+    }
 
 	if (m_texture)
 		m_texture->unbind();
@@ -142,20 +190,18 @@ void ScreenAlignedQuad::setTexture(Texture* texture)
 void ScreenAlignedQuad::setSamplerUniform(int index)
 {
 	m_samplerIndex = index;
-	m_program->setUniform("source", m_samplerIndex);
+
+    if (m_program)
+    {
+        m_program->setUniform("source", m_samplerIndex);
+    }
+    else
+    {
+        m_ownProgram->setUniform("source", m_samplerIndex);
+    }
 }
 
 Program * ScreenAlignedQuad::program()
 {
-	return m_program;
-}
-
-Shader * ScreenAlignedQuad::vertexShader()
-{
-    return m_vertexShader;
-}
-
-Shader * ScreenAlignedQuad::fragmentShader()
-{
-    return m_fragmentShader;
+    return m_ownProgram.get();
 }

@@ -41,7 +41,7 @@ public:
 
     void createAndSetupTexture()
     {
-        m_texture = Texture::createDefault(GL_TEXTURE_2D);
+        m_texture.reset(Texture::createDefault(GL_TEXTURE_2D));
 
         m_texture->image2D(0, GL_R32F, 512, 512, 0, GL_RED, GL_FLOAT, nullptr);
         m_texture->bindImageTexture(0, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_R32F);
@@ -49,7 +49,7 @@ public:
 
     void createAndSetupShaders()
     {
-        m_computeProgram = new Program();
+        m_computeProgram.reset(new Program());
         m_computeProgram->attach(Shader::fromFile(GL_COMPUTE_SHADER, "data/computeshader/cstest.comp"));
 
         m_computeProgram->setUniform("destTex", 0);
@@ -57,7 +57,7 @@ public:
 
     void createAndSetupGeometry()
     {
-        m_quad = new ScreenAlignedQuad(m_texture);
+        m_quad.reset(new ScreenAlignedQuad(m_texture.get()));
         m_quad->setSamplerUniform(0);
     }
 
@@ -99,10 +99,10 @@ public:
     }
     
 protected:
-    ref_ptr<Texture> m_texture;
+    std::unique_ptr<Texture, globjects::HeapOnlyDeleter> m_texture;
 
-    ref_ptr<Program> m_computeProgram;
-    ref_ptr<ScreenAlignedQuad> m_quad;
+    std::unique_ptr<Program, globjects::HeapOnlyDeleter> m_computeProgram;
+    std::unique_ptr<ScreenAlignedQuad, globjects::HeapOnlyDeleter> m_quad;
 
     unsigned int m_frame;
 };

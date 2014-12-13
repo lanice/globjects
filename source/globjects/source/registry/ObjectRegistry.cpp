@@ -60,22 +60,20 @@ Framebuffer * ObjectRegistry::defaultFBO()
 {
     if (m_defaultFBO == nullptr)
     {
-        m_defaultFBO = Framebuffer::fromId(0);
-        m_defaultFBO->ref();
+        m_defaultFBO.reset(Framebuffer::fromId(0));
     }
 
-    return m_defaultFBO;
+    return m_defaultFBO.get();
 }
 
 VertexArray * ObjectRegistry::defaultVAO()
 {
     if (m_defaultVAO == nullptr)
     {
-        m_defaultVAO = VertexArray::fromId(0);
-        m_defaultVAO->ref();
+        m_defaultVAO.reset(VertexArray::fromId(0));
     }
 
-    return m_defaultVAO;
+    return m_defaultVAO.get();
 }
 
 } // namespace globjects

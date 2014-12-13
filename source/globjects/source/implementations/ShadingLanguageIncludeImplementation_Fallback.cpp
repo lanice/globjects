@@ -1,10 +1,11 @@
 
 #include "ShadingLanguageIncludeImplementation_Fallback.h"
 
+#include <memory>
+
 #include <glbinding/gl/functions.h>
 
 #include <globjects/base/AbstractStringSource.h>
-#include <globjects/base/ref_ptr.h>
 
 #include <globjects/Shader.h>
 
@@ -22,7 +23,7 @@ void ShadingLanguageIncludeImplementation_Fallback::updateSources(const Shader *
 
     if (shader->source())
     {
-        ref_ptr<AbstractStringSource> resolvedSource = IncludeProcessor::resolveIncludes(shader->source(), shader->includePaths());
+        std::unique_ptr<AbstractStringSource> resolvedSource(IncludeProcessor::resolveIncludes(shader->source(), shader->includePaths()));
 
         sources = resolvedSource->strings();
     }

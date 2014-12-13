@@ -44,6 +44,7 @@ void Program::hintBinaryImplementation(const BinaryImplementation impl)
 
 Program::Program()
 : Object(new ProgramResource)
+, m_binary(nullptr)
 , m_linked(false)
 , m_dirty(true)
 {
@@ -57,7 +58,7 @@ Program::Program(ProgramBinary * binary)
 
 Program::~Program()
 {
-    for (std::pair<LocationIdentity, ref_ptr<AbstractUniform>> uniformPair : m_uniforms)
+    for (std::pair<LocationIdentity, AbstractUniform *> uniformPair : m_uniforms)
         uniformPair.second->deregisterProgram(this);
 
     if (0 == id())
@@ -67,7 +68,7 @@ Program::~Program()
     }
     else
     {
-        for (ref_ptr<Shader> shader : std::set<ref_ptr<Shader>>(m_shaders))
+        for (Shader * shader : std::set<Shader *>(m_shaders))
             detach(shader);
     }
 }
@@ -149,10 +150,7 @@ void Program::detach(Shader * shader)
 
 std::set<Shader *> Program::shaders() const
 {
-	std::set<Shader *> shaders;
-    for (ref_ptr<Shader> shader: m_shaders)
-		shaders.insert(shader);
-	return shaders;
+    return m_shaders;
 }
 
 void Program::link() const
@@ -173,7 +171,7 @@ void Program::link() const
 
 bool Program::compileAttachedShaders() const
 {
-    for (Shader * shader : shaders())
+    for (Shader * shader : m_shaders)
     {
         if (shader->isCompiled())
             continue;
@@ -393,7 +391,7 @@ void Program::addUniform(AbstractUniform * uniform)
 {
     assert(uniform != nullptr);
 
-    ref_ptr<AbstractUniform>& uniformReference = m_uniforms[uniform->identity()];
+    AbstractUniform * uniformReference = m_uniforms[uniform->identity()];
 
 	if (uniformReference)
 		uniformReference->deregisterProgram(this);
@@ -409,7 +407,7 @@ void Program::addUniform(AbstractUniform * uniform)
 void Program::updateUniforms() const
 {
 	// Note: uniform update will check if program is linked
-    for (std::pair<LocationIdentity, ref_ptr<AbstractUniform>> uniformPair : m_uniforms)
+    for (std::pair<LocationIdentity, AbstractUniform *> uniformPair : m_uniforms)
 		uniformPair.second->update(this);
 }
 
@@ -421,13 +419,13 @@ void Program::updateUniformBlockBindings() const
 
 void Program::setBinary(ProgramBinary * binary)
 {
-    if (m_binary == binary)
+    if (m_binary.get() == binary)
         return;
 
     if (m_binary)
         m_binary->deregisterListener(this);
 
-    m_binary = binary;
+    m_binary.reset(binary);
 
     if (m_binary)
         m_binary->registerListener(this);

@@ -4,7 +4,7 @@
 
 #include <glbinding/gl/types.h>
 
-#include <globjects/base/Referenced.h>
+#include <globjects/base/HeapOnly.h>
 
 #include <globjects/globjects_api.h>
 
@@ -23,7 +23,7 @@ class Framebuffer;
     \see TextureAttachment
     \see RenderBufferAttachment
 */
-class GLOBJECTS_API FramebufferAttachment : public Referenced
+class GLOBJECTS_API FramebufferAttachment : public HeapOnly
 {
 public:
     FramebufferAttachment(Framebuffer * fbo, gl::GLenum attachment);

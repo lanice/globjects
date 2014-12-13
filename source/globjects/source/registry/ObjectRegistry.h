@@ -1,6 +1,9 @@
 #pragma once
 
 #include <set>
+#include <memory>
+
+#include <globjects/base/HeapOnlyDeleter.h>
 
 namespace globjects 
 {
@@ -34,8 +37,8 @@ protected:
 
 protected:
     std::set<Object *> m_objects;
-    Framebuffer * m_defaultFBO;
-    VertexArray * m_defaultVAO;
+    std::unique_ptr<Framebuffer, HeapOnlyDeleter> m_defaultFBO;
+    std::unique_ptr<VertexArray, HeapOnlyDeleter> m_defaultVAO;
 };
 
 } // namespace globjects

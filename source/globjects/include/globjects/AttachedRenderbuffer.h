@@ -2,8 +2,6 @@
 
 #include <glbinding/gl/types.h>
 
-#include <globjects/base/ref_ptr.h>
-
 #include <globjects/globjects_api.h>
 #include <globjects/FramebufferAttachment.h>
 
@@ -32,7 +30,7 @@ public:
     const Renderbuffer * renderBuffer() const;
 
 protected:
-    ref_ptr<Renderbuffer> m_renderBuffer;
+    Renderbuffer * m_renderBuffer;
 };
 
 } // namespace globjects

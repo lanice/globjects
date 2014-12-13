@@ -5,7 +5,7 @@
 
 #include <globjects/globjects_api.h>
 
-#include <globjects/base/Referenced.h>
+#include <globjects/base/HeapOnly.h>
 #include <globjects/base/Changeable.h>
 
 namespace globjects
@@ -19,7 +19,7 @@ class CompositeStringSource;
  *
  * \see Shader
  */
-class GLOBJECTS_API AbstractStringSource : public Referenced, public Changeable
+class GLOBJECTS_API AbstractStringSource : public HeapOnly, public Changeable
 {
 public:
     virtual std::string string() const = 0;

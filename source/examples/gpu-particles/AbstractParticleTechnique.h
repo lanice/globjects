@@ -2,11 +2,11 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 
 #include <glm/glm.hpp>
 
-#include <globjects/base/ref_ptr.h>
-
+#include <globjects/base/HeapOnlyDeleter.h>
 
 namespace globjects
 {
@@ -60,11 +60,11 @@ protected:
 
     bool m_paused;
 
-    globjects::ref_ptr<globjects::Framebuffer> m_fbo;
-    globjects::ref_ptr<globjects::Texture> m_color;
+    std::unique_ptr<globjects::Framebuffer, globjects::HeapOnlyDeleter> m_fbo;
+    std::unique_ptr<globjects::Texture, globjects::HeapOnlyDeleter> m_color;
 
-    globjects::ref_ptr<globjects::Program> m_drawProgram;
+    std::unique_ptr<globjects::Program, globjects::HeapOnlyDeleter> m_drawProgram;
 
-    globjects::ref_ptr<ScreenAlignedQuad> m_quad;
-    globjects::ref_ptr<ScreenAlignedQuad> m_clear;
+    std::unique_ptr<ScreenAlignedQuad, globjects::HeapOnlyDeleter> m_quad;
+    std::unique_ptr<ScreenAlignedQuad, globjects::HeapOnlyDeleter> m_clear;
 };

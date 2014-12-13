@@ -377,7 +377,7 @@ std::vector<FramebufferAttachment*> Framebuffer::attachments()
 {
 	std::vector<FramebufferAttachment*> attachments;
 
-    for (std::pair<GLenum, ref_ptr<FramebufferAttachment>> pair: m_attachments)
+    for (std::pair<GLenum, FramebufferAttachment *> pair: m_attachments)
 	{
 		attachments.push_back(pair.second);
 	}

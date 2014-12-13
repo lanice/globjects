@@ -3,12 +3,13 @@
 #include <vector>
 #include <array>
 #include <string>
+#include <memory>
 
 #include <glbinding/gl/boolean.h>
 #include <glbinding/gl/enum.h>
 
-#include <globjects/base/ref_ptr.h>
-#include <globjects/base/Referenced.h>
+#include <globjects/base/HeapOnly.h>
+#include <globjects/base/HeapOnlyDeleter.h>
 
 #include <globjects/VertexArray.h>
 #include <globjects/Buffer.h>
@@ -21,7 +22,7 @@ class VertexAttributeBinding;
 }
 
 
-class VertexDrawable : public globjects::Referenced
+class VertexDrawable : public globjects::HeapOnly
 {
 public:
     class AttributeFormat
@@ -71,8 +72,8 @@ public:
     void draw() const;
 
 protected:
-    globjects::ref_ptr<globjects::VertexArray> m_vao;
-    globjects::ref_ptr<globjects::Buffer> m_vbo;
+    std::unique_ptr<globjects::VertexArray, globjects::HeapOnlyDeleter> m_vao;
+    globjects::Buffer * m_vbo;
 
     std::vector<gl::GLint> m_attributeIndices;
     std::vector<AttributeFormat> m_formats;

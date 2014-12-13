@@ -44,6 +44,7 @@ std::map<std::string, std::string> Shader::s_globalReplacements;
 Shader::Shader(const GLenum type)
 : Object(new ShaderResource(type))
 , m_type(type)
+, m_source(nullptr)
 , m_compiled(false)
 , m_compilationFailed(false)
 {

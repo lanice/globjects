@@ -2,13 +2,13 @@
 
 #include <map>
 #include <vector>
+#include <memory>
 
 #include <glbinding/gl/types.h>
 
-#include <globjects/base/ref_ptr.h>
-
 #include <globjects/globjects_api.h>
 #include <globjects/Object.h>
+#include <globjects/base/HeapOnlyDeleter.h>
 
 namespace globjects 
 {
@@ -104,7 +104,7 @@ protected:
     virtual ~VertexArray();
 
 protected:
-    std::map<gl::GLuint, ref_ptr<VertexAttributeBinding>> m_bindings;
+    std::map<gl::GLuint, std::unique_ptr<VertexAttributeBinding, HeapOnlyDeleter>> m_bindings;
 
 };
 

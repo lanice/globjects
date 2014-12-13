@@ -37,7 +37,7 @@ public:
 
         NamedString::create("/color.glsl", new File("data/shaderincludes/color.glsl"));
 
-        m_quad = new ScreenAlignedQuad(Shader::fromFile(GL_FRAGMENT_SHADER, "data/shaderincludes/test.frag"));
+        m_quad.reset(new ScreenAlignedQuad(Shader::fromFile(GL_FRAGMENT_SHADER, "data/shaderincludes/test.frag")));
     }
     
     virtual void paintEvent(PaintEvent & event) override
@@ -49,7 +49,7 @@ public:
     }
 
 protected:
-    ref_ptr<ScreenAlignedQuad> m_quad;
+    std::unique_ptr<ScreenAlignedQuad, globjects::HeapOnlyDeleter> m_quad;
 };
 
 
