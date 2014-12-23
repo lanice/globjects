@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include <vector>
+#include <memory>
 
 #include <glbinding/gl/types.h>
 
@@ -42,8 +43,6 @@ public:
     virtual void disable(gl::GLenum capability, int index) override;
     virtual bool isEnabled(gl::GLenum capability, int index) const override;
 
-    virtual void add(StateSetting * setting) override;
-
     Capability * capability(gl::GLenum capability);
     const Capability * capability(gl::GLenum capability) const;
     std::vector<Capability *> capabilities() const;
@@ -57,11 +56,12 @@ protected:
     void addCapability(Capability * capability);
     Capability * getCapability(gl::GLenum capability);
     const Capability * getCapability(gl::GLenum capability) const;
+    virtual void add(StateSetting * setting) override;
 
 protected:
     Mode m_mode;
-    std::unordered_map<gl::GLenum, Capability *> m_capabilities;
-    std::unordered_map<StateSettingType, StateSetting *> m_settings;
+    std::unordered_map<gl::GLenum, std::unique_ptr<Capability>> m_capabilities;
+    std::unordered_map<StateSettingType, std::unique_ptr<StateSetting>> m_settings;
 };
 
 } // namespace globjects

@@ -365,21 +365,21 @@ void Framebuffer::addAttachment(FramebufferAttachment * attachment)
 {
     assert(attachment != nullptr);
 
-    m_attachments[attachment->attachment()] = attachment;
+    m_attachments[attachment->attachment()].reset(attachment);
 }
 
 FramebufferAttachment * Framebuffer::getAttachment(GLenum attachment)
 {
-	return m_attachments[attachment];
+    return m_attachments[attachment].get();
 }
 
 std::vector<FramebufferAttachment*> Framebuffer::attachments()
 {
 	std::vector<FramebufferAttachment*> attachments;
 
-    for (std::pair<GLenum, FramebufferAttachment *> pair: m_attachments)
+    for (const std::pair<const GLenum, std::unique_ptr<FramebufferAttachment>> & pair: m_attachments)
 	{
-		attachments.push_back(pair.second);
+        attachments.push_back(pair.second.get());
 	}
 
 	return attachments;

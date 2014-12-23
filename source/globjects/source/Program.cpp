@@ -58,7 +58,7 @@ Program::Program(ProgramBinary * binary)
 
 Program::~Program()
 {
-    for (std::pair<LocationIdentity, AbstractUniform *> uniformPair : m_uniforms)
+    for (const std::pair<const LocationIdentity, std::unique_ptr<AbstractUniform>> & uniformPair : m_uniforms)
         uniformPair.second->deregisterProgram(this);
 
     if (0 == id())
@@ -391,7 +391,7 @@ void Program::addUniform(AbstractUniform * uniform)
 {
     assert(uniform != nullptr);
 
-    AbstractUniform * uniformReference = m_uniforms[uniform->identity()];
+    AbstractUniform * uniformReference = m_uniforms[uniform->identity()].get();
 
 	if (uniformReference)
 		uniformReference->deregisterProgram(this);
@@ -407,7 +407,7 @@ void Program::addUniform(AbstractUniform * uniform)
 void Program::updateUniforms() const
 {
 	// Note: uniform update will check if program is linked
-    for (std::pair<LocationIdentity, AbstractUniform *> uniformPair : m_uniforms)
+    for (const std::pair<const LocationIdentity, std::unique_ptr<AbstractUniform>> & uniformPair : m_uniforms)
 		uniformPair.second->update(this);
 }
 

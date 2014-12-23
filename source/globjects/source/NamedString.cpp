@@ -32,7 +32,7 @@ NamedString * NamedString::create(const std::string & name, AbstractStringSource
         return nullptr;
     }
 
-    return new NamedString(name, source, type);
+    return new NamedString(name, source, false, type);
 }
 
 NamedString * NamedString::create(const std::string & name, const std::string & string, const GLenum type)
@@ -42,12 +42,13 @@ NamedString * NamedString::create(const std::string & name, const std::string & 
         return nullptr;
     }
 
-    return new NamedString(name, new StaticStringSource(string), type);
+    return new NamedString(name, new StaticStringSource(string), true, type);
 }
 
-NamedString::NamedString(const std::string & name, AbstractStringSource * source, const GLenum type)
+NamedString::NamedString(const std::string & name, AbstractStringSource * source, bool ownSource, const GLenum type)
 : m_name(name)
 , m_source(source)
+, m_ownsSource(ownSource)
 , m_type(type)
 {
     createNamedString();
@@ -62,6 +63,11 @@ NamedString::~NamedString()
 
     deregisterNamedString();
     deleteNamedString();
+
+    if (m_ownsSource)
+    {
+        delete m_source;
+    }
 }
 
 void NamedString::createNamedString()

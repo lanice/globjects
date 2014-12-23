@@ -35,7 +35,7 @@ Uniform<T> * Program::getUniformByIdentity(const LocationIdentity & identity)
 
     Uniform<T> * uniform = identity.isName() ? new Uniform<T>(identity.name()) : new Uniform<T>(identity.location());
 
-    m_uniforms[uniform->identity()] = uniform;
+    m_uniforms[uniform->identity()].reset(uniform);
     uniform->registerProgram(this);
 
     return uniform;

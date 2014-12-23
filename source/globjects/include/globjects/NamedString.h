@@ -8,7 +8,7 @@
 
 #include <globjects/globjects_api.h>
 
-namespace globjects 
+namespace globjects
 {
 class AbstractStringSource;
 
@@ -44,7 +44,7 @@ protected:
     void createNamedString();
     void deleteNamedString();
 
-    NamedString(const std::string & name, AbstractStringSource * source, gl::GLenum type);
+    NamedString(const std::string & name, AbstractStringSource * source, bool ownSource, gl::GLenum type);
 
     virtual ~NamedString();
 
@@ -55,6 +55,7 @@ protected:
     std::string m_name;
 
     AbstractStringSource * m_source;
+    bool m_ownsSource;
     gl::GLenum m_type;
 };
 

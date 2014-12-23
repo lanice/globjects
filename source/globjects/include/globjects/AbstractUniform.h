@@ -27,7 +27,7 @@ template<typename T> class Uniform;
  */
 class GLOBJECTS_API AbstractUniform
 {
-	friend class Program; ///< Programs (de)register themselves.
+    friend class Program; ///< Programs (de)register themselves.
 
 public:
     enum BindlessImplementation

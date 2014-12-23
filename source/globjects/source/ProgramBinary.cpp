@@ -10,13 +10,14 @@ namespace globjects
 {
 
 ProgramBinary::ProgramBinary(const GLenum binaryFormat, const std::vector<char> & binaryData)
-: ProgramBinary(binaryFormat, new StaticStringSource(binaryData.data(), binaryData.size()))
+: ProgramBinary(binaryFormat, new StaticStringSource(binaryData.data(), binaryData.size()), true)
 {
 }
 
-ProgramBinary::ProgramBinary(const GLenum binaryFormat, AbstractStringSource * dataSource)
+ProgramBinary::ProgramBinary(const GLenum binaryFormat, AbstractStringSource * dataSource, bool ownSource)
 : m_binaryFormat(binaryFormat)
 , m_dataSource(dataSource)
+, m_ownsSource(ownSource)
 , m_valid(false)
 {
     if (m_dataSource)
@@ -30,6 +31,11 @@ ProgramBinary::~ProgramBinary()
     if (m_dataSource)
     {
         m_dataSource->deregisterListener(this);
+    }
+
+    if (m_ownsSource)
+    {
+        delete m_dataSource;
     }
 }
 

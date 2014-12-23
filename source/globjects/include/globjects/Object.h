@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <memory>
 
 #include <glbinding/gl/types.h>
 
@@ -53,7 +54,7 @@ protected:
     virtual ~Object();
 
 protected:
-    IDResource * m_resource;
+    std::unique_ptr<IDResource> m_resource;
 
     mutable void * m_objectLabelState;
 };

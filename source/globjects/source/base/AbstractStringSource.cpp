@@ -3,6 +3,10 @@
 namespace globjects
 {
 
+AbstractStringSource::~AbstractStringSource()
+{
+}
+
 std::vector<std::string> AbstractStringSource::strings() const
 {
     std::vector<std::string> stringList;

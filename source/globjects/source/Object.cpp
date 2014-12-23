@@ -38,7 +38,6 @@ Object::Object(IDResource * resource)
 Object::~Object()
 {
     ObjectRegistry::current().deregisterObject(this);
-    delete m_resource;
 }
 
 GLuint Object::id() const
@@ -73,8 +72,7 @@ void Object::detach()
 
     ObjectRegistry::current().deregisterObject(this);
 
-    delete m_resource;
-    m_resource = new InvalidResource();
+    m_resource.reset(new InvalidResource());
 }
 
 } // namespace globjects

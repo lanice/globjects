@@ -6,6 +6,7 @@
 #include <globjects/globjects.h>
 #include <globjects/Capability.h>
 #include <globjects/StateSetting.h>
+#include <glbinding/Version.h>
 
 using namespace gl;
 
@@ -19,14 +20,6 @@ State::State(const Mode mode)
 
 State::~State()
 {
-    for (const auto & capability : m_capabilities)
-    {
-        delete capability.second;
-    }
-    for (const auto & setting : m_settings)
-    {
-        delete setting.second;
-    }
 }
 
 State * State::currentState()
@@ -215,22 +208,17 @@ void State::apply()
 
 void State::addCapability(Capability * capability)
 {
-    if (m_capabilities.find(capability->capability()) != m_capabilities.end())
-    {
-        delete m_capabilities[capability->capability()];
-    }
-
-    m_capabilities[capability->capability()] = capability;
+    m_capabilities[capability->capability()].reset(capability);
 }
 
 Capability* State::getCapability(GLenum capability)
 {
     if (m_capabilities.find(capability) == m_capabilities.end())
     {
-        m_capabilities[capability] = new Capability(capability);
+        m_capabilities[capability].reset(new Capability(capability));
     }
 
-    return m_capabilities[capability];
+    return m_capabilities[capability].get();
 }
 
 std::vector<Capability*> State::capabilities() const
@@ -239,7 +227,7 @@ std::vector<Capability*> State::capabilities() const
 
     for (const auto& capability : m_capabilities)
     {
-        caps.push_back(capability.second);
+        caps.push_back(capability.second.get());
     }
 
     return caps;
@@ -251,7 +239,7 @@ Capability* State::capability(const GLenum capability)
     if (it == m_capabilities.end())
         return nullptr;
 
-    return it->second;
+    return it->second.get();
 }
 
 const Capability* State::capability(const GLenum capability) const
@@ -260,7 +248,7 @@ const Capability* State::capability(const GLenum capability) const
     if (it == m_capabilities.end())
         return nullptr;
 
-    return it->second;
+    return it->second.get();
 }
 
 std::vector<StateSetting*> State::settings()
@@ -269,7 +257,7 @@ std::vector<StateSetting*> State::settings()
 
     for (const auto& setting : m_settings)
     {
-        settings.push_back(setting.second);
+        settings.push_back(setting.second.get());
     }
 
     return settings;
@@ -281,7 +269,7 @@ std::vector<const StateSetting*> State::settings() const
 
     for (const auto& setting : m_settings)
     {
-        settings.push_back(setting.second);
+        settings.push_back(setting.second.get());
     }
 
     return settings;
@@ -293,7 +281,7 @@ StateSetting * State::setting(const StateSettingType & type)
     if (it == m_settings.end())
         return nullptr;
 
-    return it->second;
+    return it->second.get();
 }
 
 const StateSetting * State::setting(const StateSettingType & type) const
@@ -302,18 +290,14 @@ const StateSetting * State::setting(const StateSettingType & type) const
     if (it == m_settings.end())
         return nullptr;
 
-    return it->second;
+    return it->second.get();
 }
 
 void State::add(StateSetting * setting)
 {
     auto type = setting->type();
-    if (m_settings.find(type) != m_settings.end())
-    {
-        delete m_settings[type];
-        m_settings.erase(type);
-    }
-    m_settings[type] = setting;
+
+    m_settings[type].reset(setting);
 
     if (m_mode == ImmediateMode)
         setting->apply();

@@ -58,7 +58,7 @@ public:
 
 public:
     Shader(const gl::GLenum type);
-    Shader(const gl::GLenum type, AbstractStringSource * source, const IncludePaths & includePaths = IncludePaths());
+    Shader(const gl::GLenum type, AbstractStringSource * source, bool ownSource, const IncludePaths & includePaths = IncludePaths());
 
     virtual ~Shader();
 
@@ -98,6 +98,7 @@ protected:
 protected:
     gl::GLenum m_type;
     AbstractStringSource * m_source;
+    bool m_ownsSource;
     IncludePaths m_includePaths;
 
     mutable bool m_compiled;

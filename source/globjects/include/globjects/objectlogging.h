@@ -22,7 +22,6 @@ class VertexArray;
 class AbstractUniform;
 template <typename T>
 class Uniform;
-class Version;
 
 GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const Object * object);
 GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const Buffer * object);

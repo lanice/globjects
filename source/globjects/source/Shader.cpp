@@ -45,13 +45,15 @@ Shader::Shader(const GLenum type)
 : Object(new ShaderResource(type))
 , m_type(type)
 , m_source(nullptr)
+, m_ownsSource(false)
 , m_compiled(false)
 , m_compilationFailed(false)
 {
 }
 
-Shader::Shader(const GLenum type, AbstractStringSource * source, const IncludePaths & includePaths)
+Shader::Shader(const GLenum type, AbstractStringSource * source, bool ownSource, const IncludePaths & includePaths)
 : Shader(type)
+, m_ownsSource(ownSource)
 {
     setIncludePaths(includePaths);
     setSource(source);
@@ -108,6 +110,11 @@ void Shader::setSource(AbstractStringSource * source)
 	if (m_source)
 		m_source->deregisterListener(this);
 
+    if (m_source && m_ownsSource)
+    {
+        delete m_source;
+    }
+
     if (!s_globalReplacements.empty())
     {
         StringTemplate * sourceTemplate = new StringTemplate(source);
@@ -119,6 +126,7 @@ void Shader::setSource(AbstractStringSource * source)
     }
 
 	m_source = source;
+    m_ownsSource = false;
 
 	if (m_source)
 		m_source->registerListener(this);

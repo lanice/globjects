@@ -60,10 +60,10 @@ public:
     void stencilMaskSeparate(gl::GLenum face, gl::GLuint mask);
     void stencilOpSeparate(gl::GLenum face, gl::GLenum stencilFail, gl::GLenum depthFail, gl::GLenum depthPass);
 
-    virtual void add(StateSetting * setting) = 0;
-
     template <typename... Arguments>
     void set(void (*function)(Arguments...), Arguments... arguments);
+protected:
+    virtual void add(StateSetting * setting) = 0;
 };
 
 } // namespace globjects

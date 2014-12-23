@@ -134,7 +134,7 @@ protected:
     static void blit(const std::array<gl::GLint, 4> & srcRect, const std::array<gl::GLint, 4> & destRect, gl::ClearBufferMask mask, gl::GLenum filter);
 
 protected:
-    std::map<gl::GLenum, FramebufferAttachment *> m_attachments;
+    std::map<gl::GLenum, std::unique_ptr<FramebufferAttachment>> m_attachments;
 };
 
 } // namespace globjects

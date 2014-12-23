@@ -21,6 +21,8 @@ class CompositeStringSource;
 class GLOBJECTS_API AbstractStringSource : public Changeable
 {
 public:
+    virtual ~AbstractStringSource();
+
     virtual std::string string() const = 0;
     virtual std::vector<std::string> strings() const;
 

@@ -26,7 +26,7 @@ class GLOBJECTS_API ProgramBinary : public Changeable, protected ChangeListener
 {
 public:
     ProgramBinary(gl::GLenum binaryFormat, const std::vector<char> & binaryData);
-    ProgramBinary(gl::GLenum binaryFormat, AbstractStringSource * dataSource);
+    ProgramBinary(gl::GLenum binaryFormat, AbstractStringSource * dataSource, bool ownSource);
 
     virtual ~ProgramBinary();
 
@@ -42,6 +42,7 @@ protected:
 protected:
     gl::GLenum m_binaryFormat;
     AbstractStringSource * m_dataSource;
+    bool m_ownsSource;
 
     mutable bool m_valid;
     mutable std::vector<unsigned char> m_binaryData;
