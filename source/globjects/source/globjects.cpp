@@ -3,11 +3,12 @@
 #include <unordered_map>
 #include <mutex>
 
+#include <khrapi/AbstractFunction.h>
+#include <khrapi/callbacks.h>
+
 #include <glbinding/gl/gl.h>
 #include <glbinding/gl/functions.h>
-#include <glbinding/AbstractFunction.h>
 #include <glbinding/Binding.h>
-#include <glbinding/callbacks.h>
 #include <glbinding/ContextInfo.h>
 
 #include <globjects/Error.h>
@@ -35,7 +36,7 @@ namespace
 namespace globjects
 {
 
-void manualErrorCheckAfter(const glbinding::AbstractFunction & function)
+void manualErrorCheckAfter(const khrapi::AbstractFunction & function)
 {
     Error error = Error::get();
 
@@ -62,7 +63,7 @@ void init()
     g_mutex.lock();
     if (!g_globjectsIsInitialized)
     {
-        glbinding::setAfterCallback([](const glbinding::FunctionCall & functionCall) {
+        khrapi::setAfterCallback([](const khrapi::FunctionCall & functionCall) {
             manualErrorCheckAfter(*functionCall.function); });
 
         g_globjectsIsInitialized = true;
@@ -78,9 +79,9 @@ void init(const glbinding::ContextHandle sharedContextId)
     g_mutex.lock();
     if (g_globjectsIsInitialized)
     {
-        glbinding::setCallbackMaskExcept(glbinding::CallbackMask::After, { "glGetError" });
+        glbinding::Binding::setCallbackMaskExcept(khrapi::CallbackMask::After, { "glGetError" });
 
-        glbinding::setAfterCallback([](const glbinding::FunctionCall & functionCall) {
+        khrapi::setAfterCallback([](const khrapi::FunctionCall & functionCall) {
             manualErrorCheckAfter(*functionCall.function); });
 
         g_globjectsIsInitialized = true;
