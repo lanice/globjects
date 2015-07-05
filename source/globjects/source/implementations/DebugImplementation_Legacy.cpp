@@ -1,7 +1,9 @@
 
 #include "DebugImplementation_Legacy.h"
 
-#include <glbinding/callbacks.h>
+#include <khrapi/callbacks.h>
+
+#include <glbinding/Binding.h>
 
 
 using namespace gl;
@@ -23,14 +25,14 @@ void DebugImplementation_Legacy::enable()
 {
     m_enabled = true;
 
-    glbinding::setCallbackMaskExcept(glbinding::CallbackMask::After, { "glGetError" });
+    glbinding::Binding::setCallbackMaskExcept(khrapi::CallbackMask::After, { "glGetError" });
 }
 
 void DebugImplementation_Legacy::disable()
 {
     m_enabled = false;
 
-    glbinding::setCallbackMask(glbinding::CallbackMask::None);
+    glbinding::Binding::setCallbackMask(khrapi::CallbackMask::None);
 }
 
 void DebugImplementation_Legacy::setSynchronous(bool)
