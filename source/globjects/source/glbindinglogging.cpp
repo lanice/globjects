@@ -5,10 +5,10 @@
 #include <iostream>
 
 #include <khrapi/Version.h>
+#include <khrapi/Value.h>
 
 #include <glbinding/Version.h>
 #include <glbinding/Meta.h>
-#include <glbinding/Value.h>
 #include <glbinding/gl/typeintegrations.h>
 
 
