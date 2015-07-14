@@ -4,40 +4,44 @@
 
 #include <globjects/base/LogMessageBuilder.h>
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
-
-namespace glbinding
+namespace khrapi
 {
-    class Version;
+
+class AbstractVersion;
+
 }
 
 namespace globjects 
 {
 
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const glbinding::Version & version);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::GLboolean & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::GLenum & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::GLextension & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::AttribMask & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::ClearBufferMask & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::ClientAttribMask & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::ContextFlagMask & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::ContextProfileMask & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::FfdMaskSGIX & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::FragmentShaderColorModMaskATI & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::FragmentShaderDestMaskATI & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::FragmentShaderDestModMaskATI & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::MapBufferUsageMask & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::MemoryBarrierMask & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::PathRenderingMaskNV & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::PerformanceQueryCapsMaskINTEL & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::SyncObjectMask & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::TextureStorageMaskAMD & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::UseProgramStageMask & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::VertexHintsMaskPGI & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::PathFontStyle & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::UnusedMask & value);
-GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::BufferAccessMask & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const khrapi::AbstractVersion & version);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::GLboolean & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::GLenum & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::GLextension & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::AttribMask & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::ClearBufferMask & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::ContextFlagMask & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::MapBufferUsageMask & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::MemoryBarrierMask & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::PathRenderingMaskNV & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::PerformanceQueryCapsMaskINTEL & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::SyncObjectMask & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::UseProgramStageMask & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::PathFontStyle & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::UnusedMask & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::BufferAccessMask & value);
+
+#ifdef GLOBJECTS_GL_BINDING
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::ClientAttribMask & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::ContextProfileMask & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::FfdMaskSGIX & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::FragmentShaderColorModMaskATI & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::FragmentShaderDestMaskATI & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::FragmentShaderDestModMaskATI & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::TextureStorageMaskAMD & value);
+GLOBJECTS_API LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::VertexHintsMaskPGI & value);
+#endif
 
 } // namespace globjects

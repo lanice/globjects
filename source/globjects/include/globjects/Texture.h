@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <vector>
 
@@ -30,91 +30,100 @@ class GLOBJECTS_API Texture : public Object
 {
 public:
     Texture();
-    Texture(gl::GLenum target);
-    static Texture * fromId(gl::GLuint id, gl::GLenum  target);
+    Texture(binding::GLenum target);
+    static Texture * fromId(binding::GLuint id, binding::GLenum  target);
 
     static Texture * createDefault();
-    static Texture * createDefault(gl::GLenum target);
+    static Texture * createDefault(binding::GLenum target);
 
     virtual void accept(ObjectVisitor & visitor) override;
 
     void bind() const;
     void unbind() const;
-    static void unbind(gl::GLenum target);
+    static void unbind(binding::GLenum target);
 
-    void bindActive(gl::GLenum texture) const;
-    void unbindActive(gl::GLenum texture) const;
+    void bindActive(binding::GLenum texture) const;
+    void unbindActive(binding::GLenum texture) const;
 
-    void setParameter(gl::GLenum name, gl::GLenum value);
-    void setParameter(gl::GLenum name, gl::GLint value);
-    void setParameter(gl::GLenum name, gl::GLfloat value);
+    void setParameter(binding::GLenum name, binding::GLenum value);
+    void setParameter(binding::GLenum name, binding::GLint value);
+    void setParameter(binding::GLenum name, binding::GLfloat value);
 
-    gl::GLint getParameter(gl::GLenum pname) const;
-    gl::GLint getLevelParameter(gl::GLint level, gl::GLenum pname) const;
+    binding::GLint getParameter(binding::GLenum pname) const;
+    binding::GLint getLevelParameter(binding::GLint level, binding::GLenum pname) const;
 
-    void getImage(gl::GLint level, gl::GLenum format, gl::GLenum type, gl::GLvoid * image) const;
-    std::vector<unsigned char> getImage(gl::GLint level, gl::GLenum format, gl::GLenum type) const;
+#ifdef GLOBJECTS_GL_BINDING
+    void getImage(binding::GLint level, binding::GLenum format, binding::GLenum type, binding::GLvoid * image) const;
+    std::vector<unsigned char> getImage(binding::GLint level, binding::GLenum format, binding::GLenum type) const;
 
-    void getCompressedImage(gl::GLint lod, gl::GLvoid * image) const;
-    std::vector<unsigned char> getCompressedImage(gl::GLint lod = 0) const;
+    void getCompressedImage(binding::GLint lod, binding::GLvoid * image) const;
+    std::vector<unsigned char> getCompressedImage(binding::GLint lod = 0) const;
+#endif
 
-    gl::GLenum target() const;
+    binding::GLenum target() const;
 
-    void image1D(gl::GLint level, gl::GLenum internalFormat, gl::GLsizei width, gl::GLint border, gl::GLenum format, gl::GLenum type, const gl::GLvoid * data);
-    void compressedImage1D(gl::GLint level, gl::GLenum internalFormat, gl::GLsizei width, gl::GLint border, gl::GLsizei imageSize, const gl::GLvoid * data);
-    void subImage1D(gl::GLint level, gl::GLint xOffset, gl::GLsizei width, gl::GLenum format, gl::GLenum type, const gl::GLvoid * data);
+#ifdef GLOBJECTS_GL_BINDING
+    void image1D(binding::GLint level, binding::GLenum internalFormat, binding::GLsizei width, binding::GLint border, binding::GLenum format, binding::GLenum type, const binding::GLvoid * data);
+    void compressedImage1D(binding::GLint level, binding::GLenum internalFormat, binding::GLsizei width, binding::GLint border, binding::GLsizei imageSize, const binding::GLvoid * data);
+    void subImage1D(binding::GLint level, binding::GLint xOffset, binding::GLsizei width, binding::GLenum format, binding::GLenum type, const binding::GLvoid * data);
+#endif
 
-    void image2D(gl::GLint level, gl::GLenum internalFormat, gl::GLsizei width, gl::GLsizei height, gl::GLint border, gl::GLenum format, gl::GLenum type, const gl::GLvoid * data);
-    void image2D(gl::GLint level, gl::GLenum internalFormat, const glm::ivec2 & size, gl::GLint border, gl::GLenum format, gl::GLenum type, const gl::GLvoid * data);
-    void image2D(gl::GLenum target, gl::GLint level, gl::GLenum internalFormat, gl::GLsizei width, gl::GLsizei height, gl::GLint border, gl::GLenum format, gl::GLenum type, const gl::GLvoid * data);
-    void image2D(gl::GLenum target, gl::GLint level, gl::GLenum internalFormat, const glm::ivec2 & size, gl::GLint border, gl::GLenum format, gl::GLenum type, const gl::GLvoid * data);
-    void compressedImage2D(gl::GLint level, gl::GLenum internalFormat, gl::GLsizei width, gl::GLsizei height, gl::GLint border, gl::GLsizei imageSize, const gl::GLvoid * data);
-    void compressedImage2D(gl::GLint level, gl::GLenum internalFormat, const glm::ivec2 & size, gl::GLint border, gl::GLsizei imageSize, const gl::GLvoid * data);
-    void subImage2D(gl::GLint level, gl::GLint xOffset, gl::GLint yOffset, gl::GLsizei width, gl::GLsizei height, gl::GLenum format, gl::GLenum type, const gl::GLvoid * data);
-    void subImage2D(gl::GLint level, const glm::ivec2& offset, const glm::ivec2& size, gl::GLenum format, gl::GLenum type, const gl::GLvoid * data);
+    void image2D(binding::GLint level, binding::GLenum internalFormat, binding::GLsizei width, binding::GLsizei height, binding::GLint border, binding::GLenum format, binding::GLenum type, const binding::GLvoid * data);
+    void image2D(binding::GLint level, binding::GLenum internalFormat, const glm::ivec2 & size, binding::GLint border, binding::GLenum format, binding::GLenum type, const binding::GLvoid * data);
+    void image2D(binding::GLenum target, binding::GLint level, binding::GLenum internalFormat, binding::GLsizei width, binding::GLsizei height, binding::GLint border, binding::GLenum format, binding::GLenum type, const binding::GLvoid * data);
+    void image2D(binding::GLenum target, binding::GLint level, binding::GLenum internalFormat, const glm::ivec2 & size, binding::GLint border, binding::GLenum format, binding::GLenum type, const binding::GLvoid * data);
+    void compressedImage2D(binding::GLint level, binding::GLenum internalFormat, binding::GLsizei width, binding::GLsizei height, binding::GLint border, binding::GLsizei imageSize, const binding::GLvoid * data);
+    void compressedImage2D(binding::GLint level, binding::GLenum internalFormat, const glm::ivec2 & size, binding::GLint border, binding::GLsizei imageSize, const binding::GLvoid * data);
+    void subImage2D(binding::GLint level, binding::GLint xOffset, binding::GLint yOffset, binding::GLsizei width, binding::GLsizei height, binding::GLenum format, binding::GLenum type, const binding::GLvoid * data);
+    void subImage2D(binding::GLint level, const glm::ivec2& offset, const glm::ivec2& size, binding::GLenum format, binding::GLenum type, const binding::GLvoid * data);
 
-    void image3D(gl::GLint level, gl::GLenum internalFormat, gl::GLsizei width, gl::GLsizei height, gl::GLsizei depth, gl::GLint border, gl::GLenum format, gl::GLenum type, const gl::GLvoid * data);
-    void image3D(gl::GLint level, gl::GLenum internalFormat, const glm::ivec3 & size, gl::GLint border, gl::GLenum format, gl::GLenum type, const gl::GLvoid * data);
-    void compressedImage3D(gl::GLint level, gl::GLenum internalFormat, gl::GLsizei width, gl::GLsizei height, gl::GLsizei depth, gl::GLint border, gl::GLsizei imageSize, const gl::GLvoid * data);
-    void compressedImage3D(gl::GLint level, gl::GLenum internalFormat, const glm::ivec3 & size, gl::GLint border, gl::GLsizei imageSize, const gl::GLvoid * data);
-    void subImage3D(gl::GLint level, gl::GLint xOffset, gl::GLint yOffset, gl::GLint zOffset, gl::GLsizei width, gl::GLsizei height, gl::GLsizei depth, gl::GLenum format, gl::GLenum type, const gl::GLvoid * data);
-    void subImage3D(gl::GLint level, const glm::ivec3& offset, const glm::ivec3& size, gl::GLenum format, gl::GLenum type, const gl::GLvoid * data);
+    void image3D(binding::GLint level, binding::GLenum internalFormat, binding::GLsizei width, binding::GLsizei height, binding::GLsizei depth, binding::GLint border, binding::GLenum format, binding::GLenum type, const binding::GLvoid * data);
+    void image3D(binding::GLint level, binding::GLenum internalFormat, const glm::ivec3 & size, binding::GLint border, binding::GLenum format, binding::GLenum type, const binding::GLvoid * data);
+    void compressedImage3D(binding::GLint level, binding::GLenum internalFormat, binding::GLsizei width, binding::GLsizei height, binding::GLsizei depth, binding::GLint border, binding::GLsizei imageSize, const binding::GLvoid * data);
+    void compressedImage3D(binding::GLint level, binding::GLenum internalFormat, const glm::ivec3 & size, binding::GLint border, binding::GLsizei imageSize, const binding::GLvoid * data);
+    void subImage3D(binding::GLint level, binding::GLint xOffset, binding::GLint yOffset, binding::GLint zOffset, binding::GLsizei width, binding::GLsizei height, binding::GLsizei depth, binding::GLenum format, binding::GLenum type, const binding::GLvoid * data);
+    void subImage3D(binding::GLint level, const glm::ivec3& offset, const glm::ivec3& size, binding::GLenum format, binding::GLenum type, const binding::GLvoid * data);
 
-    void image2DMultisample(gl::GLsizei samples, gl::GLenum internalFormat, gl::GLsizei width, gl::GLsizei height, gl::GLboolean fixedSamplesLocations);
-    void image2DMultisample(gl::GLsizei samples, gl::GLenum internalFormat, const glm::ivec2 & size, gl::GLboolean fixedSamplesLocations);
-    void image3DMultisample(gl::GLsizei samples, gl::GLenum internalFormat, gl::GLsizei width, gl::GLsizei height, gl::GLsizei depth, gl::GLboolean fixedSamplesLocations);
-    void image3DMultisample(gl::GLsizei samples, gl::GLenum internalFormat, const glm::ivec3 & size, gl::GLboolean fixedSamplesLocations);
+#ifdef GLOBJECTS_GL_BINDING
+    void image2DMultisample(binding::GLsizei samples, binding::GLenum internalFormat, binding::GLsizei width, binding::GLsizei height, binding::GLboolean fixedSamplesLocations);
+    void image2DMultisample(binding::GLsizei samples, binding::GLenum internalFormat, const glm::ivec2 & size, binding::GLboolean fixedSamplesLocations);
+    void image3DMultisample(binding::GLsizei samples, binding::GLenum internalFormat, binding::GLsizei width, binding::GLsizei height, binding::GLsizei depth, binding::GLboolean fixedSamplesLocations);
+    void image3DMultisample(binding::GLsizei samples, binding::GLenum internalFormat, const glm::ivec3 & size, binding::GLboolean fixedSamplesLocations);
 
-    void storage1D(gl::GLsizei levels, gl::GLenum internalFormat, gl::GLsizei width);
-    void storage2D(gl::GLsizei levels, gl::GLenum internalFormat, gl::GLsizei width, gl::GLsizei height);
-    void storage2D(gl::GLsizei levels, gl::GLenum internalFormat, const glm::ivec2 & size);
-    void storage3D(gl::GLsizei levels, gl::GLenum internalFormat, gl::GLsizei width, gl::GLsizei height, gl::GLsizei depth);
-    void storage3D(gl::GLsizei levels, gl::GLenum internalFormat, const glm::ivec3 & size);
+    void storage1D(binding::GLsizei levels, binding::GLenum internalFormat, binding::GLsizei width);
+#endif
 
-    void textureView(gl::GLuint originalTexture, gl::GLenum internalFormat, gl::GLuint minLevel, gl::GLuint numLevels, gl::GLuint minLayer, gl::GLuint numLayers);
+    void storage2D(binding::GLsizei levels, binding::GLenum internalFormat, binding::GLsizei width, binding::GLsizei height);
+    void storage2D(binding::GLsizei levels, binding::GLenum internalFormat, const glm::ivec2 & size);
+    void storage3D(binding::GLsizei levels, binding::GLenum internalFormat, binding::GLsizei width, binding::GLsizei height, binding::GLsizei depth);
+    void storage3D(binding::GLsizei levels, binding::GLenum internalFormat, const glm::ivec3 & size);
 
-    void texBuffer(gl::GLenum internalFormat, Buffer * buffer);
-    void texBuffer(gl::GLenum activeTexture, gl::GLenum internalFormat, Buffer * buffer);
-    void texBufferRange(gl::GLenum internalFormat, Buffer * buffer, gl::GLintptr offset, gl::GLsizeiptr size);
-    void texBufferRange(gl::GLenum activeTexture, gl::GLenum internalFormat, Buffer * buffer, gl::GLintptr offset, gl::GLsizeiptr size);
+    void textureView(binding::GLuint originalTexture, binding::GLenum internalFormat, binding::GLuint minLevel, binding::GLuint numLevels, binding::GLuint minLayer, binding::GLuint numLayers);
 
-    void clearImage(gl::GLint level, gl::GLenum format, gl::GLenum type, const void * data);
-    void clearImage(gl::GLint level, gl::GLenum format, gl::GLenum type, const glm::vec4 & value);
-    void clearImage(gl::GLint level, gl::GLenum format, gl::GLenum type, const glm::ivec4 & value);
-    void clearImage(gl::GLint level, gl::GLenum format, gl::GLenum type, const glm::uvec4 & value);
+    void texBuffer(binding::GLenum internalFormat, Buffer * buffer);
+    void texBuffer(binding::GLenum activeTexture, binding::GLenum internalFormat, Buffer * buffer);
+    void texBufferRange(binding::GLenum internalFormat, Buffer * buffer, binding::GLintptr offset, binding::GLsizeiptr size);
+    void texBufferRange(binding::GLenum activeTexture, binding::GLenum internalFormat, Buffer * buffer, binding::GLintptr offset, binding::GLsizeiptr size);
 
-    void clearSubImage(gl::GLint level, gl::GLint xOffset, gl::GLint yOffset, gl::GLint zOffset, gl::GLsizei width, gl::GLsizei height, gl::GLsizei depth, gl::GLenum format, gl::GLenum type, const void * data);
-    void clearSubImage(gl::GLint level, const glm::ivec3 & offset, const glm::ivec3 & size, gl::GLenum format, gl::GLenum type, const void * data);
-    void clearSubImage(gl::GLint level, const glm::ivec3 & offset, const glm::ivec3 & size, gl::GLenum format, gl::GLenum type, const glm::vec4 & value);
-    void clearSubImage(gl::GLint level, const glm::ivec3 & offset, const glm::ivec3 & size, gl::GLenum format, gl::GLenum type, const glm::ivec4 & value);
-    void clearSubImage(gl::GLint level, const glm::ivec3 & offset, const glm::ivec3 & size, gl::GLenum format, gl::GLenum type, const glm::uvec4 & value);
+#ifdef GLOBJECTS_GL_BINDING
+    void clearImage(binding::GLint level, binding::GLenum format, binding::GLenum type, const void * data);
+    void clearImage(binding::GLint level, binding::GLenum format, binding::GLenum type, const glm::vec4 & value);
+    void clearImage(binding::GLint level, binding::GLenum format, binding::GLenum type, const glm::ivec4 & value);
+    void clearImage(binding::GLint level, binding::GLenum format, binding::GLenum type, const glm::uvec4 & value);
 
-    void invalidateImage(gl::GLint level) const;
-    void invalidateSubImage(gl::GLint level, gl::GLint xoffset, gl::GLint yoffset, gl::GLint zoffset, gl::GLsizei width, gl::GLsizei height, gl::GLsizei depth);
-    void invalidateSubImage(gl::GLint level, const glm::ivec3& offset, const glm::ivec3 size);
+    void clearSubImage(binding::GLint level, binding::GLint xOffset, binding::GLint yOffset, binding::GLint zOffset, binding::GLsizei width, binding::GLsizei height, binding::GLsizei depth, binding::GLenum format, binding::GLenum type, const void * data);
+    void clearSubImage(binding::GLint level, const glm::ivec3 & offset, const glm::ivec3 & size, binding::GLenum format, binding::GLenum type, const void * data);
+    void clearSubImage(binding::GLint level, const glm::ivec3 & offset, const glm::ivec3 & size, binding::GLenum format, binding::GLenum type, const glm::vec4 & value);
+    void clearSubImage(binding::GLint level, const glm::ivec3 & offset, const glm::ivec3 & size, binding::GLenum format, binding::GLenum type, const glm::ivec4 & value);
+    void clearSubImage(binding::GLint level, const glm::ivec3 & offset, const glm::ivec3 & size, binding::GLenum format, binding::GLenum type, const glm::uvec4 & value);
 
-    void bindImageTexture(gl::GLuint unit, gl::GLint level, gl::GLboolean layered, gl::GLint layer, gl::GLenum access, gl::GLenum format) const;
-    static void unbindImageTexture(gl::GLuint unit);
+    void invalidateImage(binding::GLint level) const;
+    void invalidateSubImage(binding::GLint level, binding::GLint xoffset, binding::GLint yoffset, binding::GLint zoffset, binding::GLsizei width, binding::GLsizei height, binding::GLsizei depth);
+    void invalidateSubImage(binding::GLint level, const glm::ivec3& offset, const glm::ivec3 size);
+#endif
+
+    void bindImageTexture(binding::GLuint unit, binding::GLint level, binding::GLboolean layered, binding::GLint layer, binding::GLenum access, binding::GLenum format) const;
+    static void unbindImageTexture(binding::GLuint unit);
 
     void generateMipmap();
 
@@ -123,17 +132,19 @@ public:
     TextureHandle makeResident() const;
     void makeNonResident() const;
 
-    void pageCommitment(gl::GLint level, gl::GLint xOffset, gl::GLint yOffset, gl::GLint zOffset, gl::GLsizei width, gl::GLsizei height, gl::GLsizei depth, gl::GLboolean commit) const;
-    void pageCommitment(gl::GLint level, const glm::ivec3& offset, const glm::ivec3& size, gl::GLboolean commit) const;
+    void pageCommitment(binding::GLint level, binding::GLint xOffset, binding::GLint yOffset, binding::GLint zOffset, binding::GLsizei width, binding::GLsizei height, binding::GLsizei depth, binding::GLboolean commit) const;
+    void pageCommitment(binding::GLint level, const glm::ivec3& offset, const glm::ivec3& size, binding::GLboolean commit) const;
 
-    virtual gl::GLenum objectType() const override;
+#ifdef GLOBJECTS_GL_BINDING
+    virtual binding::GLenum objectType() const override;
+#endif
 
 protected:
-    Texture(IDResource * resource, gl::GLenum target);
+    Texture(IDResource * resource, binding::GLenum target);
     virtual ~Texture();
 
 protected:
-    gl::GLenum m_target;
+    binding::GLenum m_target;
 };
 
 } // namespace globjects

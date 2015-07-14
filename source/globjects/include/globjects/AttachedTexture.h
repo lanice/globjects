@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/base/ref_ptr.h>
 
@@ -23,22 +23,22 @@ class Framebuffer;
 class GLOBJECTS_API AttachedTexture : public FramebufferAttachment
 {
 public:
-    AttachedTexture(Framebuffer * fbo, gl::GLenum attachment, Texture * texture, gl::GLint level, gl::GLint layer = -1);
+    AttachedTexture(Framebuffer * fbo, binding::GLenum attachment, Texture * texture, binding::GLint level, binding::GLint layer = -1);
 
     virtual bool isTextureAttachment() const override;
 
     Texture * texture();
     const Texture * texture() const;
 
-    gl::GLint level() const;
+    binding::GLint level() const;
 
     bool hasLayer() const;
-    gl::GLint layer() const;
+    binding::GLint layer() const;
 
 protected:
     ref_ptr<Texture> m_texture;
-    gl::GLint m_level;
-    gl::GLint m_layer;
+    binding::GLint m_level;
+    binding::GLint m_layer;
 };
 
 } // namespace globjects

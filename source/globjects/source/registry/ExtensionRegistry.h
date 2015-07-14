@@ -3,14 +3,8 @@
 #include <set>
 #include <string>
 
-#include <glbinding/gl/extension.h>
-
-namespace glbinding
-{
-
-class Version;
-
-}
+#include <globjects/binding/extension.h>
+#include <globjects/binding/VersionFwd.h>
 
 namespace globjects
 {
@@ -21,19 +15,22 @@ public:
     ExtensionRegistry();
     static ExtensionRegistry & current();
 
-    std::set<gl::GLextension>::iterator begin();
-    std::set<gl::GLextension>::iterator end();
+    std::set<binding::GLextension>::iterator begin();
+    std::set<binding::GLextension>::iterator end();
 
-    const std::set<gl::GLextension> & availableExtensions();
+    const std::set<binding::GLextension> & availableExtensions();
     const std::set<std::string> & unknownAvailableExtensions();
 
-    bool hasExtension(gl::GLextension extension);
+    bool hasExtension(binding::GLextension extension);
     bool hasExtension(const std::string & extensionName);
-    bool isInCoreProfile(gl::GLextension extension);
-    bool isInCoreProfile(gl::GLextension extension, const glbinding::Version & version);
+
+#ifdef GLOBJECTS_GL_BINDING
+    bool isInCoreProfile(binding::GLextension extension);
+    bool isInCoreProfile(binding::GLextension extension, const binding::Version & version);
+#endif
 protected:
     bool m_initialized;
-    std::set<gl::GLextension> m_availableExtensions;
+    std::set<binding::GLextension> m_availableExtensions;
     std::set<std::string> m_unknownAvailableExtensions;
 
     void initialize();

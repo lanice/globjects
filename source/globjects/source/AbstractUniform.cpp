@@ -10,9 +10,6 @@
 
 #include "implementations/AbstractUniformImplementation.h"
 
-
-using namespace gl;
-
 namespace 
 {
 
@@ -25,6 +22,8 @@ const globjects::AbstractUniformImplementation & implementation()
 
 namespace globjects
 {
+
+using namespace binding;
 
 void AbstractUniform::hintBindlessImplementation(BindlessImplementation impl)
 {

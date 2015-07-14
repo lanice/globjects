@@ -3,14 +3,13 @@
 #include <sstream>
 #include <cassert>
 
-#include <glbinding/gl/enum.h>
-#include <glbinding/gl/boolean.h>
+#include <globjects/binding/enum.h>
+#include <globjects/binding/boolean.h>
 
 #include "registry/Registry.h"
 #include "registry/ImplementationRegistry.h"
 #include "implementations/AbstractDebugImplementation.h"
 
-using namespace gl;
 
 namespace
 {
@@ -24,6 +23,8 @@ globjects::AbstractDebugImplementation & implementation()
 
 namespace globjects 
 {
+
+using namespace binding;
 
 void DebugMessage::hintImplementation(const Implementation impl)
 {
@@ -78,6 +79,8 @@ std::string DebugMessage::toString() const
 
     return stream.str();
 }
+
+#ifdef GLOBJECTS_GL_BINDING
 
 std::string DebugMessage::severityString() const
 {
@@ -135,6 +138,25 @@ std::string DebugMessage::typeString() const
             return "unknown";
     }
 }
+
+#else
+
+std::string DebugMessage::severityString() const
+{
+    return "unknown";
+}
+
+std::string DebugMessage::sourceString() const
+{
+    return "Unknown";
+}
+
+std::string DebugMessage::typeString() const
+{
+    return "unknown";
+}
+
+#endif
 
 bool DebugMessage::isFallbackImplementation()
 {

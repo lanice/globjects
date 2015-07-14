@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 namespace globjects 
 {
@@ -21,30 +21,30 @@ protected:
 class IDTrait
 {
 public:
-    IDTrait(gl::GLuint id);
+    IDTrait(binding::GLuint id);
     virtual ~IDTrait();
 
-    gl::GLuint id() const;
+    binding::GLuint id() const;
 
 protected:
-    gl::GLuint m_id;
+    binding::GLuint m_id;
 };
 
 
 class IDResource : public AbstractResource, public IDTrait
 {
 public:
-    IDResource(gl::GLuint id);
+    IDResource(binding::GLuint id);
 
 protected:
-    IDResource(gl::GLuint id, bool hasOwnership);
+    IDResource(binding::GLuint id, bool hasOwnership);
 };
 
 
 class ExternalResource : public IDResource
 {
 public:
-    ExternalResource(gl::GLuint id);
+    ExternalResource(binding::GLuint id);
 };
 
 
@@ -107,7 +107,7 @@ public:
 class ShaderResource : public IDResource
 {
 public:
-    ShaderResource(gl::GLenum type);
+    ShaderResource(binding::GLenum type);
     ~ShaderResource();
 };
 

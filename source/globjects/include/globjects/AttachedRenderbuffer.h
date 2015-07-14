@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/base/ref_ptr.h>
 
@@ -24,7 +24,7 @@ class Framebuffer;
 class GLOBJECTS_API AttachedRenderbuffer : public FramebufferAttachment
 {
 public:
-    AttachedRenderbuffer(Framebuffer * fbo,  gl::GLenum attachment, Renderbuffer * renderBuffer);
+    AttachedRenderbuffer(Framebuffer * fbo,  binding::GLenum attachment, Renderbuffer * renderBuffer);
 
     virtual bool isRenderBufferAttachment() const override;
 

@@ -5,10 +5,10 @@
 #include <globjects/Texture.h>
 
 
-using namespace gl;
-
 namespace globjects
 {
+
+using namespace binding;
 
 AttachedTexture::AttachedTexture(Framebuffer * fbo, const GLenum attachment, Texture * texture, GLint level, GLint layer)
 : FramebufferAttachment(fbo, attachment)

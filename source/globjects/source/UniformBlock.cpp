@@ -2,15 +2,15 @@
 
 #include <globjects/Program.h>
 
-#include <glbinding/gl/values.h>
-#include <glbinding/gl/enum.h>
-#include <glbinding/gl/functions.h>
+#include <globjects/binding/values.h>
+#include <globjects/binding/enum.h>
+#include <globjects/binding/functions.h>
 
-
-using namespace gl;
 
 namespace globjects 
 {
+
+using namespace binding;
 
 UniformBlock::UniformBlock()
 : m_program(nullptr)

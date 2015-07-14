@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/globjects_api.h>
 
@@ -18,20 +18,20 @@ class GLOBJECTS_API Error
 {
 public:
 	Error();
-	Error(gl::GLenum errorCode);
+	Error(binding::GLenum errorCode);
 
     static Error get();
 
 	static void clear();
 
-	gl::GLenum code() const;
+	binding::GLenum code() const;
 	std::string name() const;
 
 	bool isError() const;
     operator bool() const;
 
 protected:
-	gl::GLenum m_errorCode;
+	binding::GLenum m_errorCode;
 };
 
 } // namespace globjects

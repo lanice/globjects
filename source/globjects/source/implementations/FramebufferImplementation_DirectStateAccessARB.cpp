@@ -1,8 +1,8 @@
 
 #include "FramebufferImplementation_DirectStateAccessARB.h"
 
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/enum.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/enum.h>
 
 #include <globjects/Framebuffer.h>
 #include <globjects/Texture.h>

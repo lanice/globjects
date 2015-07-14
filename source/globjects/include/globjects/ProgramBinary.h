@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/globjects_api.h>
 
@@ -26,12 +26,12 @@ class AbstractStringSource;
 class GLOBJECTS_API ProgramBinary : public Referenced, public Changeable, protected ChangeListener
 {
 public:
-    ProgramBinary(gl::GLenum binaryFormat, const std::vector<char> & binaryData);
-    ProgramBinary(gl::GLenum binaryFormat, AbstractStringSource * dataSource);
+    ProgramBinary(binding::GLenum binaryFormat, const std::vector<char> & binaryData);
+    ProgramBinary(binding::GLenum binaryFormat, AbstractStringSource * dataSource);
 
-    gl::GLenum format() const;
+    binding::GLenum format() const;
     const void * data() const;
-    gl::GLsizei length() const;
+    binding::GLsizei length() const;
 
      virtual void notifyChanged(const Changeable* sender) override;
 
@@ -41,7 +41,7 @@ protected:
     void validate() const;
 
 protected:
-    gl::GLenum m_binaryFormat;
+    binding::GLenum m_binaryFormat;
     ref_ptr<AbstractStringSource> m_dataSource;
 
     mutable bool m_valid;

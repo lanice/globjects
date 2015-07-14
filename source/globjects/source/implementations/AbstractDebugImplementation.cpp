@@ -4,7 +4,7 @@
 #include <globjects/globjects.h>
 #include <globjects/logging.h>
 
-#include <glbinding/gl/enum.h>
+#include <globjects/binding/enum.h>
 
 #include "DebugImplementation_DebugKHR.h"
 #include "DebugImplementation_Legacy.h"
@@ -14,14 +14,18 @@
 #endif
 
 
-using namespace gl;
-
 namespace globjects 
 {
 
+using namespace binding;
+
 DebugMessage::Callback AbstractDebugImplementation::s_defaultCallback = [](const DebugMessage & message) 
 {
+#ifdef GLOBJECTS_GL_BINDING
     if (message.type() == GL_DEBUG_TYPE_ERROR_ARB)
+#else
+    if (message.type() == GL_DEBUG_TYPE_ERROR_KHR)
+#endif
     {
 #ifdef GLOBJECTS_GL_ERROR_RAISE_EXCEPTION
         throw std::runtime_error(message.toString());
@@ -29,7 +33,11 @@ DebugMessage::Callback AbstractDebugImplementation::s_defaultCallback = [](const
         fatal() << message.toString();
 #endif
     }
+#ifdef GLOBJECTS_GL_BINDING
     else if (message.type() != GL_DEBUG_TYPE_OTHER)
+#else
+    else if (message.type() != GL_DEBUG_TYPE_OTHER_KHR)
+#endif
     {
         debug() << message.toString();
     }

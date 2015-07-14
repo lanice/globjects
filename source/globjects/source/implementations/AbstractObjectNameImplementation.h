@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/Object.h>
 

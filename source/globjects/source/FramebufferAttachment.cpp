@@ -2,15 +2,15 @@
 
 #include <string>
 
-#include <glbinding/Meta.h>
+#include <globjects/binding/Meta.h>
 
 #include <globjects/Framebuffer.h>
 
 
-using namespace gl;
-
 namespace globjects
 {
+
+using namespace binding;
 
 FramebufferAttachment::FramebufferAttachment(Framebuffer * fbo, GLenum attachment)
 : m_fbo(fbo)
@@ -40,7 +40,7 @@ bool FramebufferAttachment::isRenderBufferAttachment() const
 
 std::string FramebufferAttachment::attachmentString() const
 {
-    return glbinding::Meta::getString(m_attachment);
+    return binding::Meta::getString(m_attachment);
 }
 
 AttachedTexture * FramebufferAttachment::asTextureAttachment()

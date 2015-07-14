@@ -1,18 +1,18 @@
 
 #include "FramebufferImplementation_Legacy.h"
 
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/enum.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/enum.h>
 
 #include <globjects/Framebuffer.h>
 #include <globjects/Texture.h>
 #include <globjects/Renderbuffer.h>
 
 
-using namespace gl;
-
 namespace globjects 
 {
+
+using namespace binding;
 
 GLuint FramebufferImplementation_Legacy::create() const
 {
@@ -57,19 +57,25 @@ void FramebufferImplementation_Legacy::attachTexture(const Framebuffer * fbo, GL
 {
     fbo->bind(s_workingTarget);
 
+#ifdef GLOBJECTS_GL_BINDING
     if (texture == nullptr)
     {
         glFramebufferTexture(s_workingTarget, attachment, 0, level);
     }
     else
+#endif
     {
         switch (texture->target())
         {
+#ifdef GLOBJECTS_GL_BINDING
         case GL_TEXTURE_1D:
             glFramebufferTexture1D(s_workingTarget, attachment, texture->target(), texture->id(), level);
             break;
+#endif
         case GL_TEXTURE_2D:
+#ifdef GLOBJECTS_GL_BINDING
         case GL_TEXTURE_RECTANGLE:
+#endif
         case GL_TEXTURE_CUBE_MAP_POSITIVE_X:
         case GL_TEXTURE_CUBE_MAP_POSITIVE_Y:
         case GL_TEXTURE_CUBE_MAP_POSITIVE_Z:
@@ -80,7 +86,11 @@ void FramebufferImplementation_Legacy::attachTexture(const Framebuffer * fbo, GL
             glFramebufferTexture2D(s_workingTarget, attachment, texture->target(), texture->id(), level);
             break;
         default:
+#ifdef GLOBJECTS_GL_BINDING
             glFramebufferTexture(s_workingTarget, attachment, texture->id(), level);
+#else
+            // TODO: not implemented
+#endif
             break;
         }
     }
@@ -112,7 +122,12 @@ void FramebufferImplementation_Legacy::setDrawBuffer(const Framebuffer * fbo, GL
 {
     fbo->bind(GL_DRAW_FRAMEBUFFER);
 
+#ifdef GLOBJECTS_GL_BINDING
     glDrawBuffer(mode);
+#else
+    GLenum modes[] = { mode };
+    glDrawBuffers(1, modes);
+#endif
 }
 
 void FramebufferImplementation_Legacy::setDrawBuffers(const Framebuffer * fbo, GLsizei n, const GLenum * modes) const

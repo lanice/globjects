@@ -3,16 +3,16 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/boolean.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/boolean.h>
 
 #include <globjects/Program.h>
 
 
-using namespace gl;
-
 namespace globjects
 {
+
+using namespace binding;
 
 void UniformImplementation_Legacy::set(const Program * program, const GLint location, const float & value) const
 {
@@ -149,7 +149,12 @@ void UniformImplementation_Legacy::set(const Program * program, const GLint loca
 void UniformImplementation_Legacy::set(const Program * program, const GLint location, const TextureHandle & value) const
 {
     program->use();
+
+#ifdef GLOBJECTS_GL_BINDING
     glUniformHandleui64ARB(location, value);
+#else
+    glUniformHandleui64NV(location, value);
+#endif
 }
 
 void UniformImplementation_Legacy::set(const Program * program, const GLint location, const std::vector<float> & value) const
@@ -293,7 +298,12 @@ void UniformImplementation_Legacy::set(const Program * program, const GLint loca
 void UniformImplementation_Legacy::set(const Program * program, const GLint location, const std::vector<TextureHandle> & value) const
 {
     program->use();
+
+#ifdef GLOBJECTS_GL_BINDING
     glUniformHandleui64vARB(location, static_cast<GLint>(value.size()), value.data());
+#else
+    glUniformHandleui64vNV(location, static_cast<GLint>(value.size()), value.data());
+#endif
 }
 
 } // namespace globjects

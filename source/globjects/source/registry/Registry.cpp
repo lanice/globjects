@@ -19,9 +19,9 @@ namespace
 namespace globjects
 {
 
-std::unordered_map<glbinding::ContextHandle, Registry *> Registry::s_registries;
+std::unordered_map<binding::ContextHandle, Registry *> Registry::s_registries;
 
-void Registry::registerContext(glbinding::ContextHandle contextId)
+void Registry::registerContext(binding::ContextHandle contextId)
 {
     if (isContextRegistered(contextId))
     {
@@ -31,7 +31,7 @@ void Registry::registerContext(glbinding::ContextHandle contextId)
     setCurrentRegistry(contextId);
 }
 
-void Registry::registerContext(const glbinding::ContextHandle contextId, const glbinding::ContextHandle sharedContextId)
+void Registry::registerContext(const binding::ContextHandle contextId, const binding::ContextHandle sharedContextId)
 {
     if (isContextRegistered(contextId))
     {
@@ -53,7 +53,7 @@ void Registry::registerContext(const glbinding::ContextHandle contextId, const g
     //registry->initialize();
 }
 
-void Registry::setCurrentContext(const glbinding::ContextHandle contextId)
+void Registry::setCurrentContext(const binding::ContextHandle contextId)
 {
     if (!isContextRegistered(contextId))
     {
@@ -63,7 +63,7 @@ void Registry::setCurrentContext(const glbinding::ContextHandle contextId)
     setCurrentRegistry(contextId);
 }
 
-void Registry::deregisterContext(const glbinding::ContextHandle contextId)
+void Registry::deregisterContext(const binding::ContextHandle contextId)
 {
     if (!isContextRegistered(contextId))
     {
@@ -90,7 +90,7 @@ Registry & Registry::current()
     return *t_currentRegistry;
 }
 
-bool Registry::isContextRegistered(const glbinding::ContextHandle contextId)
+bool Registry::isContextRegistered(const binding::ContextHandle contextId)
 {
     g_mutex.lock();
     bool found = s_registries.find(contextId) != s_registries.end();
@@ -99,7 +99,7 @@ bool Registry::isContextRegistered(const glbinding::ContextHandle contextId)
     return found;
 }
 
-void Registry::setCurrentRegistry(const glbinding::ContextHandle contextId)
+void Registry::setCurrentRegistry(const binding::ContextHandle contextId)
 {
     g_mutex.lock();
     auto it = s_registries.find(contextId);

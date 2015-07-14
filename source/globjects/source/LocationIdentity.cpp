@@ -1,10 +1,10 @@
 #include <globjects/LocationIdentity.h>
 
 
-using namespace gl;
-
 namespace globjects 
 {
+
+using namespace binding;
 
 LocationIdentity::LocationIdentity()
 : m_invalid(true)

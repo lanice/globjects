@@ -4,7 +4,7 @@
 #include <vector>
 #include <map>
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/globjects_api.h>
 
@@ -50,20 +50,20 @@ public:
     static void hintIncludeImplementation(IncludeImplementation impl);
 
 public:
-    static Shader * fromString(const gl::GLenum type, const std::string & sourceString, const IncludePaths & includePaths = IncludePaths());
-    static Shader * fromFile(const gl::GLenum type, const std::string & filename, const IncludePaths & includePaths = IncludePaths());
+    static Shader * fromString(const binding::GLenum type, const std::string & sourceString, const IncludePaths & includePaths = IncludePaths());
+    static Shader * fromFile(const binding::GLenum type, const std::string & filename, const IncludePaths & includePaths = IncludePaths());
 
     static void globalReplace(const std::string & search, const std::string & replacement);
     static void globalReplace(const std::string & search, int i);
     static void clearGlobalReplacements();
 
 public:
-    Shader(const gl::GLenum type);
-    Shader(const gl::GLenum type, AbstractStringSource * source, const IncludePaths & includePaths = IncludePaths());
+    Shader(const binding::GLenum type);
+    Shader(const binding::GLenum type, AbstractStringSource * source, const IncludePaths & includePaths = IncludePaths());
 
     virtual void accept(ObjectVisitor& visitor) override;
 
-	gl::GLenum type() const;
+	binding::GLenum type() const;
 
     void setSource(AbstractStringSource * source);
 	void setSource(const std::string & source);
@@ -77,16 +77,18 @@ public:
 	bool isCompiled() const;
     void invalidate();
 
-    gl::GLint get(gl::GLenum pname) const;
+    binding::GLint get(binding::GLenum pname) const;
     std::string getSource() const;
     bool checkCompileStatus() const;
 	std::string infoLog() const;
 
     std::string typeString() const;
 
-    virtual gl::GLenum objectType() const override;
+#ifdef GLOBJECTS_GL_BINDING
+    virtual binding::GLenum objectType() const override;
+#endif
 
-    static std::string typeString(gl::GLenum type);
+    static std::string typeString(binding::GLenum type);
 
 protected:
     virtual ~Shader();
@@ -97,7 +99,7 @@ protected:
     std::string shaderString() const;
 
 protected:
-	gl::GLenum m_type;
+	binding::GLenum m_type;
     ref_ptr<AbstractStringSource> m_source;
     IncludePaths m_includePaths;
 

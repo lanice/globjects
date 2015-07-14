@@ -3,13 +3,13 @@
 
 #include <khrapi/callbacks.h>
 
-#include <glbinding/Binding.h>
+#include <globjects/binding/Binding.h>
 
-
-using namespace gl;
 
 namespace globjects 
 {
+
+using namespace binding;
 
 DebugImplementation_Legacy::DebugImplementation_Legacy()
 : m_enabled(false)
@@ -25,14 +25,14 @@ void DebugImplementation_Legacy::enable()
 {
     m_enabled = true;
 
-    glbinding::Binding::setCallbackMaskExcept(khrapi::CallbackMask::After, { "glGetError" });
+    binding::Binding::setCallbackMaskExcept(khrapi::CallbackMask::After, { "glGetError" });
 }
 
 void DebugImplementation_Legacy::disable()
 {
     m_enabled = false;
 
-    glbinding::Binding::setCallbackMask(khrapi::CallbackMask::None);
+    binding::Binding::setCallbackMask(khrapi::CallbackMask::None);
 }
 
 void DebugImplementation_Legacy::setSynchronous(bool)

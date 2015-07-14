@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <memory>
 
-#include <glbinding/ContextHandle.h>
+#include <globjects/binding/ContextHandle.h>
 
 namespace globjects
 {
@@ -17,11 +17,11 @@ class NamedStringRegistry;
 class Registry
 {
 public:
-    static void registerContext(glbinding::ContextHandle contextId);
-    static void registerContext(glbinding::ContextHandle contextId, glbinding::ContextHandle sharedContextId);
-    static void deregisterContext(glbinding::ContextHandle contextId);
+    static void registerContext(binding::ContextHandle contextId);
+    static void registerContext(binding::ContextHandle contextId, binding::ContextHandle sharedContextId);
+    static void deregisterContext(binding::ContextHandle contextId);
 
-    static void setCurrentContext(glbinding::ContextHandle contextId);
+    static void setCurrentContext(binding::ContextHandle contextId);
 
     static Registry & current();
 
@@ -39,10 +39,10 @@ private:
 
     void initialize();
 
-    static bool isContextRegistered(glbinding::ContextHandle contextId);
-    static void setCurrentRegistry(glbinding::ContextHandle contextId);
+    static bool isContextRegistered(binding::ContextHandle contextId);
+    static void setCurrentRegistry(binding::ContextHandle contextId);
 
-    static std::unordered_map<glbinding::ContextHandle, Registry *> s_registries;
+    static std::unordered_map<binding::ContextHandle, Registry *> s_registries;
 
 private:
     bool m_initialized;

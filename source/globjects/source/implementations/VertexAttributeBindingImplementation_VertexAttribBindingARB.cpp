@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-#include <glbinding/gl/functions.h>
+#include <globjects/binding/functions.h>
 
 #include <globjects/Buffer.h>
 #include <globjects/VertexArray.h>

@@ -7,8 +7,6 @@
 
 #include "Resource.h"
 
-using namespace gl;
-
 namespace 
 {
 
@@ -21,6 +19,8 @@ globjects::AbstractObjectNameImplementation & nameImplementation()
 
 namespace globjects
 {
+
+using namespace binding;
 
 void Object::hintNameImplementation(const NameImplementation impl)
 {

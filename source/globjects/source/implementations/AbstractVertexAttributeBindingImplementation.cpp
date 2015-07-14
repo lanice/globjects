@@ -1,20 +1,22 @@
 #include "AbstractVertexAttributeBindingImplementation.h"
 
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/extension.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/extension.h>
 
 #include <globjects/globjects.h>
 
+#ifdef GLOBJECTS_GL_BINDING
 #include "VertexAttributeBindingImplementation_DirectStateAccessARB.h"
 #include "VertexAttributeBindingImplementation_VertexAttribBindingARB.h"
+#endif
 #include "VertexAttributeBindingImplementation_Legacy.h"
 
 #include <globjects/VertexAttributeBinding.h>
 
-using namespace gl;
-
 namespace globjects 
 {
+
+using namespace binding;
 
 AbstractVertexAttributeBindingImplementation::AbstractVertexAttributeBindingImplementation()
 {
@@ -26,6 +28,7 @@ AbstractVertexAttributeBindingImplementation::~AbstractVertexAttributeBindingImp
 
 AbstractVertexAttributeBindingImplementation * AbstractVertexAttributeBindingImplementation::get(const VertexArray::AttributeImplementation impl)
 {
+#ifdef GLOBJECTS_GL_BINDING
     if (impl == VertexArray::AttributeImplementation::DirectStateAccessARB
      && hasExtension(GLextension::GL_ARB_direct_state_access))
     {
@@ -40,6 +43,11 @@ AbstractVertexAttributeBindingImplementation * AbstractVertexAttributeBindingImp
     {
         return VertexAttributeBindingImplementation_Legacy::instance();
     }
+#else
+    (void) impl; // unused
+
+    return VertexAttributeBindingImplementation_Legacy::instance();
+#endif
 }
 
 GLint AbstractVertexAttributeBindingImplementation::attributeIndex(const VertexAttributeBinding * binding) const

@@ -3,8 +3,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include <glbinding/gl/types.h>
-#include <glbinding/gl/typeintegrations.h>
+#include <globjects/binding/types.h>
+#include <globjects/binding/typeintegrations.h>
 
 #include <globjects/base/Referenced.h>
 
@@ -37,17 +37,17 @@ public:
 
     void apply();
 
-    virtual void enable(gl::GLenum capability) override;
-    virtual void disable(gl::GLenum capability) override;
-    virtual bool isEnabled(gl::GLenum capability) const override;
-    virtual void enable(gl::GLenum capability, int index) override;
-    virtual void disable(gl::GLenum capability, int index) override;
-    virtual bool isEnabled(gl::GLenum capability, int index) const override;
+    virtual void enable(binding::GLenum capability) override;
+    virtual void disable(binding::GLenum capability) override;
+    virtual bool isEnabled(binding::GLenum capability) const override;
+    virtual void enable(binding::GLenum capability, int index) override;
+    virtual void disable(binding::GLenum capability, int index) override;
+    virtual bool isEnabled(binding::GLenum capability, int index) const override;
 
     virtual void add(StateSetting * setting) override;
 
-    Capability * capability(gl::GLenum capability);
-    const Capability * capability(gl::GLenum capability) const;
+    Capability * capability(binding::GLenum capability);
+    const Capability * capability(binding::GLenum capability) const;
     std::vector<Capability *> capabilities() const;
 
     StateSetting * setting(const StateSettingType & type);
@@ -57,14 +57,14 @@ public:
 
 protected:
     void addCapability(Capability * capability);
-    Capability * getCapability(gl::GLenum capability);
-    const Capability * getCapability(gl::GLenum capability) const;
+    Capability * getCapability(binding::GLenum capability);
+    const Capability * getCapability(binding::GLenum capability) const;
 
 protected:
     virtual ~State();
 
     Mode m_mode;
-    std::unordered_map<gl::GLenum, Capability *> m_capabilities;
+    std::unordered_map<binding::GLenum, Capability *> m_capabilities;
     std::unordered_map<StateSettingType, StateSetting *> m_settings;
 };
 

@@ -1,8 +1,8 @@
 #include <globjects/NamedString.h>
 
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/boolean.h>
-#include <glbinding/gl/enum.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/boolean.h>
+#include <globjects/binding/enum.h>
 
 #include <globjects/base/AbstractStringSource.h>
 #include <globjects/base/StaticStringSource.h>
@@ -10,19 +10,27 @@
 #include "registry/NamedStringRegistry.h"
 
 
-using namespace gl;
-
 namespace globjects 
 {
 
+using namespace binding;
+
 NamedString * NamedString::create(const std::string & name, AbstractStringSource * source)
 {
+#ifdef GLOBJECTS_GL_BINDING
     return create(name, source, GL_SHADER_INCLUDE_ARB);
+#else
+    return create(name, source, GL_NONE);
+#endif
 }
 
 NamedString * NamedString::create(const std::string & name, const std::string & string)
 {
+#ifdef GLOBJECTS_GL_BINDING
     return create(name, string, GL_SHADER_INCLUDE_ARB);
+#else
+    return create(name, string, GL_NONE);
+#endif
 }
 
 NamedString * NamedString::create(const std::string & name, AbstractStringSource * source, const GLenum type)
@@ -66,20 +74,24 @@ NamedString::~NamedString()
 
 void NamedString::createNamedString()
 {
+#ifdef GLOBJECTS_GL_BINDING
     if (!hasNativeSupport())
         return;
 
     std::string str = string();
 
     glNamedStringARB(m_type, static_cast<GLint>(m_name.size()), m_name.c_str(), static_cast<GLint>(str.size()), str.c_str());
+#endif
 }
 
 void NamedString::deleteNamedString()
 {
+#ifdef GLOBJECTS_GL_BINDING
     if (!hasNativeSupport())
         return;
 
     glDeleteNamedStringARB(static_cast<GLint>(m_name.size()), m_name.c_str());
+#endif
 }
 
 void NamedString::registerNamedString()
@@ -99,14 +111,17 @@ bool NamedString::isNamedString(const std::string & name)
         return true;
     }
 
+#ifdef GLOBJECTS_GL_BINDING
     if (hasNativeSupport())
     {
         return glIsNamedStringARB(static_cast<GLint>(name.size()), name.c_str()) == GL_TRUE;
     }
+#endif
 
     return false;
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 GLint NamedString::getParameter(const GLenum pname) const
 {
     if (hasNativeSupport())
@@ -128,11 +143,13 @@ GLint NamedString::getParameter(const GLenum pname) const
             return -1;
     }
 }
+#endif
 
 NamedString * NamedString::obtain(const std::string & name)
 {
     NamedString * namedString = NamedStringRegistry::current().namedString(name);
 
+#ifdef GLOBJECTS_GL_BINDING
     if (!namedString && hasNativeSupport() && isNamedString(name))
     {
         GLint type;
@@ -147,6 +164,7 @@ NamedString * NamedString::obtain(const std::string & name)
 
         namedString = create(name, std::string(string.data(), string.size()), static_cast<GLenum>(type));
     }
+#endif
 
     return namedString;
 }

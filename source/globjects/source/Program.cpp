@@ -3,10 +3,10 @@
 
 #include <cassert>
 
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/extension.h>
-#include <glbinding/gl/boolean.h>
-#include <glbinding/gl/enum.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/extension.h>
+#include <globjects/binding/boolean.h>
+#include <globjects/binding/enum.h>
 
 #include <globjects/globjects.h>
 
@@ -21,8 +21,6 @@
 #include "implementations/AbstractProgramBinaryImplementation.h"
 
 
-using namespace gl;
-
 namespace
 {
 
@@ -35,6 +33,8 @@ const globjects::AbstractProgramBinaryImplementation & binaryImplementation()
 
 namespace globjects
 {
+
+using namespace binding;
 
 void Program::hintBinaryImplementation(const BinaryImplementation impl)
 {
@@ -127,7 +127,7 @@ void Program::attach(Shader * shader)
 {
     assert(shader != nullptr);
 
-    gl::glAttachShader(id(), shader->id());
+    binding::glAttachShader(id(), shader->id());
 
     shader->registerListener(this);
     m_shaders.insert(shader);
@@ -198,10 +198,12 @@ bool Program::checkLinkStatus() const
     return true;
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 void Program::bindFragDataLocation(const GLuint index, const std::string & name) const
 {
     glBindFragDataLocation(id(), index, name.c_str());
 }
+#endif
 
 void Program::bindAttributeLocation(const GLuint index, const std::string & name) const
 {
@@ -213,10 +215,12 @@ GLint Program::getFragDataLocation(const std::string & name) const
     return glGetFragDataLocation(id(), name.c_str());
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 GLint Program::getFragDataIndex(const std::string & name) const
 {
     return glGetFragDataIndex(id(), name.c_str());
 }
+#endif
 
 GLint Program::getUniformLocation(const std::string& name) const
 {
@@ -256,7 +260,7 @@ GLint Program::getAttributeLocation(const std::string & name) const
     return glGetAttribLocation(id(), name.c_str());
 }
 
-void Program::getInterface(gl::GLenum programInterface, gl::GLenum pname, gl::GLint * params) const
+void Program::getInterface(binding::GLenum programInterface, binding::GLenum pname, binding::GLint * params) const
 {
     checkDirty();
 
@@ -270,67 +274,71 @@ GLuint Program::getResourceIndex(const GLenum programInterface, const std::strin
     return glGetProgramResourceIndex(id(), programInterface, name.c_str());
 }
 
-void Program::getResourceName(gl::GLenum programInterface, gl::GLuint index, gl::GLsizei bufSize, gl::GLsizei * length, char * name) const
+void Program::getResourceName(binding::GLenum programInterface, binding::GLuint index, binding::GLsizei bufSize, binding::GLsizei * length, char * name) const
 {
     checkDirty();
 
     glGetProgramResourceName(id(), programInterface, index, bufSize, length, name);
 }
 
-void Program::getResource(gl::GLenum programInterface, gl::GLuint index, gl::GLsizei propCount, const gl::GLenum * props, gl::GLsizei bufSize, gl::GLsizei * length, gl::GLint * params) const
+void Program::getResource(binding::GLenum programInterface, binding::GLuint index, binding::GLsizei propCount, const binding::GLenum * props, binding::GLsizei bufSize, binding::GLsizei * length, binding::GLint * params) const
 {
     checkDirty();
 
     glGetProgramResourceiv(id(), programInterface, index, propCount, props, bufSize, length, params);
 }
 
-gl::GLint Program::getResourceLocation(gl::GLenum programInterface, const std::string & name) const
+binding::GLint Program::getResourceLocation(binding::GLenum programInterface, const std::string & name) const
 {
     checkDirty();
 
     return glGetProgramResourceLocation(id(), programInterface, name.c_str());
 }
 
-gl::GLint Program::getResourceLocationIndex(gl::GLenum programInterface, const std::string & name) const
+binding::GLint Program::getResourceLocationIndex(binding::GLenum programInterface, const std::string & name) const
 {
     checkDirty();
 
+#ifdef GLOBJECTS_GL_BINDING
     return glGetProgramResourceLocationIndex(id(), programInterface, name.c_str());
+#else
+    return glGetProgramResourceIndex(id(), programInterface, name.c_str());
+#endif
 }
 
-gl::GLint Program::getInterface(gl::GLenum programInterface, gl::GLenum pname) const
+binding::GLint Program::getInterface(binding::GLenum programInterface, binding::GLenum pname) const
 {
     checkDirty();
 
-    gl::GLint result;
+    binding::GLint result;
 
     getInterface(programInterface, pname, &result);
 
     return result;
 }
 
-gl::GLint Program::getResource(gl::GLenum programInterface, gl::GLuint index, gl::GLenum prop, gl::GLsizei * length) const
+binding::GLint Program::getResource(binding::GLenum programInterface, binding::GLuint index, binding::GLenum prop, binding::GLsizei * length) const
 {
-    gl::GLint result;
+    binding::GLint result;
 
     getResource(programInterface, index, 1, &prop, 1, length, &result);
 
     return result;
 }
 
-std::vector<gl::GLint> Program::getResource(gl::GLenum programInterface, gl::GLuint index, const std::vector<gl::GLenum> & props, gl::GLsizei * length) const
+std::vector<binding::GLint> Program::getResource(binding::GLenum programInterface, binding::GLuint index, const std::vector<binding::GLenum> & props, binding::GLsizei * length) const
 {
-    std::vector<gl::GLint> result;
+    std::vector<binding::GLint> result;
     result.resize(props.size());
 
-    getResource(programInterface, index, props, static_cast<gl::GLsizei>(result.size()), length, result.data());
+    getResource(programInterface, index, props, static_cast<binding::GLsizei>(result.size()), length, result.data());
 
     return result;
 }
 
-void Program::getResource(gl::GLenum programInterface, gl::GLuint index, const std::vector<gl::GLenum> & props, gl::GLsizei bufSize, gl::GLsizei * length, gl::GLint * params) const
+void Program::getResource(binding::GLenum programInterface, binding::GLuint index, const std::vector<binding::GLenum> & props, binding::GLsizei bufSize, binding::GLsizei * length, binding::GLint * params) const
 {
-    getResource(programInterface, index, static_cast<gl::GLsizei>(props.size()), props.data(), bufSize, length, params);
+    getResource(programInterface, index, static_cast<binding::GLsizei>(props.size()), props.data(), bufSize, length, params);
 }
 
 GLuint Program::getUniformBlockIndex(const std::string & name) const
@@ -373,9 +381,17 @@ std::string Program::getActiveUniformName(const GLuint uniformIndex) const
 {
     checkDirty();
 
+#ifdef GLOBJECTS_GL_BINDING
     GLint length = getActiveUniform(uniformIndex, GL_UNIFORM_NAME_LENGTH);
     std::vector<char> name(length);
+
     glGetActiveUniformName(id(), uniformIndex, length, nullptr, name.data());
+#else
+    GLint length = get(GL_ACTIVE_UNIFORM_MAX_LENGTH);
+    std::vector<char> name(length);
+
+    glGetActiveUniform(id(), uniformIndex, length, &length, nullptr, nullptr, name.data());
+#endif
 
     return std::string(name.data(), length);
 }
@@ -457,7 +473,7 @@ GLint Program::get(const GLenum pname) const
 	return value;
 }
 
-void Program::getActiveAttrib(gl::GLuint index, gl::GLsizei bufSize, gl::GLsizei * length, gl::GLint * size, gl::GLenum * type, gl::GLchar * name) const
+void Program::getActiveAttrib(binding::GLuint index, binding::GLsizei bufSize, binding::GLsizei * length, binding::GLint * size, binding::GLenum * type, binding::GLchar * name) const
 {
     checkDirty();
 
@@ -493,6 +509,7 @@ void Program::dispatchCompute(const GLuint numGroupsX, const GLuint numGroupsY, 
     glDispatchCompute(numGroupsX, numGroupsY, numGroupsZ);
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 void Program::dispatchComputeGroupSize(const GLuint numGroupsX, const GLuint numGroupsY, const GLuint numGroupsZ, const GLuint groupSizeX, const GLuint groupSizeY, const GLuint groupSizeZ)
 {
     use();
@@ -521,5 +538,6 @@ GLenum Program::objectType() const
 {
     return GL_PROGRAM;
 }
+#endif
 
 } // namespace globjects

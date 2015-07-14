@@ -2,18 +2,18 @@
 
 #include <cassert>
 
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/enum.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/enum.h>
 
 #include <globjects/Buffer.h>
 #include <globjects/VertexArray.h>
 #include <globjects/VertexAttributeBinding.h>
 
 
-using namespace gl;
-
 namespace globjects 
 {
+
+using namespace binding;
 
 VertexAttributeBindingImplementation_Legacy::Format::Format()
 : method(Method::O)
@@ -120,6 +120,7 @@ void VertexAttributeBindingImplementation_Legacy::setIFormat(const VertexAttribu
     finishIfComplete(binding);
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 void VertexAttributeBindingImplementation_Legacy::setLFormat(const VertexAttributeBinding * binding, GLint size, GLenum type, GLuint relativeoffset) const
 {
     if (bindingData(binding) == nullptr)
@@ -130,6 +131,7 @@ void VertexAttributeBindingImplementation_Legacy::setLFormat(const VertexAttribu
 
     finishIfComplete(binding);
 }
+#endif
 
 void VertexAttributeBindingImplementation_Legacy::finishIfComplete(const VertexAttributeBinding * binding) const
 {
@@ -168,10 +170,12 @@ void VertexAttributeBindingImplementation_Legacy::finish(const VertexAttributeBi
             , bindingData(binding)->stride, offset);
         break;
 
+#ifdef GLOBJECTS_GL_BINDING
     case Format::Method::L:
         glVertexAttribLPointer(attribute, bindingData(binding)->format.size, bindingData(binding)->format.type
             , bindingData(binding)->stride, offset);
         break;
+#endif
 
     default:
         glVertexAttribPointer(attribute, bindingData(binding)->format.size, bindingData(binding)->format.type

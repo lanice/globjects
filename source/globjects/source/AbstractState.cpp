@@ -1,16 +1,16 @@
 
 #include <globjects/AbstractState.h>
 
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/enum.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/enum.h>
 
 #include <globjects/StateSetting.h>
 
 
-using namespace gl;
-
 namespace globjects 
 {
+
+using namespace binding;
 
 void AbstractState::setEnabled(GLenum capability, const bool enabled)
 {
@@ -87,10 +87,12 @@ void AbstractState::depthMask(const GLboolean flag)
     add(new StateSetting(glDepthMask, flag));
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 void AbstractState::depthRange(const GLdouble nearVal, const GLdouble farVal)
 {
     add(new StateSetting(glDepthRange, nearVal, farVal));
 }
+#endif
 
 void AbstractState::depthRange(const GLfloat nearVal, const GLfloat farVal)
 {
@@ -102,14 +104,16 @@ void AbstractState::depthRange(const std::array<GLfloat, 2> & range)
     depthRange(range[0], range[1]);
 }
     
-    void AbstractState::frontFace(GLenum winding) {
-        add(new StateSetting(glFrontFace, winding));
-    }
+void AbstractState::frontFace(GLenum winding) {
+    add(new StateSetting(glFrontFace, winding));
+}
 
+#ifdef GLOBJECTS_GL_BINDING
 void AbstractState::logicOp(const GLenum opcode)
 {
     add(new StateSetting(glLogicOp, opcode));
 }
+#endif
 
 void AbstractState::pixelStore(const GLenum pname, const GLint param)
 {
@@ -118,6 +122,7 @@ void AbstractState::pixelStore(const GLenum pname, const GLint param)
     add(setting);
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 void AbstractState::pointParameter(const GLenum pname, const GLint param)
 {
     auto setting = new StateSetting(glPointParameteri, pname, param);
@@ -136,12 +141,14 @@ void AbstractState::polygonMode(const GLenum face, const GLenum mode)
     setting->type().specializeType(face);
     add(setting);
 }
+#endif
 
 void AbstractState::polygonOffset(const GLfloat factor, const GLfloat units)
 {
     add(new StateSetting(glPolygonOffset, factor, units));
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 void AbstractState::primitiveRestartIndex(const GLuint index)
 {
     add(new StateSetting(glPrimitiveRestartIndex, index));
@@ -151,6 +158,7 @@ void AbstractState::provokingVertex(const GLenum provokeMode)
 {
     add(new StateSetting(glProvokingVertex, provokeMode));
 }
+#endif
 
 void AbstractState::sampleCoverage(const GLfloat value, const GLboolean invert)
 {

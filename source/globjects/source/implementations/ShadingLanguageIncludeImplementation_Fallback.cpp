@@ -1,7 +1,7 @@
 
 #include "ShadingLanguageIncludeImplementation_Fallback.h"
 
-#include <glbinding/gl/functions.h>
+#include <globjects/binding/functions.h>
 
 #include <globjects/base/AbstractStringSource.h>
 #include <globjects/base/ref_ptr.h>
@@ -11,10 +11,10 @@
 #include "../IncludeProcessor.h"
 
 
-using namespace gl;
-
 namespace globjects 
 {
+
+using namespace binding;
 
 void ShadingLanguageIncludeImplementation_Fallback::updateSources(const Shader * shader) const
 {

@@ -19,22 +19,22 @@ public:
 
     const LocationIdentity & identity() const;
 
-    void setBinding(gl::GLuint bindingIndex);
+    void setBinding(binding::GLuint bindingIndex);
 
-    void getActive(gl::GLenum pname, gl::GLint * params) const;
-    gl::GLint getActive(gl::GLenum pname) const;
-    std::vector<gl::GLint> getActive(gl::GLenum pname, gl::GLint paramCount) const;
+    void getActive(binding::GLenum pname, binding::GLint * params) const;
+    binding::GLint getActive(binding::GLenum pname) const;
+    std::vector<binding::GLint> getActive(binding::GLenum pname, binding::GLint paramCount) const;
 
-    std::vector<gl::GLint> getActiveUniformIndices() const;
+    std::vector<binding::GLint> getActiveUniformIndices() const;
 
     std::string getName() const;
 
 protected:
     const Program * m_program;
     LocationIdentity m_identity;
-    gl::GLuint m_bindingIndex;
+    binding::GLuint m_bindingIndex;
 
-    gl::GLuint blockIndex() const;
+    binding::GLuint blockIndex() const;
     void updateBinding() const;
 };
 

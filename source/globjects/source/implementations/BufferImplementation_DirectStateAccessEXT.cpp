@@ -1,8 +1,8 @@
 
 #include "BufferImplementation_DirectStateAccessEXT.h"
 
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/boolean.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/boolean.h>
 
 #include <globjects/Buffer.h>
 

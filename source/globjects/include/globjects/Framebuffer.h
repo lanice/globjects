@@ -55,7 +55,7 @@ public:
 
 public:
     Framebuffer();
-    static Framebuffer * fromId(gl::GLuint id);
+    static Framebuffer * fromId(binding::GLuint id);
 
     static Framebuffer * defaultFBO();
 
@@ -64,64 +64,66 @@ public:
     /** uses GL_FRAMEBUFFER as target
     */
     void bind() const;
-    void bind(gl::GLenum target) const;
+    void bind(binding::GLenum target) const;
 
     /** uses GL_FRAMEBUFFER as target
     */
     static void unbind();
-    static void unbind(gl::GLenum target);
+    static void unbind(binding::GLenum target);
 
-    void setParameter(gl::GLenum pname, gl::GLint param);
-    gl::GLint getAttachmentParameter(gl::GLenum attachment, gl::GLenum pname) const;
+    void setParameter(binding::GLenum pname, binding::GLint param);
+    binding::GLint getAttachmentParameter(binding::GLenum attachment, binding::GLenum pname) const;
 
-    void attachTexture(gl::GLenum attachment, Texture * texture, gl::GLint level = 0);
-    void attachTextureLayer(gl::GLenum attachment, Texture * texture, gl::GLint level = 0, gl::GLint layer = 0);
-    void attachRenderBuffer(gl::GLenum attachment, Renderbuffer * renderBuffer);
+    void attachTexture(binding::GLenum attachment, Texture * texture, binding::GLint level = 0);
+    void attachTextureLayer(binding::GLenum attachment, Texture * texture, binding::GLint level = 0, binding::GLint layer = 0);
+    void attachRenderBuffer(binding::GLenum attachment, Renderbuffer * renderBuffer);
 
-    bool detach(gl::GLenum attachment);
+    bool detach(binding::GLenum attachment);
 
-    void setReadBuffer(gl::GLenum mode) const;
-    void setDrawBuffer(gl::GLenum mode) const;
-    void setDrawBuffers(gl::GLsizei n, const gl::GLenum * modes) const;
-    void setDrawBuffers(const std::vector<gl::GLenum> & modes) const;
+    void setReadBuffer(binding::GLenum mode) const;
+    void setDrawBuffer(binding::GLenum mode) const;
+    void setDrawBuffers(binding::GLsizei n, const binding::GLenum * modes) const;
+    void setDrawBuffers(const std::vector<binding::GLenum> & modes) const;
 
-    void clear(gl::ClearBufferMask mask);
+    void clear(binding::ClearBufferMask mask);
 
-    void clearBufferiv(gl::GLenum buffer, gl::GLint drawBuffer, const gl::GLint * value);
-    void clearBufferuiv(gl::GLenum buffer, gl::GLint drawBuffer, const gl::GLuint * value);
-    void clearBufferfv(gl::GLenum buffer, gl::GLint drawBuffer, const gl::GLfloat * value);
-    void clearBufferfi(gl::GLenum buffer, gl::GLint drawBuffer, gl::GLfloat depth, gl::GLint stencil);
+    void clearBufferiv(binding::GLenum buffer, binding::GLint drawBuffer, const binding::GLint * value);
+    void clearBufferuiv(binding::GLenum buffer, binding::GLint drawBuffer, const binding::GLuint * value);
+    void clearBufferfv(binding::GLenum buffer, binding::GLint drawBuffer, const binding::GLfloat * value);
+    void clearBufferfi(binding::GLenum buffer, binding::GLint drawBuffer, binding::GLfloat depth, binding::GLint stencil);
 
-    void clearBuffer(gl::GLenum buffer, gl::GLint drawBuffer, const glm::ivec4 & value);
-    void clearBuffer(gl::GLenum buffer, gl::GLint drawBuffer, const glm::uvec4 & value);
-    void clearBuffer(gl::GLenum buffer, gl::GLint drawBuffer, const glm::vec4 & value);
+    void clearBuffer(binding::GLenum buffer, binding::GLint drawBuffer, const glm::ivec4 & value);
+    void clearBuffer(binding::GLenum buffer, binding::GLint drawBuffer, const glm::uvec4 & value);
+    void clearBuffer(binding::GLenum buffer, binding::GLint drawBuffer, const glm::vec4 & value);
 
-    static void colorMask(gl::GLboolean red, gl::GLboolean green, gl::GLboolean blue, gl::GLboolean alpha);
+    static void colorMask(binding::GLboolean red, binding::GLboolean green, binding::GLboolean blue, binding::GLboolean alpha);
     static void colorMask(const glm::bvec4 & mask);
-    static void colorMaski(gl::GLuint buffer, gl::GLboolean red, gl::GLboolean green, gl::GLboolean blue, gl::GLboolean alpha);
-    static void colorMaski(gl::GLuint buffer, const glm::bvec4 & mask);
-    static void clearColor(gl::GLfloat red, gl::GLfloat green, gl::GLfloat blue, gl::GLfloat alpha);
+    static void colorMaski(binding::GLuint buffer, binding::GLboolean red, binding::GLboolean green, binding::GLboolean blue, binding::GLboolean alpha);
+    static void colorMaski(binding::GLuint buffer, const glm::bvec4 & mask);
+    static void clearColor(binding::GLfloat red, binding::GLfloat green, binding::GLfloat blue, binding::GLfloat alpha);
     static void clearColor(const glm::vec4 & color);
-    static void clearDepth(gl::GLclampd depth);
+    static void clearDepth(binding::GLclampd depth);
 
-    void readPixels(gl::GLint x, gl::GLint y, gl::GLsizei width, gl::GLsizei height, gl::GLenum format, gl::GLenum type, gl::GLvoid * data = nullptr) const;
-    void readPixels(const std::array<gl::GLint, 4> & rect, gl::GLenum format, gl::GLenum type, gl::GLvoid * data = nullptr) const;
-    void readPixels(gl::GLenum readBuffer, const std::array<gl::GLint, 4> & rect, gl::GLenum format, gl::GLenum type, gl::GLvoid * data = nullptr) const;
-    std::vector<unsigned char> readPixelsToByteArray(const std::array<gl::GLint, 4> & rect, gl::GLenum format, gl::GLenum type) const;
-    std::vector<unsigned char> readPixelsToByteArray(gl::GLenum readBuffer, const std::array<gl::GLint, 4> & rect, gl::GLenum format, gl::GLenum type) const;
-    void readPixelsToBuffer(const std::array<gl::GLint, 4> & rect, gl::GLenum format, gl::GLenum type, Buffer * pbo) const;
+    void readPixels(binding::GLint x, binding::GLint y, binding::GLsizei width, binding::GLsizei height, binding::GLenum format, binding::GLenum type, binding::GLvoid * data = nullptr) const;
+    void readPixels(const std::array<binding::GLint, 4> & rect, binding::GLenum format, binding::GLenum type, binding::GLvoid * data = nullptr) const;
+    void readPixels(binding::GLenum readBuffer, const std::array<binding::GLint, 4> & rect, binding::GLenum format, binding::GLenum type, binding::GLvoid * data = nullptr) const;
+    std::vector<unsigned char> readPixelsToByteArray(const std::array<binding::GLint, 4> & rect, binding::GLenum format, binding::GLenum type) const;
+    std::vector<unsigned char> readPixelsToByteArray(binding::GLenum readBuffer, const std::array<binding::GLint, 4> & rect, binding::GLenum format, binding::GLenum type) const;
+    void readPixelsToBuffer(const std::array<binding::GLint, 4> & rect, binding::GLenum format, binding::GLenum type, Buffer * pbo) const;
 
-    gl::GLenum checkStatus() const;
+    binding::GLenum checkStatus() const;
     std::string statusString() const;
     void printStatus(bool onlyErrors = false) const;
 
-    FramebufferAttachment * getAttachment(gl::GLenum attachment);
+    FramebufferAttachment * getAttachment(binding::GLenum attachment);
     std::vector<FramebufferAttachment*> attachments();
 
-    void blit(gl::GLenum readBuffer, const std::array<gl::GLint, 4> & srcRect, Framebuffer * destFbo, gl::GLenum drawBuffer, const std::array<gl::GLint, 4> & destRect, gl::ClearBufferMask mask, gl::GLenum filter) const;
-    void blit(gl::GLenum readBuffer, const std::array<gl::GLint, 4> & srcRect, Framebuffer * destFbo, const std::vector<gl::GLenum> & drawBuffers, const std::array<gl::GLint, 4> & destRect, gl::ClearBufferMask mask, gl::GLenum filter) const;
+    void blit(binding::GLenum readBuffer, const std::array<binding::GLint, 4> & srcRect, Framebuffer * destFbo, binding::GLenum drawBuffer, const std::array<binding::GLint, 4> & destRect, binding::ClearBufferMask mask, binding::GLenum filter) const;
+    void blit(binding::GLenum readBuffer, const std::array<binding::GLint, 4> & srcRect, Framebuffer * destFbo, const std::vector<binding::GLenum> & drawBuffers, const std::array<binding::GLint, 4> & destRect, binding::ClearBufferMask mask, binding::GLenum filter) const;
 
-    virtual gl::GLenum objectType() const override;
+#ifdef GLOBJECTS_GL_BINDING
+    virtual binding::GLenum objectType() const override;
+#endif
 
 protected:
     Framebuffer(IDResource * resource);
@@ -129,11 +131,11 @@ protected:
 
     void addAttachment(FramebufferAttachment * attachment);
 
-    static void blit(gl::GLint srcX0, gl::GLint srcY0, gl::GLint srcX1, gl::GLint srcY1, gl::GLint destX0, gl::GLint destY0, gl::GLint destX1, gl::GLint destY1, gl::ClearBufferMask mask, gl::GLenum filter);
-    static void blit(const std::array<gl::GLint, 4> & srcRect, const std::array<gl::GLint, 4> & destRect, gl::ClearBufferMask mask, gl::GLenum filter);
+    static void blit(binding::GLint srcX0, binding::GLint srcY0, binding::GLint srcX1, binding::GLint srcY1, binding::GLint destX0, binding::GLint destY0, binding::GLint destX1, binding::GLint destY1, binding::ClearBufferMask mask, binding::GLenum filter);
+    static void blit(const std::array<binding::GLint, 4> & srcRect, const std::array<binding::GLint, 4> & destRect, binding::ClearBufferMask mask, binding::GLenum filter);
 
 protected:
-	std::map<gl::GLenum, ref_ptr<FramebufferAttachment>> m_attachments;
+	std::map<binding::GLenum, ref_ptr<FramebufferAttachment>> m_attachments;
 };
 
 } // namespace globjects

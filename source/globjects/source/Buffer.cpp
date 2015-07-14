@@ -2,8 +2,8 @@
 
 #include <cassert>
 
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/enum.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/enum.h>
 
 #include <globjects/globjects.h>
 #include <globjects/ObjectVisitor.h>
@@ -14,8 +14,6 @@
 
 #include "implementations/BufferImplementation_Legacy.h"
 
-
-using namespace gl;
 
 namespace 
 {
@@ -29,6 +27,8 @@ const globjects::AbstractBufferImplementation & implementation()
 
 namespace globjects
 {
+
+using namespace binding;
 
 void Buffer::hintBindlessImplementation(BindlessImplementation impl)
 {
@@ -205,9 +205,11 @@ void Buffer::invalidateSubData(const GLintptr offset, const GLsizeiptr length) c
     implementation().invalidateSubData(this, offset, length);
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 GLenum Buffer::objectType() const
 {
     return GL_BUFFER;
 }
+#endif
 
 } // namespace globjects

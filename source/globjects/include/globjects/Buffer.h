@@ -3,7 +3,7 @@
 #include <vector>
 #include <array>
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/globjects_api.h>
 #include <globjects/Object.h>
@@ -23,8 +23,8 @@ namespace globjects
     The current bound VertexArrayObject and Program will specify the render pipeline and data.
     
     \code{.cpp}
-    Buffer * buffer = new Buffer(gl::GL_SHADER_STORAGE_BUFFER);
-    buffer->setData(sizeof(glm::vec4) * 100, nullptr, gl::GL_DYNAMIC_DRAW); // allocate 100 vec4
+    Buffer * buffer = new Buffer(binding::GL_SHADER_STORAGE_BUFFER);
+    buffer->setData(sizeof(glm::vec4) * 100, nullptr, binding::GL_DYNAMIC_DRAW); // allocate 100 vec4
     \endcode
     
     \see http://www.opengl.org/wiki/Buffer_Object
@@ -46,7 +46,7 @@ public:
         Usually this target never has to be changed unless you want to ensure that a certain binding target will not be used.
         \param target
     */
-    static void setWorkingTarget(gl::GLenum target);
+    static void setWorkingTarget(binding::GLenum target);
 
 public:
     /** \brief Creates a new OpenGL buffer object.
@@ -58,7 +58,7 @@ public:
         will not delete it in the destructor.
         \param id an external OpenGL buffer id
     */
-    static Buffer * fromId(gl::GLuint id);
+    static Buffer * fromId(binding::GLuint id);
 
     /** \brief Implements the visitor pattern.
         \param visitor The visitor on which visitBuffer will be called.
@@ -67,20 +67,20 @@ public:
 
     /** \brief Binds the buffer to target.
         \param target the target for binding
-        \see https://www.opengl.org/sdk/docs/man4/xhtml/gl::glBindBuffer.xml
+        \see https://www.opengl.org/sdk/docs/man4/xhtml/binding::glBindBuffer.xml
     */
-    void bind(gl::GLenum target) const;
+    void bind(binding::GLenum target) const;
 
     /** \brief Unbinds a specific target, i.e. binds a 0 id to the target.
         \param target the target for unbinding
     */
-    static void unbind(gl::GLenum target);
+    static void unbind(binding::GLenum target);
 
     /** \brief Unbinds the buffer bound to the target and index.
         \param target the target for unbinding
         \param index the index for unbinding
     */
-    static void unbind(gl::GLenum target, gl::GLuint index);
+    static void unbind(binding::GLenum target, binding::GLuint index);
 
     /** \brief Wraps the OpenGL function glBufferData.
         Creates video memory for the buffer.
@@ -89,17 +89,17 @@ public:
         \param usage used as a performance hint on how the buffer is used
         \see https://www.opengl.org/sdk/docs/man4/xhtml/glBufferData.xml
     */
-    void setData(gl::GLsizeiptr size, const gl::GLvoid * data, gl::GLenum usage);
+    void setData(binding::GLsizeiptr size, const binding::GLvoid * data, binding::GLenum usage);
     
     /** \brief Convenience method to simplify passing of data in form of an std::vector.
     */
     template <typename T>
-    void setData(const std::vector<T> & data, gl::GLenum usage);
+    void setData(const std::vector<T> & data, binding::GLenum usage);
     
     /** \brief Convenience method to simplify passing of data in form of an std::array.
     */
     template <typename T, std::size_t Count>
-    void setData(const std::array<T, Count> & data, gl::GLenum usage);
+    void setData(const std::array<T, Count> & data, binding::GLenum usage);
     /** \brief Wraps the OpenGL function glBufferSubData.
         Writes data only to a defined area of the memory.
         \param size size of memory in bytes
@@ -107,17 +107,17 @@ public:
         \param data memory location containing the data
         \see http://www.opengl.org/sdk/docs/man/xhtml/glBufferSubData.xml
     */
-    void setSubData(gl::GLintptr offset, gl::GLsizeiptr size, const gl::GLvoid* data = nullptr);
+    void setSubData(binding::GLintptr offset, binding::GLsizeiptr size, const binding::GLvoid* data = nullptr);
     
     /** \brief Convenience method to simplify passing of data in form of an std::vector.
     */
     template <typename T>
-    void setSubData(const std::vector<T> & data, gl::GLintptr offset = 0);
+    void setSubData(const std::vector<T> & data, binding::GLintptr offset = 0);
     
     /** \brief Convenience method to simplify passing of data in form of an std::array.
     */
     template <typename T, std::size_t Count>
-    void setSubData(const std::array<T, Count> & data, gl::GLintptr offset = 0);
+    void setSubData(const std::array<T, Count> & data, binding::GLintptr offset = 0);
 
     /** \brief Wraps the OpenGL function glBufferStorage.
         \param size size of the new memory in bytes
@@ -125,33 +125,33 @@ public:
         \param flags flags indicating usage
         \see www.opengl.org/sdk/docs/man/xhtml/glBufferStorage.xml
     */
-    void setStorage(gl::GLsizeiptr size, const gl::GLvoid * data, gl::BufferStorageMask flags);
+    void setStorage(binding::GLsizeiptr size, const binding::GLvoid * data, binding::BufferStorageMask flags);
     
     /** \brief Convenience method to simplify passing of data in form of an std::vector.
     */
     template <typename T>
-    void setStorage(const std::vector<T> & data, gl::BufferStorageMask flags);
+    void setStorage(const std::vector<T> & data, binding::BufferStorageMask flags);
     
     /** \brief Convenience method to simplify passing of data in form of an std::array.
     */
     template <typename T, std::size_t Count>
-    void setStorage(const std::array<T, Count> & data, gl::BufferStorageMask flags);
+    void setStorage(const std::array<T, Count> & data, binding::BufferStorageMask flags);
 
-    /** \brief Wraps the OpenGL function gl::glGetBufferParameter.
+    /** \brief Wraps the OpenGL function binding::glGetBufferParameter.
         Queries OpenGL for internal state of the buffer.
-        \param pname name of the parameter, e.g. gl::GL_BUFFER_SIZE
+        \param pname name of the parameter, e.g. binding::GL_BUFFER_SIZE
         \return integer value for the parameter
-        \see http://www.opengl.org/sdk/docs/man/xhtml/gl::glGetBufferParameter.xml
+        \see http://www.opengl.org/sdk/docs/man/xhtml/binding::glGetBufferParameter.xml
     */
-    gl::GLint getParameter(gl::GLenum pname) const;
+    binding::GLint getParameter(binding::GLenum pname) const;
 
-    /** \brief Wraps the OpenGL function gl::glGetBufferParameter for 64 bit data types.
+    /** \brief Wraps the OpenGL function binding::glGetBufferParameter for 64 bit data types.
         Queries OpenGL for internal state of the buffer.
-        \param pname name of the parameter, e.g. gl::GL_BUFFER_SIZE
+        \param pname name of the parameter, e.g. binding::GL_BUFFER_SIZE
         \return integer value for the parameter
-        \see http://www.opengl.org/sdk/docs/man/xhtml/gl::glGetBufferParameter.xml
+        \see http://www.opengl.org/sdk/docs/man/xhtml/binding::glGetBufferParameter.xml
     */
-    gl::GLint64 getParameter64(gl::GLenum pname) const;
+    binding::GLint64 getParameter64(binding::GLenum pname) const;
 
     /** \brief Maps the Buffer's memory read only.
         \return a pointer to the mapped memory
@@ -162,7 +162,7 @@ public:
         \param access specifies reading/writing access
         \return a pointer to the mapped memory
     */
-    void * map(gl::GLenum access);
+    void * map(binding::GLenum access);
 
     /** \brief Wraps the OpenGL function glMapBufferRange.
         Maps only a range of the buffers memory.
@@ -172,7 +172,7 @@ public:
         \return pointer to the mapped memory
         \see http://www.opengl.org/sdk/docs/man/xhtml/glMapBufferRange.xml
     */
-    void * mapRange(gl::GLintptr offset, gl::GLsizeiptr length, gl::BufferAccessMask access);
+    void * mapRange(binding::GLintptr offset, binding::GLsizeiptr length, binding::BufferAccessMask access);
     
     /** \brief Wraps the OpenGL function glUnmapBuffer.
         \see http://www.opengl.org/sdk/docs/man3/xhtml/glMapBuffer.xml
@@ -184,17 +184,17 @@ public:
         \param length length of the range in bytes
         \see http://www.opengl.org/sdk/docs/man/html/glFlushMappedBufferRange.xhtml
     */
-    void flushMappedRange(gl::GLintptr offset, gl::GLsizeiptr length);
+    void flushMappedRange(binding::GLintptr offset, binding::GLsizeiptr length);
 
-    /** \brief Wraps the OpenGL function gl::glBindBufferBase.
-        \see http://www.opengl.org/sdk/docs/man/xhtml/gl::glBindBufferBase.xml
+    /** \brief Wraps the OpenGL function binding::glBindBufferBase.
+        \see http://www.opengl.org/sdk/docs/man/xhtml/binding::glBindBufferBase.xml
     */
-    void bindBase(gl::GLenum target, gl::GLuint index) const;
+    void bindBase(binding::GLenum target, binding::GLuint index) const;
 
-    /** \brief Wraps the OpenGL function gl::glBindBufferRange.
-        \see http://www.opengl.org/sdk/docs/man3/xhtml/gl::glBindBufferRange.xml
+    /** \brief Wraps the OpenGL function binding::glBindBufferRange.
+        \see http://www.opengl.org/sdk/docs/man3/xhtml/binding::glBindBufferRange.xml
     */
-    void bindRange(gl::GLenum target, gl::GLuint index, gl::GLintptr offset, gl::GLsizeiptr size) const;
+    void bindRange(binding::GLenum target, binding::GLuint index, binding::GLintptr offset, binding::GLsizeiptr size) const;
 
     /** \brief Wraps the OpenGL function glCopyBufferSubData.
         \param readOffset offset in bytes in read buffer
@@ -202,11 +202,11 @@ public:
         \param size size of the data to be copies in bytes
         \see http://www.opengl.org/sdk/docs/man3/xhtml/glCopyBufferSubData.xml
     */
-    void copySubData(Buffer * buffer, gl::GLintptr readOffset, gl::GLintptr writeOffset, gl::GLsizeiptr size) const;
+    void copySubData(Buffer * buffer, binding::GLintptr readOffset, binding::GLintptr writeOffset, binding::GLsizeiptr size) const;
     
     /** \brief Convenience method. Both readOffset and writeOffset are 0.
     */
-    void copySubData(Buffer * buffer, gl::GLsizeiptr size) const;
+    void copySubData(Buffer * buffer, binding::GLsizeiptr size) const;
     
     /** \brief Creates new uninitialized memory to fit size (using usage), then
         copies the contents of buffer to this buffer's new memory.
@@ -214,50 +214,52 @@ public:
         \param size size of the data to be copied
         \param usage buffer usage
     */
-    void copyData(Buffer * buffer, gl::GLsizeiptr size, gl::GLenum usage) const;
+    void copyData(Buffer * buffer, binding::GLsizeiptr size, binding::GLenum usage) const;
 
-    /** \brief Wraps the OpenGL function gl::glClearBufferData.
+    /** \brief Wraps the OpenGL function binding::glClearBufferData.
         Clears the Buffer's data by filling it with the value in data, which has to be long enough to match format.
         \param data up to 4 components of the vector value to fill the buffer with
-        \see http://www.opengl.org/sdk/docs/man/xhtml/gl::glClearBufferData.xml
+        \see http://www.opengl.org/sdk/docs/man/xhtml/binding::glClearBufferData.xml
     */
-    void clearData(gl::GLenum internalformat, gl::GLenum format, gl::GLenum type, const void * data = nullptr);
+    void clearData(binding::GLenum internalformat, binding::GLenum format, binding::GLenum type, const void * data = nullptr);
     
-    /** \brief Wraps the OpenGL function gl::glClearBufferSubData.
+    /** \brief Wraps the OpenGL function binding::glClearBufferSubData.
         \param offset offset in bytes
         \param size size in bytes
-        \see https://www.opengl.org/sdk/docs/man4/xhtml/gl::glClearBufferSubData.xml
+        \see https://www.opengl.org/sdk/docs/man4/xhtml/binding::glClearBufferSubData.xml
     */
-    void clearSubData(gl::GLenum internalformat, gl::GLintptr offset, gl::GLsizeiptr size, gl::GLenum format, gl::GLenum type, const void * data = nullptr);
+    void clearSubData(binding::GLenum internalformat, binding::GLintptr offset, binding::GLsizeiptr size, binding::GLenum format, binding::GLenum type, const void * data = nullptr);
 
     const void * getPointer() const;
     void * getPointer();
-    const void * getPointer(gl::GLenum pname) const;
-    void * getPointer(gl::GLenum pname);
+    const void * getPointer(binding::GLenum pname) const;
+    void * getPointer(binding::GLenum pname);
 
-    void getSubData(gl::GLintptr offset, gl::GLsizeiptr size, void * data) const;
+    void getSubData(binding::GLintptr offset, binding::GLsizeiptr size, void * data) const;
 
     template <typename T>
-    const std::vector<T> getSubData(gl::GLsizeiptr size, gl::GLintptr offset = 0) const;
+    const std::vector<T> getSubData(binding::GLsizeiptr size, binding::GLintptr offset = 0) const;
     
     /** \brief Convenience method to simplify passing of data in form of an std::array.
     */
     template <typename T, std::size_t Count>
-    const std::array<T, Count> getSubData(gl::GLintptr offset = 0) const;
+    const std::array<T, Count> getSubData(binding::GLintptr offset = 0) const;
 
-    /** \brief Wraps the OpenGL function gl::glInvalidateBufferData.
+    /** \brief Wraps the OpenGL function binding::glInvalidateBufferData.
         \see https://www.opengl.org/sdk/docs/man/html/glInvalidateBufferData.xhtml
     */
     void invalidateData() const;
 
-    /** \brief Wraps the OpenGL function gl::glInvalidateBufferSubData.
+    /** \brief Wraps the OpenGL function binding::glInvalidateBufferSubData.
         \param offset offset in bytes
         \param size size in bytes
         \see https://www.opengl.org/sdk/docs/man/html/glInvalidateBufferSubData.xhtml
     */
-    void invalidateSubData(gl::GLintptr offset, gl::GLsizeiptr length) const;
+    void invalidateSubData(binding::GLintptr offset, binding::GLsizeiptr length) const;
 
-    virtual gl::GLenum objectType() const override;
+#ifdef GLOBJECTS_GL_BINDING
+    virtual binding::GLenum objectType() const override;
+#endif
 
 protected:
     /** \brief Creates a buffer with an external id.
@@ -266,7 +268,7 @@ protected:
     Buffer(IDResource * resource);
 
     /** Automatically deletes the associated OpenGL buffer unless the object was created with an external id.
-        \see https://www.opengl.org/sdk/docs/man4/xhtml/gl::glDeleteBuffers.xml
+        \see https://www.opengl.org/sdk/docs/man4/xhtml/binding::glDeleteBuffers.xml
     */
     virtual ~Buffer();
 };

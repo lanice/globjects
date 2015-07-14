@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/globjects_api.h>
 
@@ -25,21 +25,21 @@ public:
 public:
     using Callback = std::function<void(const DebugMessage &)>;
 
-    DebugMessage(gl::GLenum source, gl::GLenum type, gl::GLuint id, gl::GLenum severity, const std::string & message);
+    DebugMessage(binding::GLenum source, binding::GLenum type, binding::GLuint id, binding::GLenum severity, const std::string & message);
 
-    gl::GLenum source() const;
-    gl::GLenum type() const;
-    gl::GLuint id() const;
-    gl::GLenum severity() const;
+    binding::GLenum source() const;
+    binding::GLenum type() const;
+    binding::GLuint id() const;
+    binding::GLenum severity() const;
     const std::string & message() const;
 
     virtual std::string toString() const;
 
 protected:
-    gl::GLenum m_source;
-    gl::GLenum m_type;
-    gl::GLuint m_id;
-    gl::GLenum m_severity;
+    binding::GLenum m_source;
+    binding::GLenum m_type;
+    binding::GLuint m_id;
+    binding::GLenum m_severity;
     std::string m_message;
 
     std::string severityString() const;
@@ -54,19 +54,19 @@ public:
 
     static void setSynchronous(bool synchronous);
 
-    static void insertMessage(gl::GLenum source, gl::GLenum type, gl::GLuint id, gl::GLenum severity, gl::GLsizei length, const char * message);
-    static void insertMessage(gl::GLenum source, gl::GLenum type, gl::GLuint id, gl::GLenum severity, const std::string & message);
+    static void insertMessage(binding::GLenum source, binding::GLenum type, binding::GLuint id, binding::GLenum severity, binding::GLsizei length, const char * message);
+    static void insertMessage(binding::GLenum source, binding::GLenum type, binding::GLuint id, binding::GLenum severity, const std::string & message);
     static void insertMessage(const DebugMessage & message);
 
-    static void enableMessage(gl::GLenum source, gl::GLenum type, gl::GLenum severity, gl::GLuint id);
-    static void enableMessages(gl::GLenum source, gl::GLenum type, gl::GLenum severity, gl::GLsizei count, const gl::GLuint * ids);
-    static void enableMessages(gl::GLenum source, gl::GLenum type, gl::GLenum severity, const std::vector<gl::GLuint> & ids);
+    static void enableMessage(binding::GLenum source, binding::GLenum type, binding::GLenum severity, binding::GLuint id);
+    static void enableMessages(binding::GLenum source, binding::GLenum type, binding::GLenum severity, binding::GLsizei count, const binding::GLuint * ids);
+    static void enableMessages(binding::GLenum source, binding::GLenum type, binding::GLenum severity, const std::vector<binding::GLuint> & ids);
 
-    static void disableMessage(gl::GLenum source, gl::GLenum type, gl::GLenum severity, gl::GLuint id);
-    static void disableMessages(gl::GLenum source, gl::GLenum type, gl::GLenum severity, gl::GLsizei count, const gl::GLuint * ids);
-    static void disableMessages(gl::GLenum source, gl::GLenum type, gl::GLenum severity, const std::vector<gl::GLuint> & ids);
+    static void disableMessage(binding::GLenum source, binding::GLenum type, binding::GLenum severity, binding::GLuint id);
+    static void disableMessages(binding::GLenum source, binding::GLenum type, binding::GLenum severity, binding::GLsizei count, const binding::GLuint * ids);
+    static void disableMessages(binding::GLenum source, binding::GLenum type, binding::GLenum severity, const std::vector<binding::GLuint> & ids);
 
-    static void controlMessages(gl::GLenum source, gl::GLenum type, gl::GLenum severity, gl::GLsizei count, const gl::GLuint * ids, gl::GLboolean enabled);
+    static void controlMessages(binding::GLenum source, binding::GLenum type, binding::GLenum severity, binding::GLsizei count, const binding::GLuint * ids, binding::GLboolean enabled);
 
     static bool isFallbackImplementation();
 };

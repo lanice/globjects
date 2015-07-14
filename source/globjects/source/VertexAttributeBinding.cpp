@@ -9,8 +9,6 @@
 #include "implementations/AbstractVertexAttributeBindingImplementation.h"
 
 
-using namespace gl;
-
 namespace 
 {
     globjects::AbstractVertexAttributeBindingImplementation & attributeImplementation()
@@ -21,6 +19,8 @@ namespace
 
 namespace globjects
 {
+
+using namespace binding;
 
 VertexAttributeBinding::VertexAttributeBinding(
     VertexArray * vao
@@ -92,9 +92,11 @@ void VertexAttributeBinding::setIFormat(const GLint size, const GLenum type, con
     attributeImplementation().setIFormat(this, size, type, relativeoffset);
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 void VertexAttributeBinding::setLFormat(const GLint size, const GLenum type, const GLuint relativeoffset)
 {
     attributeImplementation().setLFormat(this, size, type, relativeoffset);
 }
+#endif
 
 } // namespace globjects

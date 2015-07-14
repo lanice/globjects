@@ -1,17 +1,16 @@
 #include "Resource.h"
 
-#include <glbinding/gl/functions.h>
+#include <globjects/binding/functions.h>
 
 #include "registry/ImplementationRegistry.h"
 
 #include "implementations/AbstractBufferImplementation.h"
 #include "implementations/AbstractFramebufferImplementation.h"
 
-
-using namespace gl;
-
 namespace 
 {
+
+using namespace globjects::binding;
 
 template <typename CreateObjectsFunction>
 GLuint createObject(CreateObjectsFunction function)
@@ -34,6 +33,8 @@ void deleteObject(DeleteObjectsFunction function, const GLuint id, const bool ha
 
 namespace globjects 
 {
+
+using namespace binding;
 
 AbstractResource::AbstractResource(const bool hasOwnership)
 : m_hasOwnership(hasOwnership)

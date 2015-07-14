@@ -1,8 +1,8 @@
 
 #include "DebugImplementation_DebugKHR.h"
 
-#include <glbinding/gl/enum.h>
-#include <glbinding/gl/functions.h>
+#include <globjects/binding/enum.h>
+#include <globjects/binding/functions.h>
 
 #include <globjects/DebugMessage.h>
 

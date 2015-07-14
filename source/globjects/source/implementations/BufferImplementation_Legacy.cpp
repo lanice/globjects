@@ -1,18 +1,18 @@
 
 #include "BufferImplementation_Legacy.h"
 
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/boolean.h>
-#include <glbinding/gl/enum.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/boolean.h>
+#include <globjects/binding/enum.h>
 
 #include <globjects/base/baselogging.h>
 #include <globjects/Buffer.h>
 
 
-using namespace gl;
-
 namespace globjects 
 {
+
+using namespace binding;
 
 GLenum BufferImplementation_Legacy::s_workingTarget = GL_COPY_WRITE_BUFFER;
 
@@ -34,7 +34,11 @@ void * BufferImplementation_Legacy::map(const Buffer * buffer, GLenum access) co
 {
     buffer->bind(s_workingTarget);
 
+#ifdef GLOBJECTS_GL_BINDING
     return glMapBuffer(s_workingTarget, access);
+#else
+    return glMapBufferOES(s_workingTarget, access);
+#endif
 }
 
 void * BufferImplementation_Legacy::mapRange(const Buffer * buffer, GLintptr offset, GLsizeiptr length, BufferAccessMask access) const
@@ -69,7 +73,11 @@ void BufferImplementation_Legacy::setStorage(const Buffer * buffer, GLsizeiptr s
 {
     buffer->bind(s_workingTarget);
 
+#ifdef GLOBJECTS_GL_BINDING
     glBufferStorage(s_workingTarget, size, data, flags);
+#else
+    glBufferStorageEXT(s_workingTarget, size, data, static_cast<GLbitfield>(flags));
+#endif
 }
 
 void BufferImplementation_Legacy::copySubData(const Buffer * buffer, Buffer * other, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size) const
@@ -120,14 +128,34 @@ void BufferImplementation_Legacy::clearData(const Buffer * buffer, GLenum intern
 {
     buffer->bind(s_workingTarget);
 
+#ifdef GLOBJECTS_GL_BINDING
     glClearBufferData(s_workingTarget, internalformat, format, type, data);
+#else
+    (void) internalformat; // unused
+    (void) format; // unused
+    (void) type; // unused
+    (void) data; // unused
+
+    critical() << "glClearBufferData requires OpenGL";
+#endif
 }
 
 void BufferImplementation_Legacy::clearSubData(const Buffer * buffer, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format, GLenum type, const void * data) const
 {
     buffer->bind(s_workingTarget);
 
+#ifdef GLOBJECTS_GL_BINDING
     glClearBufferSubData(s_workingTarget, internalformat, offset, size, format, type, data);
+#else
+    (void) internalformat; // unused
+    (void) offset; // unused
+    (void) size; // unused
+    (void) format; // unused
+    (void) type; // unused
+    (void) data; // unused
+
+    critical() << "glClearBufferSubData requires OpenGL";
+#endif
 }
 
 void BufferImplementation_Legacy::flushMappedRange(const Buffer * buffer, GLintptr offset, GLsizeiptr length) const
@@ -141,7 +169,15 @@ void BufferImplementation_Legacy::getBufferSubData(const Buffer * buffer, GLintp
 {
     buffer->bind(s_workingTarget);
 
+#ifdef GLOBJECTS_GL_BINDING
     glGetBufferSubData(s_workingTarget, offset, size, data);
+#else
+    (void) offset; // unused
+    (void) size; // unused
+    (void) data; // unused
+
+    critical() << "glGetBufferSubData requires OpenGL";
+#endif
 }
 
 void BufferImplementation_Legacy::invalidateData(const Buffer * /* buffer */) const

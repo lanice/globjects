@@ -4,10 +4,10 @@
 #include <globjects/base/AbstractStringSource.h>
 
 
-using namespace gl;
-
 namespace globjects
 {
+
+using namespace binding;
 
 ProgramBinary::ProgramBinary(const GLenum binaryFormat, const std::vector<char> & binaryData)
 : ProgramBinary(binaryFormat, new StaticStringSource(binaryData.data(), binaryData.size()))

@@ -1,15 +1,16 @@
 #include "ExtensionRegistry.h"
 #include "Registry.h"
 
-#include <glbinding/Meta.h>
-#include <glbinding/ContextInfo.h>
+#include <globjects/binding/Meta.h>
+#include <globjects/binding/ContextInfo.h>
+#include <globjects/binding/Version.h>
 
 #include <globjects/globjects.h>
 
-using namespace gl;
-
 namespace globjects 
 {
+
+using namespace binding;
 
 ExtensionRegistry::ExtensionRegistry()
 : m_initialized(false)
@@ -49,11 +50,12 @@ void ExtensionRegistry::initialize()
     if (m_initialized)
         return;
 
-    m_availableExtensions = glbinding::ContextInfo::extensions(&m_unknownAvailableExtensions);
+    m_availableExtensions = binding::ContextInfo::extensions(&m_unknownAvailableExtensions);
 
     m_initialized = true;
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 bool ExtensionRegistry::hasExtension(GLextension extension)
 {
     initialize();
@@ -63,12 +65,13 @@ bool ExtensionRegistry::hasExtension(GLextension extension)
 
     return m_availableExtensions.find(extension) != m_availableExtensions.end();
 }
+#endif
 
 bool ExtensionRegistry::hasExtension(const std::string & extensionName)
 {
     initialize();
 
-    GLextension extension = glbinding::Meta::getExtension(extensionName);
+    GLextension extension = binding::Meta::getExtension(extensionName);
 
     if (extension != GLextension::UNKNOWN)
     {
@@ -80,14 +83,15 @@ bool ExtensionRegistry::hasExtension(const std::string & extensionName)
     }
 }
 
-glbinding::Version getCoreVersion(GLextension extension)
+#ifdef GLOBJECTS_GL_BINDING
+binding::Version getCoreVersion(GLextension extension)
 {
-    return glbinding::Meta::getRequiringVersion(extension);
+    return binding::Meta::getRequiringVersion(extension);
 }
 
-bool ExtensionRegistry::isInCoreProfile(GLextension extension, const glbinding::Version & version)
+bool ExtensionRegistry::isInCoreProfile(GLextension extension, const binding::Version & version)
 {
-    glbinding::Version coreVersion = getCoreVersion(extension);
+    binding::Version coreVersion = getCoreVersion(extension);
 
     if (!coreVersion.isValid())
         return false;
@@ -100,6 +104,7 @@ bool ExtensionRegistry::isInCoreProfile(GLextension extension)
 {
     return isInCoreProfile(extension, globjects::version());
 }
+#endif
 
 } // namespace globjects
 

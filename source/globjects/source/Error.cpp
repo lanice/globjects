@@ -1,13 +1,13 @@
 #include <globjects/Error.h>
 
-#include <glbinding/gl/enum.h>
-#include <glbinding/gl/functions.h>
+#include <globjects/binding/enum.h>
+#include <globjects/binding/functions.h>
 
-
-using namespace gl;
 
 namespace globjects
 {
+
+using namespace binding;
 
 Error::Error(GLenum errorCode)
 : m_errorCode(errorCode)

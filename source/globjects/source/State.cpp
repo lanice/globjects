@@ -1,16 +1,17 @@
 #include <globjects/State.h>
 
-#include <glbinding/gl/enum.h>
-#include <glbinding/gl/extension.h>
+#include <globjects/binding/enum.h>
+#include <globjects/binding/extension.h>
+#include <globjects/binding/Version.h>
 
 #include <globjects/globjects.h>
 #include <globjects/Capability.h>
 #include <globjects/StateSetting.h>
 
-using namespace gl;
-
 namespace globjects 
 {
+
+using namespace binding;
 
 State::State(const Mode mode)
 : m_mode(mode)
@@ -35,29 +36,45 @@ State * State::currentState()
 
     std::vector<GLenum> capabilities = {
         GL_BLEND,
+#ifdef GLOBJECTS_GL_BINDING
         GL_COLOR_LOGIC_OP,
+#endif
         GL_CULL_FACE,
+#ifdef GLOBJECTS_GL_BINDING
         GL_DEPTH_CLAMP,
+#endif
         GL_DEPTH_TEST,
         GL_DITHER,
+#ifdef GLOBJECTS_GL_BINDING
         GL_FRAMEBUFFER_SRGB,
         GL_LINE_SMOOTH,
         GL_MULTISAMPLE,
+#else
+        GL_FRAMEBUFFER_SRGB_EXT,
+#endif
         GL_POLYGON_OFFSET_FILL,
+#ifdef GLOBJECTS_GL_BINDING
         GL_POLYGON_OFFSET_LINE,
         GL_POLYGON_OFFSET_POINT,
         GL_POLYGON_SMOOTH,
         GL_PROGRAM_POINT_SIZE,
+#else
+        GL_POLYGON_OFFSET_LINE_NV,
+        GL_POLYGON_OFFSET_POINT_NV,
+#endif
         GL_RASTERIZER_DISCARD,
         GL_SAMPLE_ALPHA_TO_COVERAGE,
+#ifdef GLOBJECTS_GL_BINDING
         GL_SAMPLE_ALPHA_TO_ONE,
+#endif
         GL_SAMPLE_COVERAGE,
         GL_SAMPLE_MASK,
         GL_SCISSOR_TEST,
         GL_STENCIL_TEST
     };
 
-    if (globjects::version() >= glbinding::Version(3, 1))
+#ifdef GLOBJECTS_GL_BINDING
+    if (globjects::version() >= binding::Version(3, 1))
     {
         capabilities.push_back(GL_PRIMITIVE_RESTART);
         if (hasExtension(GLextension::GL_ARB_ES3_compatibility))
@@ -85,6 +102,7 @@ State * State::currentState()
             capabilities.push_back(GL_DEBUG_OUTPUT_SYNCHRONOUS);
         }
     }
+#endif
 
     for (GLenum capability : capabilities)
     {
@@ -102,12 +120,17 @@ State * State::currentState()
     state->depthMask(getBoolean(GL_DEPTH_WRITEMASK));
     state->depthRange(getFloats<2>(GL_DEPTH_RANGE));
     state->frontFace(getEnum(GL_FRONT_FACE));
+#ifdef GLOBJECTS_GL_BINDING
     state->logicOp(getEnum(GL_LOGIC_OP_MODE));
     state->pointParameter(GL_POINT_FADE_THRESHOLD_SIZE, getInteger(GL_POINT_FADE_THRESHOLD_SIZE));
     state->pointParameter(GL_POINT_SPRITE_COORD_ORIGIN, getInteger(GL_POINT_SPRITE_COORD_ORIGIN));
     state->pointSize(getFloat(GL_POINT_SIZE));
     state->polygonMode(GL_FRONT, getEnums<2>(GL_POLYGON_MODE)[0]);
     state->polygonMode(GL_BACK, getEnums<2>(GL_POLYGON_MODE)[1]);
+#else
+    state->polygonMode(GL_FRONT, getEnums<2>(GL_POLYGON_MODE_NV)[0]);
+    state->polygonMode(GL_BACK, getEnums<2>(GL_POLYGON_MODE_NV)[1]);
+#endif
     state->polygonOffset(getFloat(GL_POLYGON_OFFSET_FACTOR), getFloat(GL_POLYGON_OFFSET_UNITS));
     state->sampleCoverage(getFloat(GL_SAMPLE_COVERAGE_VALUE), getBoolean(GL_SAMPLE_COVERAGE_INVERT));
     state->scissor(getIntegers<4>(GL_SCISSOR_BOX));
@@ -120,16 +143,18 @@ State * State::currentState()
 
     // pixel store
     std::vector<GLenum> pixelstoreParameters = {
+#ifdef GLOBJECTS_GL_BINDING
         GL_PACK_SWAP_BYTES,
         GL_PACK_LSB_FIRST,
-        GL_PACK_ROW_LENGTH,
         GL_PACK_IMAGE_HEIGHT,
-        GL_PACK_SKIP_PIXELS,
-        GL_PACK_SKIP_ROWS,
         GL_PACK_SKIP_IMAGES,
-        GL_PACK_ALIGNMENT,
         GL_UNPACK_SWAP_BYTES,
         GL_UNPACK_LSB_FIRST,
+#endif
+        GL_PACK_ROW_LENGTH,
+        GL_PACK_SKIP_PIXELS,
+        GL_PACK_SKIP_ROWS,
+        GL_PACK_ALIGNMENT,
         GL_UNPACK_ROW_LENGTH,
         GL_UNPACK_IMAGE_HEIGHT,
         GL_UNPACK_SKIP_PIXELS,

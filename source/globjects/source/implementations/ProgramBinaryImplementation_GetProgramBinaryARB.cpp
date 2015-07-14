@@ -1,9 +1,9 @@
 
 #include "ProgramBinaryImplementation_GetProgramBinaryARB.h"
 
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/boolean.h>
-#include <glbinding/gl/enum.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/boolean.h>
+#include <globjects/binding/enum.h>
 
 #include <globjects/Program.h>
 #include <globjects/ProgramBinary.h>

@@ -5,10 +5,10 @@
 #include <globjects/Renderbuffer.h>
 
 
-using namespace gl;
-
 namespace globjects
 {
+
+using namespace binding;
 
 AttachedRenderbuffer::AttachedRenderbuffer(Framebuffer * fbo,  const GLenum attachment, Renderbuffer * renderBuffer)
 : FramebufferAttachment(fbo, attachment)

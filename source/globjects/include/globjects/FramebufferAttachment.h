@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/base/Referenced.h>
 
@@ -26,11 +26,11 @@ class Framebuffer;
 class GLOBJECTS_API FramebufferAttachment : public Referenced
 {
 public:
-    FramebufferAttachment(Framebuffer * fbo, gl::GLenum attachment);
+    FramebufferAttachment(Framebuffer * fbo, binding::GLenum attachment);
 
-	gl::GLenum attachment() const;
+	binding::GLenum attachment() const;
 
-    gl::GLint getParameter(gl::GLenum pname) const;
+    binding::GLint getParameter(binding::GLenum pname) const;
 
 	virtual bool isTextureAttachment() const;
 	virtual bool isRenderBufferAttachment() const;
@@ -44,7 +44,7 @@ public:
 
 protected:
     Framebuffer * m_fbo; // TODO: weak pointer?
-	gl::GLenum m_attachment;
+	binding::GLenum m_attachment;
 };
 
 } // namespace globjects

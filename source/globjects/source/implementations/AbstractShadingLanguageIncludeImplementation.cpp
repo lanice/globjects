@@ -3,16 +3,18 @@
 
 #include <globjects/globjects.h>
 
-#include <glbinding/gl/extension.h>
+#include <globjects/binding/extension.h>
 
+#ifdef GLOBJECTS_GL_BINDING
 #include "ShadingLanguageIncludeImplementation_ARB.h"
+#endif
 #include "ShadingLanguageIncludeImplementation_Fallback.h"
 
 
-using namespace gl;
-
 namespace globjects 
 {
+
+using namespace binding;
 
 AbstractShadingLanguageIncludeImplementation::AbstractShadingLanguageIncludeImplementation()
 {
@@ -24,6 +26,7 @@ AbstractShadingLanguageIncludeImplementation::~AbstractShadingLanguageIncludeImp
 
 AbstractShadingLanguageIncludeImplementation * AbstractShadingLanguageIncludeImplementation::get(const Shader::IncludeImplementation impl)
 {
+#ifdef GLOBJECTS_GL_BINDING
     if (impl == Shader::IncludeImplementation::ShadingLanguageIncludeARB 
      && hasExtension(GLextension::GL_ARB_shading_language_include))
     {
@@ -33,6 +36,11 @@ AbstractShadingLanguageIncludeImplementation * AbstractShadingLanguageIncludeImp
     {
         return ShadingLanguageIncludeImplementation_Fallback::instance();
     }
+#else
+    (void) impl; // unused
+
+    return ShadingLanguageIncludeImplementation_Fallback::instance();
+#endif
 }
 
 std::vector<const char *> AbstractShadingLanguageIncludeImplementation::collectCStrings(const std::vector<std::string> & strings)

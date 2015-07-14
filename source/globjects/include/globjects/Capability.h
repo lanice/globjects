@@ -2,7 +2,7 @@
 
 #include <map>
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/globjects_api.h>
 
@@ -12,10 +12,10 @@ namespace globjects
 class GLOBJECTS_API Capability
 {
 public:
-    Capability(gl::GLenum capability);
-    Capability(gl::GLenum capability, bool enabled);
+    Capability(binding::GLenum capability);
+    Capability(binding::GLenum capability, bool enabled);
 
-    gl::GLenum capability() const;
+    binding::GLenum capability() const;
 
     void enable();
     void disable();
@@ -28,7 +28,7 @@ public:
     void apply();
 
 protected:
-    gl::GLenum m_capability;
+    binding::GLenum m_capability;
 
     bool m_enabled;
     std::map<int, bool> m_indexEnabled;

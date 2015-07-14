@@ -3,7 +3,7 @@
 #include <string>
 #include <functional>
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/globjects_api.h>
 
@@ -14,13 +14,13 @@ class GLOBJECTS_API LocationIdentity
 {
 public:
     LocationIdentity();
-    LocationIdentity(gl::GLint location);
+    LocationIdentity(binding::GLint location);
     LocationIdentity(const std::string & name);
 
     bool isLocation() const;
     bool isName() const;
 
-    gl::GLint location() const;
+    binding::GLint location() const;
     const std::string & name() const;
 
     bool operator==(const LocationIdentity & identity) const;
@@ -33,7 +33,7 @@ public:
 protected:
     bool m_invalid;
 
-    gl::GLint m_location;
+    binding::GLint m_location;
 
     std::string m_name;
     bool m_hasName;

@@ -1,17 +1,17 @@
 #include <globjects/Sampler.h>
 
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/enum.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/enum.h>
 
 #include <globjects/ObjectVisitor.h>
 
 #include "Resource.h"
 
 
-using namespace gl;
-
 namespace globjects
 {
+
+using namespace binding;
 
 Sampler::Sampler()
 : Object(new SamplerResource)
@@ -73,9 +73,11 @@ GLfloat Sampler::getParameterf(const GLenum pname) const
 	return value;
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 GLenum Sampler::objectType() const
 {
     return GL_SAMPLER;
 }
+#endif
 
 } // namespace globjects

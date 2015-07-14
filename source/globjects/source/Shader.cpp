@@ -1,8 +1,8 @@
 #include <globjects/Shader.h>
 
-#include <glbinding/gl/enum.h>
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/boolean.h>
+#include <globjects/binding/enum.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/boolean.h>
 
 #include <globjects/base/AbstractStringSource.h>
 #include <globjects/base/StaticStringSource.h>
@@ -18,8 +18,6 @@
 #include "implementations/AbstractShadingLanguageIncludeImplementation.h"
 
 
-using namespace gl;
-
 namespace
 {
 
@@ -32,6 +30,8 @@ const globjects::AbstractShadingLanguageIncludeImplementation & shadingLanguageI
 
 namespace globjects
 {
+
+using namespace binding;
 
 void Shader::hintIncludeImplementation(const IncludeImplementation impl)
 {
@@ -256,16 +256,18 @@ std::string Shader::typeString(GLenum type)
 {
     switch (type)
 	{
-    case GL_GEOMETRY_SHADER:
-        return "GL_GEOMETRY_SHADER";
     case GL_FRAGMENT_SHADER:
         return "GL_FRAGMENT_SHADER";
     case GL_VERTEX_SHADER:
         return "GL_VERTEX_SHADER";
+#ifdef GLOBJECTS_GL_BINDING
+    case GL_GEOMETRY_SHADER:
+        return "GL_GEOMETRY_SHADER";
     case GL_TESS_EVALUATION_SHADER:
         return "GL_TESS_EVALUATION_SHADER";
     case GL_TESS_CONTROL_SHADER:
         return "GL_TESS_CONTROL_SHADER";
+#endif
     case GL_COMPUTE_SHADER:
         return "GL_COMPUTE_SHADER";
 	default:
@@ -273,9 +275,11 @@ std::string Shader::typeString(GLenum type)
 	}
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 GLenum Shader::objectType() const
 {
     return GL_SHADER;
 }
+#endif
 
 } // namespace globjects

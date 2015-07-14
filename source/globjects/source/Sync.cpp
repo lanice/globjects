@@ -1,14 +1,14 @@
 #include <globjects/Sync.h>
 
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/enum.h>
-#include <glbinding/gl/bitfield.h>
-#include <glbinding/gl/values.h>
-
-using namespace gl;
+#include <globjects/binding/functions.h>
+#include <globjects/binding/enum.h>
+#include <globjects/binding/bitfield.h>
+#include <globjects/binding/values.h>
 
 namespace globjects
 {
+
+using namespace binding;
 
 Sync * Sync::fence(const GLenum condition)
 {

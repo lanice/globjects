@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/globjects_api.h>
 #include <globjects/Object.h>
@@ -16,20 +16,22 @@ class GLOBJECTS_API Sampler : public Object
 {
 public:
     Sampler();
-    static Sampler * fromId(gl::GLuint id);
+    static Sampler * fromId(binding::GLuint id);
 
     virtual void accept(ObjectVisitor & visitor) override;
 
-    void bind(gl::GLuint unit) const;
-    static void unbind(gl::GLuint unit);
+    void bind(binding::GLuint unit) const;
+    static void unbind(binding::GLuint unit);
 
-    void setParameter(gl::GLenum name, gl::GLint value);
-    void setParameter(gl::GLenum name, gl::GLfloat value);
+    void setParameter(binding::GLenum name, binding::GLint value);
+    void setParameter(binding::GLenum name, binding::GLfloat value);
 
-    gl::GLint getParameteri(gl::GLenum pname) const;
-    gl::GLfloat getParameterf(gl::GLenum pname) const;
+    binding::GLint getParameteri(binding::GLenum pname) const;
+    binding::GLfloat getParameterf(binding::GLenum pname) const;
 
-    virtual gl::GLenum objectType() const override;
+#ifdef GLOBJECTS_GL_BINDING
+    virtual binding::GLenum objectType() const override;
+#endif
 
 protected:
     Sampler(IDResource * resource);

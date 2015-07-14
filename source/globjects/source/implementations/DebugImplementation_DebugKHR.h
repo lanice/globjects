@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/base/Singleton.h>
 
@@ -20,13 +20,13 @@ public:
     virtual void disable() override;
     virtual void setSynchronous(bool synchronous) override;
     virtual void insertMessage(const DebugMessage & message) override;
-    virtual void controlMessages(gl::GLenum source, gl::GLenum type, gl::GLenum severity, gl::GLsizei count, const gl::GLuint * ids, gl::GLboolean enabled) override;
+    virtual void controlMessages(binding::GLenum source, binding::GLenum type, binding::GLenum severity, binding::GLsizei count, const binding::GLuint * ids, binding::GLboolean enabled) override;
 
 protected:
     bool m_isRegistered;
     void registerCallback();
 
-    static void GL_APIENTRY debugMessageCallback(gl::GLenum source, gl::GLenum type, gl::GLuint id, gl::GLenum severity, gl::GLsizei length, const char * message, const void * param);
+    static void GL_APIENTRY debugMessageCallback(binding::GLenum source, binding::GLenum type, binding::GLuint id, binding::GLenum severity, binding::GLsizei length, const char * message, const void * param);
 };
 
 } // namespace globjects

@@ -7,10 +7,10 @@
 #include <globjects/globjects.h>
 
 
-using namespace gl;
-
 namespace globjects 
 {
+
+using namespace binding;
 
 NamedStringRegistry::NamedStringRegistry()
 {
@@ -50,7 +50,11 @@ void NamedStringRegistry::deregisterNamedString(NamedString * namedString)
 
 bool NamedStringRegistry::hasNativeSupport()
 {
+#ifdef GLOBJECTS_GL_BINDING
     return hasExtension(GLextension::GL_ARB_shading_language_include);
+#else
+    return false;
+#endif
 }
 
 } // namespace globjects

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/base/Referenced.h>
 
@@ -14,28 +14,28 @@ class GLOBJECTS_API Sync : public Referenced
     friend class AbstractObjectNameImplementation;
 
 public:
-    static Sync * fence(gl::GLenum condition);
+    static Sync * fence(binding::GLenum condition);
 
     virtual ~Sync();
 
-    gl::GLenum clientWait(gl::SyncObjectMask flags, gl::GLuint64 timeout);
-    void wait(gl::GLuint64 timeout);
+    binding::GLenum clientWait(binding::SyncObjectMask flags, binding::GLuint64 timeout);
+    void wait(binding::GLuint64 timeout);
 
-    void get(gl::GLenum pname, gl::GLsizei bufsize, gl::GLsizei * length, gl::GLint * values);
-    gl::GLint get(gl::GLenum pname);
+    void get(binding::GLenum pname, binding::GLsizei bufsize, binding::GLsizei * length, binding::GLint * values);
+    binding::GLint get(binding::GLenum pname);
 
-    gl::GLsync sync() const;
-
-protected:
-    Sync(gl::GLsync sync);
-
-    void wait(gl::UnusedMask flags, gl::GLuint64 timeout);
-
-    static gl::GLsync fenceSync(gl::GLenum condition, gl::UnusedMask flags);
-    static Sync * fence(gl::GLenum condition, gl::UnusedMask flags);
+    binding::GLsync sync() const;
 
 protected:
-    gl::GLsync m_sync;
+    Sync(binding::GLsync sync);
+
+    void wait(binding::UnusedMask flags, binding::GLuint64 timeout);
+
+    static binding::GLsync fenceSync(binding::GLenum condition, binding::UnusedMask flags);
+    static Sync * fence(binding::GLenum condition, binding::UnusedMask flags);
+
+protected:
+    binding::GLsync m_sync;
     mutable void * m_objectLabelState;
 };
 

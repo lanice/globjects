@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/base/Singleton.h>
 
@@ -19,17 +19,19 @@ public:
     VertexAttributeBindingImplementation_Legacy();
     virtual ~VertexAttributeBindingImplementation_Legacy();
 
-    virtual void enable(const VertexArray * vertexArray, gl::GLint attributeIndex) const override;
-    virtual void disable(const VertexArray * vertexArray, gl::GLint attributeIndex) const override;
+    virtual void enable(const VertexArray * vertexArray, binding::GLint attributeIndex) const override;
+    virtual void disable(const VertexArray * vertexArray, binding::GLint attributeIndex) const override;
 
-    virtual void setAttributeDivisor(const VertexAttributeBinding * binding, gl::GLuint divisor) const override;
+    virtual void setAttributeDivisor(const VertexAttributeBinding * binding, binding::GLuint divisor) const override;
 
-    virtual void bindAttribute(const VertexAttributeBinding * binding, gl::GLint attributeIndex) const override;
-    virtual void bindBuffer(const VertexAttributeBinding * binding, const Buffer * vbo, gl::GLint baseoffset, gl::GLint stride) const override;
+    virtual void bindAttribute(const VertexAttributeBinding * binding, binding::GLint attributeIndex) const override;
+    virtual void bindBuffer(const VertexAttributeBinding * binding, const Buffer * vbo, binding::GLint baseoffset, binding::GLint stride) const override;
 
-    virtual void setFormat(const VertexAttributeBinding * binding, gl::GLint size, gl::GLenum type, gl::GLboolean normalized, gl::GLuint relativeoffset) const override;
-    virtual void setIFormat(const VertexAttributeBinding * binding, gl::GLint size, gl::GLenum type, gl::GLuint relativeoffset) const override;
-    virtual void setLFormat(const VertexAttributeBinding * binding, gl::GLint size, gl::GLenum type, gl::GLuint relativeoffset) const override;
+    virtual void setFormat(const VertexAttributeBinding * binding, binding::GLint size, binding::GLenum type, binding::GLboolean normalized, binding::GLuint relativeoffset) const override;
+    virtual void setIFormat(const VertexAttributeBinding * binding, binding::GLint size, binding::GLenum type, binding::GLuint relativeoffset) const override;
+#ifdef GLOBJECTS_GL_BINDING
+    virtual void setLFormat(const VertexAttributeBinding * binding, binding::GLint size, binding::GLenum type, binding::GLuint relativeoffset) const override;
+#endif
 
 protected:
 
@@ -39,17 +41,19 @@ protected:
         {
             O = 0
         ,   I = 1
+#ifdef GLOBJECTS_GL_BINDING
         ,   L = 2
+#endif
         };
 
         Format();
-        Format(Method method, gl::GLint size, gl::GLenum type, gl::GLboolean normalized, gl::GLuint relativeoffset);
+        Format(Method method, binding::GLint size, binding::GLenum type, binding::GLboolean normalized, binding::GLuint relativeoffset);
 
         Method        method;
-        gl::GLint     size;
-        gl::GLenum    type;
-        gl::GLboolean normalized;
-        gl::GLuint    relativeoffset;
+        binding::GLint     size;
+        binding::GLenum    type;
+        binding::GLboolean normalized;
+        binding::GLuint    relativeoffset;
     };
 
     struct BindingData
@@ -57,8 +61,8 @@ protected:
         BindingData();
 
         Format    format;
-        gl::GLint baseoffset;
-        gl::GLint stride;
+        binding::GLint baseoffset;
+        binding::GLint stride;
         bool      hasFormat;
         bool      hasBuffer;
         bool      hasAttribute;

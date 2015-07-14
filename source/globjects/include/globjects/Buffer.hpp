@@ -5,43 +5,43 @@
 namespace globjects {
 
 template <typename T>
-void Buffer::setData(const std::vector<T> & data, gl::GLenum usage)
+void Buffer::setData(const std::vector<T> & data, binding::GLenum usage)
 {
-    setData(static_cast<gl::GLsizeiptr>(data.size() * sizeof(T)), data.data(), usage);
+    setData(static_cast<binding::GLsizeiptr>(data.size() * sizeof(T)), data.data(), usage);
 }
 
 template <typename T, std::size_t Count>
-void Buffer::setData(const std::array<T, Count> & data, gl::GLenum usage)
+void Buffer::setData(const std::array<T, Count> & data, binding::GLenum usage)
 {
-    setData(static_cast<gl::GLsizeiptr>(Count * sizeof(T)), data.data(), usage);
+    setData(static_cast<binding::GLsizeiptr>(Count * sizeof(T)), data.data(), usage);
 }
 
 template <typename T>
-void Buffer::setSubData(const std::vector<T> & data, gl::GLintptr offset)
+void Buffer::setSubData(const std::vector<T> & data, binding::GLintptr offset)
 {
-    setSubData(offset, static_cast<gl::GLsizei>(data.size() * sizeof(T)), data.data());
+    setSubData(offset, static_cast<binding::GLsizei>(data.size() * sizeof(T)), data.data());
 }
 
 template <typename T, std::size_t Count>
-void Buffer::setSubData(const std::array<T, Count> & data, gl::GLintptr offset)
+void Buffer::setSubData(const std::array<T, Count> & data, binding::GLintptr offset)
 {
-    setSubData(offset, static_cast<gl::GLsizei>(Count * sizeof(T)), data.data());
+    setSubData(offset, static_cast<binding::GLsizei>(Count * sizeof(T)), data.data());
 }
 
 template <typename T>
-void Buffer::setStorage(const std::vector<T> & data, gl::BufferStorageMask flags)
+void Buffer::setStorage(const std::vector<T> & data, binding::BufferStorageMask flags)
 {
-    setStorage(static_cast<gl::GLsizei>(data.size() * sizeof(T)), data.data(), flags);
+    setStorage(static_cast<binding::GLsizei>(data.size() * sizeof(T)), data.data(), flags);
 }
 
 template <typename T, std::size_t Count>
-void Buffer::setStorage(const std::array<T, Count> & data, gl::BufferStorageMask flags)
+void Buffer::setStorage(const std::array<T, Count> & data, binding::BufferStorageMask flags)
 {
-    setStorage(static_cast<gl::GLsizei>(Count * sizeof(T)), data.data(), flags);
+    setStorage(static_cast<binding::GLsizei>(Count * sizeof(T)), data.data(), flags);
 }
 
 template <typename T>
-const std::vector<T> Buffer::getSubData(gl::GLsizeiptr size, gl::GLintptr offset) const
+const std::vector<T> Buffer::getSubData(binding::GLsizeiptr size, binding::GLintptr offset) const
 {
     std::vector<T> data(size);
 
@@ -51,11 +51,11 @@ const std::vector<T> Buffer::getSubData(gl::GLsizeiptr size, gl::GLintptr offset
 }
 
 template <typename T, std::size_t Count>
-const std::array<T, Count> Buffer::getSubData(gl::GLintptr offset) const
+const std::array<T, Count> Buffer::getSubData(binding::GLintptr offset) const
 {
     std::array<T, Count> data;
 
-    getSubData(offset, static_cast<gl::GLsizeiptr>(Count * sizeof(T)), data.data());
+    getSubData(offset, static_cast<binding::GLsizeiptr>(Count * sizeof(T)), data.data());
 
     return data;
 }

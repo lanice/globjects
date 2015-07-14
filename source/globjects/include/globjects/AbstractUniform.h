@@ -41,11 +41,11 @@ public:
     static void hintBindlessImplementation(const BindlessImplementation impl);
 
 public:
-    AbstractUniform(gl::GLint location);
+    AbstractUniform(binding::GLint location);
 	AbstractUniform(const std::string & name);
 
 	const std::string & name() const;
-    gl::GLint location() const;
+    binding::GLint location() const;
 
     const LocationIdentity & identity() const;
 
@@ -77,73 +77,73 @@ protected:
 
 	/** This function requires knowledge of the unifom's value.
 	*/
-    virtual void updateAt(const Program * program, gl::GLint location) const = 0;
+    virtual void updateAt(const Program * program, binding::GLint location) const = 0;
 
-    gl::GLint locationFor(const Program * program) const;
+    binding::GLint locationFor(const Program * program) const;
 
 protected:
-    void setValue(const Program * program, gl::GLint location, const float & value) const;
-    void setValue(const Program * program, gl::GLint location, const int & value) const;
-    void setValue(const Program * program, gl::GLint location, const unsigned int & value) const;
-    void setValue(const Program * program, gl::GLint location, const bool & value) const;
+    void setValue(const Program * program, binding::GLint location, const float & value) const;
+    void setValue(const Program * program, binding::GLint location, const int & value) const;
+    void setValue(const Program * program, binding::GLint location, const unsigned int & value) const;
+    void setValue(const Program * program, binding::GLint location, const bool & value) const;
 
-    void setValue(const Program * program, gl::GLint location, const glm::vec2 & value) const;
-    void setValue(const Program * program, gl::GLint location, const glm::vec3 & value) const;
-    void setValue(const Program * program, gl::GLint location, const glm::vec4 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::vec2 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::vec3 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::vec4 & value) const;
 
-    void setValue(const Program * program, gl::GLint location, const glm::ivec2 & value) const;
-    void setValue(const Program * program, gl::GLint location, const glm::ivec3 & value) const;
-    void setValue(const Program * program, gl::GLint location, const glm::ivec4 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::ivec2 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::ivec3 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::ivec4 & value) const;
 
-    void setValue(const Program * program, gl::GLint location, const glm::uvec2 & value) const;
-    void setValue(const Program * program, gl::GLint location, const glm::uvec3 & value) const;
-    void setValue(const Program * program, gl::GLint location, const glm::uvec4 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::uvec2 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::uvec3 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::uvec4 & value) const;
 
-    void setValue(const Program * program, gl::GLint location, const glm::mat2 & value) const;
-    void setValue(const Program * program, gl::GLint location, const glm::mat3 & value) const;
-    void setValue(const Program * program, gl::GLint location, const glm::mat4 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::mat2 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::mat3 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::mat4 & value) const;
 
-    void setValue(const Program * program, gl::GLint location, const glm::mat2x3 & value) const;
-    void setValue(const Program * program, gl::GLint location, const glm::mat3x2 & value) const;
-    void setValue(const Program * program, gl::GLint location, const glm::mat2x4 & value) const;
-    void setValue(const Program * program, gl::GLint location, const glm::mat4x2 & value) const;
-    void setValue(const Program * program, gl::GLint location, const glm::mat3x4 & value) const;
-    void setValue(const Program * program, gl::GLint location, const glm::mat4x3 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::mat2x3 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::mat3x2 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::mat2x4 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::mat4x2 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::mat3x4 & value) const;
+    void setValue(const Program * program, binding::GLint location, const glm::mat4x3 & value) const;
 
-    void setValue(const Program * program, gl::GLint location, const TextureHandle & value) const;
+    void setValue(const Program * program, binding::GLint location, const TextureHandle & value) const;
 
-    void setValue(const Program * program, gl::GLint location, const std::vector<float> & value) const;
-    void setValue(const Program * program, gl::GLint location, const std::vector<int> & value) const;
-    void setValue(const Program * program, gl::GLint location, const std::vector<unsigned int> & value) const;
-    void setValue(const Program * program, gl::GLint location, const std::vector<bool> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<float> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<int> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<unsigned int> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<bool> & value) const;
 
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::vec2> & value) const;
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::vec3> & value) const;
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::vec4> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::vec2> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::vec3> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::vec4> & value) const;
 
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::ivec2> & value) const;
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::ivec3> & value) const;
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::ivec4> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::ivec2> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::ivec3> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::ivec4> & value) const;
 
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::uvec2> & value) const;
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::uvec3> & value) const;
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::uvec4> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::uvec2> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::uvec3> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::uvec4> & value) const;
 
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::mat2> & value) const;
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::mat3> & value) const;
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::mat4> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::mat2> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::mat3> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::mat4> & value) const;
 
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::mat2x3> & value) const;
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::mat3x2> & value) const;
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::mat2x4> & value) const;
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::mat4x2> & value) const;
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::mat3x4> & value) const;
-    void setValue(const Program * program, gl::GLint location, const std::vector<glm::mat4x3> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::mat2x3> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::mat3x2> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::mat2x4> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::mat4x2> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::mat3x4> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<glm::mat4x3> & value) const;
 
-    void setValue(const Program * program, gl::GLint location, const std::vector<TextureHandle> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::vector<TextureHandle> & value) const;
 
     template <typename T, std::size_t Count>
-    void setValue(const Program * program, gl::GLint location, const std::array<T, Count> & value) const;
+    void setValue(const Program * program, binding::GLint location, const std::array<T, Count> & value) const;
 
 protected:
     LocationIdentity m_identity;

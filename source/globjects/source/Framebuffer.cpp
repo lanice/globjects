@@ -3,9 +3,9 @@
 
 #include <cassert>
 
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/enum.h>
-#include <glbinding/Meta.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/enum.h>
+#include <globjects/binding/Meta.h>
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -22,7 +22,6 @@
 
 #include "Resource.h"
 
-using namespace gl;
 
 namespace 
 {
@@ -37,6 +36,8 @@ const globjects::AbstractFramebufferImplementation & implementation()
 
 namespace globjects
 {
+
+using namespace binding;
 
 void Framebuffer::hintBindlessImplementation(const BindlessImplementation impl)
 {
@@ -238,7 +239,11 @@ void Framebuffer::colorMask(const glm::bvec4 & mask)
 
 void Framebuffer::colorMaski(const GLuint buffer, const GLboolean red, const GLboolean green, const GLboolean blue, const GLboolean alpha)
 {
+#ifdef GLOBJECTS_GL_BINDING
     glColorMaski(buffer, red, green, blue, alpha);
+#else
+    glColorMaskiEXT(buffer, red, green, blue, alpha);
+#endif
 }
 
 void Framebuffer::colorMaski(const GLuint buffer, const glm::bvec4 & mask)
@@ -258,7 +263,11 @@ void Framebuffer::clearColor(const glm::vec4 & color)
 
 void Framebuffer::clearDepth(const GLclampd depth)
 {
+#ifdef GLOBJECTS_GL_BINDING
     glClearDepth(depth);
+#else
+    glClearDepthf(static_cast<GLfloat>(depth));
+#endif
 }
 
 void Framebuffer::readPixels(const GLint x, const GLint y, const GLsizei width, const GLsizei height, const GLenum format, const GLenum type, GLvoid * data) const
@@ -338,7 +347,7 @@ GLenum Framebuffer::checkStatus() const
 
 std::string Framebuffer::statusString() const
 {
-    return glbinding::Meta::getString(checkStatus());
+    return binding::Meta::getString(checkStatus());
 }
 
 void Framebuffer::printStatus(bool onlyErrors) const
@@ -349,7 +358,7 @@ void Framebuffer::printStatus(bool onlyErrors) const
 
 	if (status == GL_FRAMEBUFFER_COMPLETE)
 	{
-        info() << glbinding::Meta::getString(GL_FRAMEBUFFER_COMPLETE);
+        info() << binding::Meta::getString(GL_FRAMEBUFFER_COMPLETE);
 	}
 	else
 	{
@@ -357,7 +366,7 @@ void Framebuffer::printStatus(bool onlyErrors) const
 		ss.flags(std::ios::hex | std::ios::showbase);
         ss << static_cast<unsigned int>(status);
 
-        critical() << glbinding::Meta::getString(status) << " (" << ss.str() << ")";
+        critical() << binding::Meta::getString(status) << " (" << ss.str() << ")";
 	}
 }
 
@@ -385,9 +394,11 @@ std::vector<FramebufferAttachment*> Framebuffer::attachments()
 	return attachments;
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 GLenum Framebuffer::objectType() const
 {
     return GL_FRAMEBUFFER;
 }
+#endif
 
 } // namespace globjects

@@ -4,6 +4,13 @@ if(OPTION_BUILD_EXAMPLES)
 
         # for compatibility between glm 0.9.4 and 0.9.5
         add_definitions("-DGLM_FORCE_RADIANS")
+        if (OPTION_GLES_BINDING)
+            add_definitions("-DGLOBJECTS_GLES_BINDING")
+            add_definitions("-DGLOBJECTS_NO_GL_BINDING")
+        else ()
+            add_definitions("-DGLOBJECTS_GL_BINDING")
+            add_definitions("-DGLOBJECTS_NO_GLES_BINDING")
+        endif ()
 
 	find_package(GLM REQUIRED)
 	find_package(GLFW REQUIRED)

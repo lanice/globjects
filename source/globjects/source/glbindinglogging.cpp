@@ -7,260 +7,261 @@
 #include <khrapi/Version.h>
 #include <khrapi/Value.h>
 
-#include <glbinding/Version.h>
-#include <glbinding/Meta.h>
-#include <glbinding/gl/typeintegrations.h>
+#include <globjects/binding/Meta.h>
+#include <globjects/binding/typeintegrations.h>
 
 
 namespace globjects 
 {
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const glbinding::Version & version)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const khrapi::AbstractVersion & version)
 {
     builder << "Version " << version.toString();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::GLboolean & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::GLboolean & value)
 {
-    builder << glbinding::Meta::getString(value);
+    builder << binding::Meta::getString(value);
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::GLenum & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::GLenum & value)
 {
-    builder << glbinding::Meta::getString(value);
+    builder << binding::Meta::getString(value);
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::GLextension & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::GLextension & value)
 {
-    builder << glbinding::Meta::getString(value);
+    builder << binding::Meta::getString(value);
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::AttribMask & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::AttribMask & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::AttribMask>(value).printOn(stream);
+    khrapi::Value<binding::AttribMask>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::ClearBufferMask & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::ClearBufferMask & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::ClearBufferMask>(value).printOn(stream);
+    khrapi::Value<binding::ClearBufferMask>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::ClientAttribMask & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::ContextFlagMask & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::ClientAttribMask>(value).printOn(stream);
+    khrapi::Value<binding::ContextFlagMask>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::ContextFlagMask & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::MapBufferUsageMask & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::ContextFlagMask>(value).printOn(stream);
+    khrapi::Value<binding::MapBufferUsageMask>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::ContextProfileMask & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::MemoryBarrierMask & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::ContextProfileMask>(value).printOn(stream);
+    khrapi::Value<binding::MemoryBarrierMask>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::FfdMaskSGIX & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::PathRenderingMaskNV & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::FfdMaskSGIX>(value).printOn(stream);
+    khrapi::Value<binding::PathRenderingMaskNV>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::FragmentShaderColorModMaskATI & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::PerformanceQueryCapsMaskINTEL & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::FragmentShaderColorModMaskATI>(value).printOn(stream);
+    khrapi::Value<binding::PerformanceQueryCapsMaskINTEL>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::FragmentShaderDestMaskATI & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::SyncObjectMask & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::FragmentShaderDestMaskATI>(value).printOn(stream);
+    khrapi::Value<binding::SyncObjectMask>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::FragmentShaderDestModMaskATI & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::UseProgramStageMask & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::FragmentShaderDestModMaskATI>(value).printOn(stream);
+    khrapi::Value<binding::UseProgramStageMask>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::MapBufferUsageMask & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::PathFontStyle & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::MapBufferUsageMask>(value).printOn(stream);
+    khrapi::Value<binding::PathFontStyle>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::MemoryBarrierMask & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::UnusedMask & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::MemoryBarrierMask>(value).printOn(stream);
+    khrapi::Value<binding::UnusedMask>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::PathRenderingMaskNV & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::BufferAccessMask & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::PathRenderingMaskNV>(value).printOn(stream);
+    khrapi::Value<binding::BufferAccessMask>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::PerformanceQueryCapsMaskINTEL & value)
+#ifdef GLOBJECTS_GL_BINDING
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::ClientAttribMask & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::PerformanceQueryCapsMaskINTEL>(value).printOn(stream);
+    khrapi::Value<binding::ClientAttribMask>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::SyncObjectMask & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::ContextProfileMask & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::SyncObjectMask>(value).printOn(stream);
+    khrapi::Value<binding::ContextProfileMask>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::TextureStorageMaskAMD & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::FfdMaskSGIX & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::TextureStorageMaskAMD>(value).printOn(stream);
+    khrapi::Value<binding::FfdMaskSGIX>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::UseProgramStageMask & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::FragmentShaderColorModMaskATI & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::UseProgramStageMask>(value).printOn(stream);
+    khrapi::Value<binding::FragmentShaderColorModMaskATI>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::VertexHintsMaskPGI & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::FragmentShaderDestMaskATI & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::VertexHintsMaskPGI>(value).printOn(stream);
+    khrapi::Value<binding::FragmentShaderDestMaskATI>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::PathFontStyle & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::FragmentShaderDestModMaskATI & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::PathFontStyle>(value).printOn(stream);
+    khrapi::Value<binding::FragmentShaderDestModMaskATI>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::UnusedMask & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::TextureStorageMaskAMD & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::UnusedMask>(value).printOn(stream);
+    khrapi::Value<binding::TextureStorageMaskAMD>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
 
-LogMessageBuilder operator<<(LogMessageBuilder builder, const gl::BufferAccessMask & value)
+LogMessageBuilder operator<<(LogMessageBuilder builder, const binding::VertexHintsMaskPGI & value)
 {
     std::ostringstream stream;
 
-    khrapi::Value<gl::BufferAccessMask>(value).printOn(stream);
+    khrapi::Value<binding::VertexHintsMaskPGI>(value).printOn(stream);
 
     builder << stream.str();
 
     return builder;
 }
+#endif
 
 } // namespace globjects

@@ -1,12 +1,12 @@
 
 #include <globjects/StateSetting.h>
 
-#include <glbinding/gl/enum.h>
-
-using namespace gl;
+#include <globjects/binding/enum.h>
 
 namespace globjects
 {
+
+using namespace binding;
 
 StateSettingType::StateSettingType()
 : m_functionIdentifier(nullptr)

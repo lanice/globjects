@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/globjects_api.h>
 #include <globjects/AbstractUniform.h>
@@ -33,8 +33,8 @@ template<typename T>
 class Uniform : public AbstractUniform
 {
 public:
-    Uniform(gl::GLint location);
-    Uniform(gl::GLint location, const T & value);
+    Uniform(binding::GLint location);
+    Uniform(binding::GLint location, const T & value);
     Uniform(const std::string & name);
     Uniform(const std::string & name, const T & value);
 
@@ -45,7 +45,7 @@ public:
 protected:
     virtual ~Uniform();
 
-    virtual void updateAt(const Program * program, gl::GLint location) const override;
+    virtual void updateAt(const Program * program, binding::GLint location) const override;
 
 protected:
     T m_value; ///< The uniforms value, explictly required when relinking programs.

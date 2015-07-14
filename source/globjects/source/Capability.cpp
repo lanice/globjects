@@ -1,16 +1,16 @@
 
 #include <globjects/Capability.h>
 
-#include <glbinding/gl/enum.h>
+#include <globjects/binding/enum.h>
 
 #include <globjects/State.h>
 #include <globjects/globjects.h>
 
 
-using namespace gl;
-
 namespace globjects 
 {
+
+using namespace binding;
 
 Capability::Capability(const GLenum capability)
 : m_capability(capability)

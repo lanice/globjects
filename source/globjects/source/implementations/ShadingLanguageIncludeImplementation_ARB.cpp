@@ -1,17 +1,17 @@
 
 #include "ShadingLanguageIncludeImplementation_ARB.h"
 
-#include <glbinding/gl/functions.h>
+#include <globjects/binding/functions.h>
 
 #include <globjects/Shader.h>
 
 #include <globjects/base/AbstractStringSource.h>
 
 
-using namespace gl;
-
 namespace globjects 
 {
+
+using namespace binding;
 
 void ShadingLanguageIncludeImplementation_ARB::updateSources(const Shader * shader) const
 {

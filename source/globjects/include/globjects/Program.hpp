@@ -65,7 +65,7 @@ void Program::setUniform(const std::string & name, const T & value)
 }
 
 template<typename T>
-void Program::setUniform(gl::GLint location, const T & value)
+void Program::setUniform(binding::GLint location, const T & value)
 {
     setUniformByIdentity(location, value);
 }
@@ -83,13 +83,13 @@ const Uniform<T> * Program::getUniform(const std::string & name) const
 }
 
 template<typename T>
-Uniform<T> * Program::getUniform(gl::GLint location)
+Uniform<T> * Program::getUniform(binding::GLint location)
 {
     return getUniformByIdentity<T>(location);
 }
 
 template<typename T>
-const Uniform<T> * Program::getUniform(gl::GLint location) const
+const Uniform<T> * Program::getUniform(binding::GLint location) const
 {
     return getUniformByIdentity<T>(location);
 }

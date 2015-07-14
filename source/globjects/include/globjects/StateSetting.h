@@ -3,7 +3,7 @@
 #include <functional>
 #include <set>
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/globjects_api.h>
 
@@ -22,11 +22,11 @@ public:
     bool operator==(const StateSettingType & other) const;
     std::size_t hash() const;
 
-    void specializeType(gl::GLenum subtype);
+    void specializeType(binding::GLenum subtype);
 
 protected:
     void * m_functionIdentifier;
-    std::set<gl::GLenum> m_subtypes;
+    std::set<binding::GLenum> m_subtypes;
 };
 
 

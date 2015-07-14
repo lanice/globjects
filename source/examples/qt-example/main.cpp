@@ -25,6 +25,7 @@
 
 #include <glbinding/gl/gl.h>
 #include <glbinding/ContextInfo.h>
+#include <glbinding/Version.h>
 
 #include <globjects/globjects.h>
 #include <globjects/Uniform.h>
@@ -79,9 +80,9 @@ public:
         DebugMessage::enable();
 
         std::cout << std::endl
-            << "OpenGL Version:  " << glbinding::ContextInfo::version() << std::endl
-            << "OpenGL Vendor:   " << glbinding::ContextInfo::vendor() << std::endl
-            << "OpenGL Renderer: " << glbinding::ContextInfo::renderer() << std::endl << std::endl;
+            << "OpenGL Version:  " << globjects::version() << std::endl
+            << "OpenGL Vendor:   " << globjects::vendor() << std::endl
+            << "OpenGL Renderer: " << globjects::renderer() << std::endl << std::endl;
 
 #ifdef __APPLE__
         Shader::clearGlobalReplacements();

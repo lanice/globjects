@@ -1,10 +1,10 @@
 #pragma once
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 namespace globjects 
 {
 
-using TextureHandle = gl::GLuint64;
+using TextureHandle = binding::GLuint64;
 
 } // namespace globjects

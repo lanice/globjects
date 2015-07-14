@@ -1,7 +1,7 @@
 #pragma once
 
-#include <glbinding/gl/types.h>
-#include <glbinding/gl/boolean.h>
+#include <globjects/binding/types.h>
+#include <globjects/binding/boolean.h>
 
 #include <globjects/base/Referenced.h>
 
@@ -21,35 +21,37 @@ class GLOBJECTS_API VertexAttributeBinding : public Referenced
 public:
 	VertexAttributeBinding(
         VertexArray * vao
-    ,   const gl::GLint bindingIndex);
+    ,   const binding::GLint bindingIndex);
 
     const VertexArray * vao() const;
     VertexArray * vao();
 
-    void setDivisor(gl::GLint divisor);
+    void setDivisor(binding::GLint divisor);
 
-	void setAttribute(gl::GLint attributeIndex);
+	void setAttribute(binding::GLint attributeIndex);
 	void setBuffer(
         const Buffer * vbo
-    ,   gl::GLint baseoffset
-    ,   gl::GLint stride);
+    ,   binding::GLint baseoffset
+    ,   binding::GLint stride);
 
 	void setFormat(
-        gl::GLint size
-    ,   gl::GLenum type
-    ,   gl::GLboolean normalized = gl::GL_FALSE
-    ,   gl::GLuint relativeoffset = 0);
+        binding::GLint size
+    ,   binding::GLenum type
+    ,   binding::GLboolean normalized = binding::GL_FALSE
+    ,   binding::GLuint relativeoffset = 0);
 	void setIFormat(
-        gl::GLint size
-    ,   gl::GLenum type
-    ,   gl::GLuint relativeoffset = 0);
+        binding::GLint size
+    ,   binding::GLenum type
+    ,   binding::GLuint relativeoffset = 0);
+#ifdef GLOBJECTS_GL_BINDING
 	void setLFormat(
-        gl::GLint size
-    ,   gl::GLenum type
-    ,   gl::GLuint relativeoffset = 0);
+        binding::GLint size
+    ,   binding::GLenum type
+    ,   binding::GLuint relativeoffset = 0);
+#endif
 
-    gl::GLint attributeIndex() const;
-    gl::GLint bindingIndex() const;
+    binding::GLint attributeIndex() const;
+    binding::GLint bindingIndex() const;
     const Buffer * buffer() const;
 
 protected:
@@ -58,8 +60,8 @@ protected:
 protected:
     VertexArray * m_vao; // TODO: weak_ptr?
    
-    gl::GLint m_bindingIndex;
-    gl::GLint m_attributeIndex;
+    binding::GLint m_bindingIndex;
+    binding::GLint m_attributeIndex;
     
     const Buffer * m_vbo;
 

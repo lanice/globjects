@@ -1,8 +1,8 @@
 #include <globjects/Texture.h>
 
-#include <glbinding/gl/enum.h>
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/boolean.h>
+#include <globjects/binding/enum.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/boolean.h>
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -13,10 +13,10 @@
 #include "Resource.h"
 
 
-using namespace gl;
-
 namespace globjects
 {
+
+using namespace binding;
 
 Texture::Texture()
 : Texture(GL_TEXTURE_2D)
@@ -136,6 +136,7 @@ GLint Texture::getLevelParameter(const GLint level, const GLenum pname) const
 	return value;
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 void Texture::getImage(const GLint level, const GLenum format, const GLenum type, GLvoid * image) const
 {
     bind();
@@ -193,6 +194,7 @@ void Texture::subImage1D(const GLint level, const GLint xOffset, const GLsizei w
 
     glTexSubImage1D(m_target, level, xOffset, width, format, type, data);
 }
+#endif
 
 void Texture::image2D(const GLint level, const GLenum internalFormat, const GLsizei width, const GLsizei height, const GLint border, const GLenum format, const GLenum type, const GLvoid* data)
 {
@@ -278,6 +280,7 @@ void Texture::subImage3D(const GLint level, const glm::ivec3& offset, const glm:
     subImage3D(level, offset.x, offset.y, offset.z, size.x, size.y, size.z, format, type, data);
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 void Texture::image2DMultisample(const GLsizei samples, const GLenum internalFormat, const GLsizei width, const GLsizei height, const GLboolean fixedSamplesLocations)
 {
     bind();
@@ -308,6 +311,7 @@ void Texture::storage1D(const GLsizei levels, const GLenum internalFormat, const
 
     glTexStorage1D(m_target, levels, internalFormat, width);
 }
+#endif
 
 void Texture::storage2D(const GLsizei levels, const GLenum internalFormat, const GLsizei width, const GLsizei height)
 {
@@ -335,14 +339,22 @@ void Texture::storage3D(const GLsizei levels, const GLenum internalFormat, const
 
 void Texture::textureView(const GLuint originalTexture, const GLenum internalFormat, const GLuint minLevel, const GLuint numLevels, const GLuint minLayer, const GLuint numLayers)
 {
+#ifdef GLOBJECTS_GL_BINDING
     glTextureView(id(), m_target, originalTexture, internalFormat, minLevel, numLevels, minLayer, numLayers);
+#else
+    glTextureViewEXT(id(), m_target, originalTexture, internalFormat, minLevel, numLevels, minLayer, numLayers);
+#endif
 }
 
 void Texture::texBuffer(const GLenum internalFormat, Buffer * buffer)
 {
     bind();
 
+#ifdef GLOBJECTS_GL_BINDING
     glTexBuffer(m_target, internalFormat, buffer ? buffer->id() : 0);
+#else
+    glTexBufferEXT(m_target, internalFormat, buffer ? buffer->id() : 0);
+#endif
 }
 
 void Texture::texBuffer(const GLenum activeTexture, const GLenum internalFormat, Buffer * buffer)
@@ -355,7 +367,11 @@ void Texture::texBufferRange(const GLenum internalFormat, Buffer * buffer, const
 {
     bind();
 
+#ifdef GLOBJECTS_GL_BINDING
     glTexBufferRange(m_target, internalFormat, buffer ? buffer->id() : 0, offset, size);
+#else
+    glTexBufferRangeEXT(m_target, internalFormat, buffer ? buffer->id() : 0, offset, size);
+#endif
 }
 
 void Texture::texBufferRange(const GLenum activeTexture, const GLenum internalFormat, Buffer * buffer, const GLintptr offset, const GLsizeiptr size)
@@ -364,6 +380,7 @@ void Texture::texBufferRange(const GLenum activeTexture, const GLenum internalFo
     texBufferRange(internalFormat, buffer, offset, size);
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 void Texture::clearImage(const GLint level, const GLenum format, const GLenum type, const void * data)
 {
     glClearTexImage(id(), level, format, type, data);
@@ -423,10 +440,11 @@ void Texture::invalidateSubImage(GLint level, const glm::ivec3& offset, const gl
 {
     invalidateSubImage(level, offset.x, offset.y, offset.z, size.x, size.y, size.z);
 }
+#endif
 
 void Texture::bindImageTexture(const GLuint unit, const GLint level, const GLboolean layered, const GLint layer, const GLenum access, const GLenum format) const
 {
-	glBindImageTexture(unit, id(), level, layered, layer, access, format);
+    glBindImageTexture(unit, id(), level, layered, layer, access, format);
 }
 
 void Texture::unbindImageTexture(const GLuint unit)
@@ -449,26 +467,42 @@ void Texture::accept(ObjectVisitor& visitor)
 
 TextureHandle Texture::textureHandle() const
 {
+#ifdef GLOBJECTS_GL_BINDING
     return glGetTextureHandleARB(id());
+#else
+    return glGetTextureHandleNV(id());
+#endif
 }
 
 bool Texture::isResident() const
 {
+#ifdef GLOBJECTS_GL_BINDING
     return glIsTextureHandleResidentARB(textureHandle()) == GL_TRUE;
+#else
+    return glIsTextureHandleResidentNV(textureHandle()) == GL_TRUE;
+#endif
 }
 
 TextureHandle Texture::makeResident() const
 {
     TextureHandle handle = textureHandle();
 
+#ifdef GLOBJECTS_GL_BINDING
     glMakeTextureHandleResidentARB(handle);
+#else
+    glMakeTextureHandleResidentNV(handle);
+#endif
 
 	return handle;
 }
 
 void Texture::makeNonResident() const
 {
+#ifdef GLOBJECTS_GL_BINDING
     glMakeTextureHandleNonResidentARB(textureHandle());
+#else
+    glMakeTextureHandleNonResidentNV(textureHandle());
+#endif
 }
 
 void Texture::pageCommitment(const GLint level, const GLint xOffset, const GLint yOffset, const GLint zOffset, const GLsizei width, const GLsizei height, const GLsizei depth, const GLboolean commit) const
@@ -483,9 +517,11 @@ void Texture::pageCommitment(const GLint level, const glm::ivec3& offset, const 
     pageCommitment(level, offset.x, offset.y, offset.z, size.x, size.y, size.z, commit);
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 GLenum Texture::objectType() const
 {
     return GL_TEXTURE;
 }
+#endif
 
 } // namespace globjects

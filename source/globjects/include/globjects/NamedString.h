@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/base/ChangeListener.h>
 #include <globjects/base/ref_ptr.h>
@@ -26,19 +26,21 @@ public:
 public:
     const std::string & name() const;
     std::string string() const;
-    gl::GLenum type() const;
+    binding::GLenum type() const;
 
     AbstractStringSource * stringSource() const;
 
-    gl::GLint getParameter(gl::GLenum pname) const;
+#ifdef GLOBJECTS_GL_BINDING
+    binding::GLint getParameter(binding::GLenum pname) const;
+#endif
 
     virtual void notifyChanged(const Changeable * changeable) override;
 
 protected:
     static bool hasNativeSupport();
 
-    static NamedString * create(const std::string & name, AbstractStringSource * string, gl::GLenum type);
-    static NamedString * create(const std::string & name, const std::string & string, gl::GLenum type);
+    static NamedString * create(const std::string & name, AbstractStringSource * string, binding::GLenum type);
+    static NamedString * create(const std::string & name, const std::string & string, binding::GLenum type);
 
 protected:
     void updateString();
@@ -46,7 +48,7 @@ protected:
     void createNamedString();
     void deleteNamedString();
 
-    NamedString(const std::string & name, AbstractStringSource * source, gl::GLenum type);
+    NamedString(const std::string & name, AbstractStringSource * source, binding::GLenum type);
 
     virtual ~NamedString();
 
@@ -57,7 +59,7 @@ protected:
     std::string m_name;
 
     ref_ptr<AbstractStringSource> m_source;
-    gl::GLenum m_type;
+    binding::GLenum m_type;
 };
 
 } // namespace globjects

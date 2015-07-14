@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/globjects_api.h>
 #include <globjects/Object.h>
@@ -22,18 +22,20 @@ public:
     void bind() const;
     static void unbind();
 
-    void storage(gl::GLenum internalformat, gl::GLsizei width, gl::GLsizei height);
-    void storageMultisample(gl::GLsizei samples, gl::GLenum internalformat, gl::GLsizei width, gl::GLsizei height);
+    void storage(binding::GLenum internalformat, binding::GLsizei width, binding::GLsizei height);
+    void storageMultisample(binding::GLsizei samples, binding::GLenum internalformat, binding::GLsizei width, binding::GLsizei height);
 
-    gl::GLint getParameter(gl::GLenum pname) const;
+    binding::GLint getParameter(binding::GLenum pname) const;
 
-    virtual gl::GLenum objectType() const override;
+#ifdef GLOBJECTS_GL_BINDING
+    virtual binding::GLenum objectType() const override;
+#endif
 
 protected:
     virtual ~Renderbuffer();
 
-    void bind(gl::GLenum target) const;
-    static void unbind(gl::GLenum target);
+    void bind(binding::GLenum target) const;
+    static void unbind(binding::GLenum target);
 };
 
 } // namespace globjects

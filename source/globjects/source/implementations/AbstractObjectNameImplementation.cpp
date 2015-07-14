@@ -1,7 +1,7 @@
 
 #include "AbstractObjectNameImplementation.h"
 
-#include <glbinding/gl/enum.h>
+#include <globjects/binding/enum.h>
 
 #include <globjects/globjects.h>
 
@@ -11,9 +11,9 @@
 #include "ObjectNameImplementation_KHR_debug.h"
 #include "ObjectNameImplementation_Legacy.h"
 
-using namespace gl;
-
 namespace globjects {
+
+using namespace binding;
 
 AbstractObjectNameImplementation::AbstractObjectNameImplementation()
 {

@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <globjects/base/Referenced.h>
 
@@ -36,7 +36,7 @@ public:
 public:
     virtual void accept(ObjectVisitor & visitor) = 0;
 
-    gl::GLuint id() const;
+    binding::GLuint id() const;
 
     std::string name() const;
     void setName(const std::string & name);
@@ -44,7 +44,9 @@ public:
 
     bool isDefault() const;
 
-    virtual gl::GLenum objectType() const = 0;
+#ifdef GLOBJECTS_GL_BINDING
+    virtual binding::GLenum objectType() const = 0;
+#endif
 
     /** unlinks and destroys the associated opengl object
     */

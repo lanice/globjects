@@ -1,17 +1,17 @@
 #include <globjects/Renderbuffer.h>
 
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/enum.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/enum.h>
 
 #include <globjects/ObjectVisitor.h>
 
 #include "Resource.h"
 
 
-using namespace gl;
-
 namespace globjects
 {
+
+using namespace binding;
 
 Renderbuffer::Renderbuffer()
 : Object(new RenderBufferObjectResource)
@@ -72,9 +72,11 @@ GLint Renderbuffer::getParameter(const GLenum pname) const
 	return value;
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 GLenum Renderbuffer::objectType() const
 {
     return GL_RENDERBUFFER;
 }
+#endif
 
 } // namespace globjects
