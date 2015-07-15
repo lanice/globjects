@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-#include <glbinding/Version.h>
+#include <globjects/binding/Version.h>
 
 
 class ContextFormat
@@ -60,18 +60,18 @@ public:
     Note: OpenGL versions previous to 3.2. are not supported and might not
     work. It is not taken into account in the development of globjects.
     */
-    void setVersion(const glbinding::Version & version);
+    void setVersion(const globjects::binding::Version & version);
     void setVersion(unsigned int majorVersion, unsigned int minorVersion);
 
     /** Validates requested version itself and clamps to maximum
     */
-    static glbinding::Version validateVersion(
-        const glbinding::Version & requestedVersion
-      , const glbinding::Version & supportedMaximumVersion);
+    static globjects::binding::Version validateVersion(
+        const globjects::binding::Version & requestedVersion
+      , const globjects::binding::Version & supportedMaximumVersion);
 
     int majorVersion() const;
     int minorVersion() const;
-    const glbinding::Version & version() const;
+    const globjects::binding::Version & version() const;
 
     Profile profile() const;
     void setProfile(Profile profile);
@@ -119,7 +119,7 @@ protected:
         , std::vector<std::string> & issues);
 
 protected:
-    glbinding::Version m_version;
+    globjects::binding::Version m_version;
 
     Profile m_profile;
 

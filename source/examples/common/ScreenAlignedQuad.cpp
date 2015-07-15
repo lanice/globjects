@@ -3,9 +3,9 @@
 #include <cassert>
 #include <array>
 
-#include <glbinding/gl/enum.h>
-#include <glbinding/gl/functions.h>
-#include <glbinding/gl/typeintegrations.h>
+#include <globjects/binding/enum.h>
+#include <globjects/binding/functions.h>
+#include <globjects/binding/typeintegrations.h>
 
 #include <globjects/base/StaticStringSource.h>
 
@@ -19,7 +19,6 @@
 #include <globjects/base/StringTemplate.h>
 
 
-using namespace gl;
 using namespace glm;
 using namespace globjects;
 
@@ -66,10 +65,10 @@ ScreenAlignedQuad::ScreenAlignedQuad(
     StringTemplate * vertexShaderSource   = new StringTemplate(new StaticStringSource(s_defaultVertexShaderSource));
     StringTemplate * fragmentShaderSource = new StringTemplate(new StaticStringSource(s_defaultFagmentShaderSource));
     
-    m_vertexShader   = new Shader(GL_VERTEX_SHADER, vertexShaderSource);
+    m_vertexShader   = new Shader(binding::GL_VERTEX_SHADER, vertexShaderSource);
     
     if (!m_fragmentShader)
-        m_fragmentShader = new Shader(GL_FRAGMENT_SHADER, fragmentShaderSource);
+        m_fragmentShader = new Shader(binding::GL_FRAGMENT_SHADER, fragmentShaderSource);
 
     m_program->attach(m_vertexShader, m_fragmentShader);
 
@@ -108,12 +107,12 @@ void ScreenAlignedQuad::initialize()
     m_vao = new VertexArray;
 
     m_buffer = new Buffer();
-    m_buffer->setData(raw, GL_STATIC_DRAW); //needed for some drivers
+    m_buffer->setData(raw, binding::GL_STATIC_DRAW); //needed for some drivers
 
 	auto binding = m_vao->binding(0);
 	binding->setAttribute(0);
 	binding->setBuffer(m_buffer, 0, sizeof(vec2));
-	binding->setFormat(2, GL_FLOAT, GL_FALSE, 0);
+    binding->setFormat(2, binding::GL_FLOAT, binding::GL_FALSE, 0);
 	m_vao->enable(0);
 
     setSamplerUniform(0);
@@ -123,12 +122,12 @@ void ScreenAlignedQuad::draw()
 {
     if (m_texture)
 	{
-        glActiveTexture(GL_TEXTURE0 + m_samplerIndex);
+        glActiveTexture(binding::GL_TEXTURE0 + m_samplerIndex);
         m_texture->bind();
 	}
 
     m_program->use();
-    m_vao->drawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    m_vao->drawArrays(binding::GL_TRIANGLE_STRIP, 0, 4);
     m_program->release();
 
 	if (m_texture)

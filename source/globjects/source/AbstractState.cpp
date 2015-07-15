@@ -134,14 +134,18 @@ void AbstractState::pointSize(const GLfloat size)
 {
     add(new StateSetting(glPointSize, size));
 }
+#endif
 
 void AbstractState::polygonMode(const GLenum face, const GLenum mode)
 {
+#ifdef GLOBJECTS_GL_BINDING
     auto setting = new StateSetting(glPolygonMode, face, mode);
+#else
+    auto setting = new StateSetting(glPolygonModeNV, face, mode);
+#endif
     setting->type().specializeType(face);
     add(setting);
 }
-#endif
 
 void AbstractState::polygonOffset(const GLfloat factor, const GLfloat units)
 {

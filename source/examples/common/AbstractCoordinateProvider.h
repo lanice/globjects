@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glbinding/gl/types.h>
+#include <globjects/binding/types.h>
 
 #include <glm/glm.hpp>
 
@@ -22,14 +22,14 @@ class AbstractCoordinateProvider
 public:
     static float depthAt(
         const Camera & camera
-    ,   const gl::GLenum depthFormat
+    ,   const globjects::binding::GLenum depthFormat
     ,   const glm::ivec2 & windowCoordinates);
 
     static bool validDepth(const float depth);
 
     static const glm::vec3 unproject(
         const Camera & camera
-    ,   const gl::GLenum depthFormat
+    ,   const globjects::binding::GLenum depthFormat
     ,   const glm::ivec2 & windowCoordinates);
 
     static const glm::vec3 unproject(

@@ -3,8 +3,7 @@
 #include <cassert>
 #include <cmath>
 
-#include <glbinding/gl/enum.h>
-#include <glbinding/gl/boolean.h>
+#include <globjects/binding/boolean.h>
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
@@ -14,7 +13,6 @@
 #include <common/events.h>
 
 
-using namespace gl;
 using namespace glm;
 
 WindowEventDispatcher::Timer::Timer()
@@ -211,7 +209,7 @@ void WindowEventDispatcher::handleCursorPos(GLFWwindow * glfwWindow, double xPos
 
 void WindowEventDispatcher::handleCursorEnter(GLFWwindow * glfwWindow, int entered)
 {
-    if (entered == static_cast<int>(GL_TRUE))
+    if (entered == static_cast<int>(globjects::binding::GL_TRUE))
         dispatchEvent(glfwWindow, new MouseEnterEvent);
     else
         dispatchEvent(glfwWindow, new MouseLeaveEvent);
@@ -239,12 +237,12 @@ void WindowEventDispatcher::handleMove(GLFWwindow * glfwWindow, int x, int y)
 
 void WindowEventDispatcher::handleFocus(GLFWwindow * glfwWindow, int focused)
 {
-    dispatchEvent(glfwWindow, new FocusEvent(focused == static_cast<int>(GL_TRUE)));
+    dispatchEvent(glfwWindow, new FocusEvent(focused == static_cast<int>(globjects::binding::GL_TRUE)));
 }
 
 void WindowEventDispatcher::handleIconify(GLFWwindow * glfwWindow, int iconified)
 {
-    dispatchEvent(glfwWindow, new IconifyEvent(iconified == static_cast<int>(GL_TRUE)));
+    dispatchEvent(glfwWindow, new IconifyEvent(iconified == static_cast<int>(globjects::binding::GL_TRUE)));
 }
 
 void WindowEventDispatcher::handleClose(GLFWwindow * glfwWindow)

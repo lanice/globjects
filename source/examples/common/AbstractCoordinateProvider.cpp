@@ -1,15 +1,15 @@
 #include <common/AbstractCoordinateProvider.h>
 
-#include <glbinding/gl/enum.h>
-#include <glbinding/gl/functions.h>
+#include <globjects/binding/enum.h>
+#include <globjects/binding/functions.h>
 
 #include <glm/glm.hpp>
 
 #include <common/Camera.h>
 
 
-using namespace gl;
 using namespace glm;
+using namespace globjects::binding;
 
 float AbstractCoordinateProvider::depthAt(
     const Camera & camera

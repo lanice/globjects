@@ -3,8 +3,8 @@
 #include <string>
 #include <vector>
 
-#include <glbinding/ContextHandle.h>
-#include <glbinding/Version.h>
+#include <globjects/binding/ContextHandle.h>
+#include <globjects/binding/Version.h>
 
 
 struct GLFWwindow;
@@ -19,7 +19,7 @@ public:
 
     /** note: requires that glfw::init was previously called 
     */
-    static glbinding::Version maxSupportedVersion();
+    static globjects::binding::Version maxSupportedVersion();
 
     enum class SwapInterval : int
     {
@@ -53,7 +53,7 @@ public:
 
     /** returns the context's handle - if this is somehow encapsulated tryFetchHandle for retrieval.
     */
-    virtual glbinding::ContextHandle handle() const;
+    virtual globjects::binding::ContextHandle handle() const;
 
     /** this should be in sync to the created context, not the requested one
     */
@@ -80,7 +80,7 @@ protected:
     /** operates by making the context current and fetching its context handle
         note: this is not thread safe, so this might result in errorneuos behavior or wrong handle.
     */
-    static glbinding::ContextHandle tryFetchHandle();
+    static globjects::binding::ContextHandle tryFetchHandle();
 
 protected:
     SwapInterval m_swapInterval;
@@ -88,5 +88,5 @@ protected:
     mutable ContextFormat * m_format;
 
     GLFWwindow * m_window;
-    glbinding::ContextHandle m_handle;
+    globjects::binding::ContextHandle m_handle;
 };

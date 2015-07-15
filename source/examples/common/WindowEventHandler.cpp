@@ -5,19 +5,17 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-#include <glbinding/gl/gl.h>
-
 #include <globjects/globjects.h>
 #include <globjects/DebugMessage.h>
 
 #include <globjects/base/File.h>
 #include <globjects/base/baselogging.h>
 
+#include <globjects/binding/functions.h>
+
 #include <common/events.h>
 #include <common/Window.h>
 
-
-using namespace gl;
 using namespace globjects;
 
 WindowEventHandler::WindowEventHandler()
@@ -106,12 +104,17 @@ void WindowEventHandler::initialize(Window &)
 {
     init();
     DebugMessage::enable();
+    
+    Shader::clearGlobalReplacements();
 
 #ifdef __APPLE__
-    Shader::clearGlobalReplacements();
     Shader::globalReplace("#version 140", "#version 150");
 
     debug() << "Using global OS X shader replacement '#version 140' -> '#version 150'" << std::endl;
+#elif GLOBJECTS_GLES_BINDING
+    Shader::globalReplace("#version 140", "#version 100 es");
+
+    debug() << "Using global GLES shader replacement '#version 140' -> '#version 100 es'" << std::endl;
 #endif
 }
 
@@ -131,7 +134,7 @@ void WindowEventHandler::resizeEvent(ResizeEvent &)
 
 void WindowEventHandler::framebufferResizeEvent(ResizeEvent & event)
 {
-    glViewport(0, 0, event.width(), event.height());
+    binding::glViewport(0, 0, event.width(), event.height());
 }
 
 void WindowEventHandler::moveEvent(MoveEvent &)

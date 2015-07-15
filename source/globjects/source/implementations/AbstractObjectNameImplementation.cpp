@@ -8,7 +8,9 @@
 #include <globjects/Object.h>
 #include <globjects/Sync.h>
 
+#ifdef GLOBJECTS_GL_BINDING
 #include "ObjectNameImplementation_KHR_debug.h"
+#endif
 #include "ObjectNameImplementation_Legacy.h"
 
 namespace globjects {
@@ -25,15 +27,21 @@ AbstractObjectNameImplementation::~AbstractObjectNameImplementation()
 
 AbstractObjectNameImplementation * AbstractObjectNameImplementation::get(const Object::NameImplementation impl)
 {
+#ifdef GLOBJECTS_GL_BINDING
     if (impl == Object::NameImplementation::DebugKHR
      && hasExtension(GLextension::GL_KHR_debug))
     {
-        return new ObjectNameImplementation_KHR_debug();
+        return new ObjectNameImplementation_KHR_debug::instance();
     }
     else
     {
-        return new ObjectNameImplementation_Legacy();
+        return new ObjectNameImplementation_Legacy::instance();
     }
+
+#else
+    (void) impl; // unused
+    return ObjectNameImplementation_Legacy::instance();
+#endif
 }
 
 void * AbstractObjectNameImplementation::objectLabelState(const Object * object) const

@@ -11,10 +11,7 @@ add_subdirectory(globjects)
 
 # Examples
 set(IDE_FOLDER "Examples")
-
-if (NOT OPTION_GLES_BINDING)
-    add_subdirectory(examples)
-endif ()
+add_subdirectory(examples)
 
 # Tests
 set(IDE_FOLDER "Tests")

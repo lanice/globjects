@@ -12,7 +12,7 @@ using namespace globjects;
 
 
 ContextFormat::ContextFormat()
-: m_version(glbinding::Version(4, 5))
+: m_version(binding::Version(4, 5))
 , m_profile(Profile::None)
 , m_debugContext(false)
 , m_forwardCompatibility(false)
@@ -36,33 +36,33 @@ void ContextFormat::setVersion(
     const unsigned int majorVersion
 ,   const unsigned int minorVersion)
 {
-    setVersion(glbinding::Version(majorVersion, minorVersion));
+    setVersion(globjects::binding::Version(majorVersion, minorVersion));
 }
 
-void ContextFormat::setVersion(const glbinding::Version & version)
+void ContextFormat::setVersion(const globjects::binding::Version & version)
 {
     m_version = version;
 }
 
-glbinding::Version ContextFormat::validateVersion(
-    const glbinding::Version & requestedVersion
-,   const glbinding::Version & supportedMaximumVersion)
+binding::Version ContextFormat::validateVersion(
+    const binding::Version & requestedVersion
+,   const binding::Version & supportedMaximumVersion)
 {
 #ifdef __APPLE__
-    return glbinding::Version(3, 2);
+    return globjects::binding::Version(3, 2);
 #endif
 
-    glbinding::Version maxv(supportedMaximumVersion);
+    binding::Version maxv(supportedMaximumVersion);
 
     if (maxv.isNull())
-        maxv = glbinding::Version(3, 0);
+        maxv = globjects::binding::Version(3, 0);
 
     if (requestedVersion.isNull() || requestedVersion > maxv)
         return maxv;
 
     if (!requestedVersion.isValid())
     {
-        glbinding::Version nearest = requestedVersion.nearest();
+        globjects::binding::Version nearest = requestedVersion.nearest();
         return nearest > maxv ? maxv : nearest;
     }
     return requestedVersion;
@@ -78,7 +78,7 @@ int ContextFormat::minorVersion() const
     return m_version.m_minor;
 }
 
-const glbinding::Version & ContextFormat::version() const
+const binding::Version & ContextFormat::version() const
 {
     return m_version;
 }

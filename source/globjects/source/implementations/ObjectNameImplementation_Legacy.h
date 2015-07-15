@@ -1,11 +1,13 @@
 #pragma once
 
 #include "AbstractObjectNameImplementation.h"
+#include <globjects/base/Singleton.h>
 
 namespace globjects
 {
 
 class ObjectNameImplementation_Legacy : public AbstractObjectNameImplementation
+        , public Singleton<ObjectNameImplementation_Legacy>
 {
 public:
     ObjectNameImplementation_Legacy();

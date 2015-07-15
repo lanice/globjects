@@ -55,17 +55,17 @@ void ExtensionRegistry::initialize()
     m_initialized = true;
 }
 
-#ifdef GLOBJECTS_GL_BINDING
 bool ExtensionRegistry::hasExtension(GLextension extension)
 {
     initialize();
 
+#ifdef GLOBJECTS_GL_BINDING
     if (isInCoreProfile(extension))
         return true;
+#endif
 
     return m_availableExtensions.find(extension) != m_availableExtensions.end();
 }
-#endif
 
 bool ExtensionRegistry::hasExtension(const std::string & extensionName)
 {

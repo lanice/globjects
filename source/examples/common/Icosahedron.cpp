@@ -3,8 +3,8 @@
 #include <iterator>
 #include <algorithm>
 
-#include <glbinding/gl/enum.h>
-#include <glbinding/gl/functions.h>
+#include <globjects/binding/enum.h>
+#include <globjects/binding/functions.h>
 
 #include <glm/glm.hpp>
 
@@ -13,9 +13,9 @@
 #include <globjects/Buffer.h>
 
 
-using namespace gl;
 using namespace glm;
 using namespace globjects;
+using namespace globjects::binding;
 
 const std::array<vec3, 12> Icosahedron::vertices()
 {

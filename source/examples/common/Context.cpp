@@ -4,12 +4,9 @@
 #include <cassert>
 #include <map>
 
-#include <glbinding/gl/gl.h>
-
-#include <glbinding/ContextInfo.h>
-#include <glbinding/ProcAddress.h>
-#include <glbinding/Binding.h>
-#include <glbinding/Version.h>
+#include <globjects/binding/ContextInfo.h>
+#include <globjects/binding/Binding.h>
+#include <globjects/binding/Version.h>
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h> // specifies APIENTRY, should be after Error.h include,
@@ -21,12 +18,12 @@
 #include <common/ContextFormat.h>
 
 
-using namespace gl;
 using namespace globjects;
+using namespace globjects::binding;
 
-glbinding::Version Context::maxSupportedVersion()
+binding::Version Context::maxSupportedVersion()
 {
-    glbinding::Version version;
+    binding::Version version;
 
     /* GLFW3 does not set default hint values on window creation so at least
     the default values must be set before glfwCreateWindow can be called.
@@ -54,8 +51,8 @@ glbinding::Version Context::maxSupportedVersion()
     {
         glfwMakeContextCurrent(window);
 
-        glbinding::Binding::initialize(false);
-        version = glbinding::ContextInfo::version();
+        binding::Binding::initialize(false);
+        version = binding::ContextInfo::version();
 
         glfwMakeContextCurrent(nullptr);
         glfwDestroyWindow(window);
@@ -70,7 +67,7 @@ GLFWwindow * Context::create(
 ,   int height
 ,   GLFWmonitor * monitor)
 {
-    glbinding::Version version = format.version();
+    binding::Version version = format.version();
 
     if (verify) // check if version is valid and supported
         version = ContextFormat::validateVersion(format.version(), maxSupportedVersion());
@@ -93,13 +90,13 @@ GLFWwindow * Context::create(
 
 #else
 
-    if (version >= glbinding::Version(3, 0))
+    if (version >= binding::Version(3, 0))
     {
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, format.forwardCompatible());
         glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, format.debugContext());
     }
 
-    if (version >= glbinding::Version(3, 2))
+    if (version >= binding::Version(3, 2))
     {
         glfwWindowHint(GLFW_OPENGL_PROFILE, format.profile() == ContextFormat::Profile::Core ? GLFW_OPENGL_CORE_PROFILE :
             (format.profile() == ContextFormat::Profile::Compatibility ? GLFW_OPENGL_COMPAT_PROFILE : GLFW_OPENGL_ANY_PROFILE));
@@ -123,7 +120,7 @@ GLFWwindow * Context::create(
     if (window)
     {
         glfwMakeContextCurrent(window);
-        glbinding::Binding::initialize(false);
+        binding::Binding::initialize(false);
         glfwMakeContextCurrent(nullptr);
     }
     return window;
@@ -165,20 +162,20 @@ Context::~Context()
 
 std::string Context::version()
 {
-    assert(0 != glbinding::getCurrentContext());
-    return glbinding::ContextInfo::version().toString();
+    assert(0 != binding::getCurrentContext());
+    return binding::ContextInfo::version().toString();
 }
 
 std::string Context::vendor()
 {
-    assert(0 != glbinding::getCurrentContext());
-    return glbinding::ContextInfo::vendor();
+    assert(0 != binding::getCurrentContext());
+    return binding::ContextInfo::vendor();
 }
 
 std::string Context::renderer()
 {
-    assert(0 != glbinding::getCurrentContext());
-    return glbinding::ContextInfo::renderer();
+    assert(0 != binding::getCurrentContext());
+    return binding::ContextInfo::renderer();
 }
 
 bool Context::isValid() const
@@ -186,9 +183,9 @@ bool Context::isValid() const
     return 0 < handle();
 }
 
-glbinding::ContextHandle Context::tryFetchHandle()
+binding::ContextHandle Context::tryFetchHandle()
 {
-    const glbinding::ContextHandle handle = glbinding::getCurrentContext();
+    const binding::ContextHandle handle = binding::getCurrentContext();
 
     if (0 == handle)
         critical("Acquiring OpenGL context handle failed.");
@@ -218,7 +215,7 @@ void Context::setSwapInterval(const SwapInterval interval)
 
     bool result(false);
     if (!wglSwapIntervalEXT)
-        wglSwapIntervalEXT = reinterpret_cast<SWAPINTERVALEXTPROC>(glbinding::getProcAddress("wglSwapIntervalEXT"));
+        wglSwapIntervalEXT = reinterpret_cast<SWAPINTERVALEXTPROC>(glfwGetProcAddress("wglSwapIntervalEXT"));
     if (wglSwapIntervalEXT)
         result = wglSwapIntervalEXT(static_cast<int>(interval));
 
@@ -237,7 +234,7 @@ void Context::setSwapInterval(const SwapInterval interval)
     m_swapInterval = interval;
 }
 
-glbinding::ContextHandle Context::handle() const
+binding::ContextHandle Context::handle() const
 {
     return m_handle;
 }
@@ -257,9 +254,9 @@ const ContextFormat & Context::format() const
     if (current != m_window)
         glfwMakeContextCurrent(m_window);
  
-    m_format->setVersion(glbinding::ContextInfo::version());
+    m_format->setVersion(binding::ContextInfo::version());
 
-    if (m_format->version() >= glbinding::Version(3, 2))
+    if (m_format->version() >= binding::Version(3, 2))
         m_format->setProfile(isCoreProfile() ? ContextFormat::Profile::Core : ContextFormat::Profile::Compatibility);
     else
         m_format->setProfile(ContextFormat::Profile::None);

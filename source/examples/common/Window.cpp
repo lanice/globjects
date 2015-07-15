@@ -3,8 +3,8 @@
 #include <cassert>
 #include <iostream>
 
-#include <glbinding/ContextInfo.h>
-#include <glbinding/Version.h>
+#include <globjects/binding/ContextInfo.h>
+#include <globjects/binding/Version.h>
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
@@ -157,9 +157,9 @@ bool Window::create(const ContextFormat & format, int width, int height)
 
     context()->makeCurrent();
     std::cout << std::endl
-        << "OpenGL Version:  " << glbinding::ContextInfo::version() << std::endl
-        << "OpenGL Vendor:   " << glbinding::ContextInfo::vendor() << std::endl
-        << "OpenGL Renderer: " << glbinding::ContextInfo::renderer() << std::endl << std::endl;
+        << "OpenGL Version:  " << binding::ContextInfo::version() << std::endl
+        << "OpenGL Vendor:   " << binding::ContextInfo::vendor() << std::endl
+        << "OpenGL Renderer: " << binding::ContextInfo::renderer() << std::endl << std::endl;
     context()->doneCurrent();
 
     return true;

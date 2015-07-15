@@ -5,7 +5,7 @@
 #include <globjects/Buffer.h>
 
 
-using namespace gl;
+using namespace globjects::binding;
 
 VertexDrawable::AttributeFormat::AttributeFormat()
 : size(0)
@@ -35,9 +35,11 @@ void VertexDrawable::AttributeFormat::setTo(globjects::VertexAttributeBinding * 
     case Integer:
         binding->setIFormat(size, type, relativeOffset);
         break;
+#ifdef GLOBJECTS_GL_BINDING
     case Long:
         binding->setLFormat(size, type, relativeOffset);
         break;
+#endif
     }
 }
 
@@ -148,7 +150,9 @@ VertexDrawable::AttributeFormat FormatI(GLint size, GLenum type, GLuint relative
     return VertexDrawable::AttributeFormat(size, type, GL_FALSE, relativeOffset, VertexDrawable::AttributeFormat::Integer);
 }
 
+#ifdef GLOBJECTS_GL_BINDING
 VertexDrawable::AttributeFormat FormatL(GLint size, GLenum type, GLuint relativeOffset)
 {
     return VertexDrawable::AttributeFormat(size, type, GL_FALSE, relativeOffset, VertexDrawable::AttributeFormat::Long);
 }
+#endif

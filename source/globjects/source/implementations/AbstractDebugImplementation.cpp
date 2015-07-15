@@ -6,7 +6,10 @@
 
 #include <globjects/binding/enum.h>
 
+#ifdef GLOBJECTS_GL_BINDING
 #include "DebugImplementation_DebugKHR.h"
+#endif
+
 #include "DebugImplementation_Legacy.h"
 
 #ifdef GLOBJECTS_GL_ERROR_RAISE_EXCEPTION
@@ -54,6 +57,7 @@ AbstractDebugImplementation::~AbstractDebugImplementation()
 
 AbstractDebugImplementation * AbstractDebugImplementation::get(const DebugMessage::Implementation impl)
 {
+#ifdef GLOBJECTS_GL_BINDING
     if (impl == DebugMessage::Implementation::DebugKHR 
      && hasExtension(GLextension::GL_KHR_debug))
     {
@@ -63,6 +67,10 @@ AbstractDebugImplementation * AbstractDebugImplementation::get(const DebugMessag
     {
         return DebugImplementation_Legacy::instance();
     }
+#else
+    (void) impl; // unused
+    return DebugImplementation_Legacy::instance();
+#endif
 }
 
 bool AbstractDebugImplementation::isFallback()
