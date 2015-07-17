@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "glwidget.h"
 
 #include <QPaintEvent>
 #include <QResizeEvent>
@@ -6,16 +6,13 @@
 #include "context.h"
 #include "rendergles.h"
 
-MainWindow::MainWindow()
+GLWidget::GLWidget()
 : m_initialized(false)
 {
-    setAutoFillBackground(false);
-    setAttribute(Qt::WA_OpaquePaintEvent);
-    setAttribute(Qt::WA_NoSystemBackground);
     setAttribute(Qt::WA_PaintOnScreen);
 }
 
-void MainWindow::showEvent(QShowEvent *)
+void GLWidget::showEvent(QShowEvent *)
 {
     if (!m_initialized)
     {
@@ -23,7 +20,7 @@ void MainWindow::showEvent(QShowEvent *)
     }
 }
 
-void MainWindow::paintEvent(QPaintEvent * /*pe*/)
+void GLWidget::paintEvent(QPaintEvent * /*pe*/)
 {
     if (!m_initialized)
     {
@@ -36,7 +33,7 @@ void MainWindow::paintEvent(QPaintEvent * /*pe*/)
     ::doneCurrent();
 }
 
-void MainWindow::resizeEvent(QResizeEvent * re)
+void GLWidget::resizeEvent(QResizeEvent * re)
 {
     if (!m_initialized)
     {
@@ -50,7 +47,7 @@ void MainWindow::resizeEvent(QResizeEvent * re)
     update();
 }
 
-void MainWindow::initialize()
+void GLWidget::initialize()
 {
     ::createGLESContext(winId());
     ::initializeGLES();
@@ -59,7 +56,7 @@ void MainWindow::initialize()
     m_initialized = true;
 }
 
-void MainWindow::uninitialize()
+void GLWidget::uninitialize()
 {
     ::makeCurrent();
     ::uninitializeGLES();
@@ -69,7 +66,7 @@ void MainWindow::uninitialize()
     m_initialized = false;
 }
 
-QPaintEngine * MainWindow::paintEngine() const
+QPaintEngine * GLWidget::paintEngine() const
 {
     return nullptr;
 }

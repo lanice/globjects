@@ -1,14 +1,15 @@
 
 #include <QApplication>
-#include <QString>
+#include <QMainWindow>
 
-#include "mainwindow.h"
+#include "glwidget.h"
 
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    MainWindow window;
+    QMainWindow window;
+    window.setCentralWidget(new GLWidget());
     window.show();
 
     return app.exec();

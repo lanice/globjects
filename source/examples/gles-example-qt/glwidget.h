@@ -1,12 +1,12 @@
 #pragma once
 
-#include <QMainWindow>
+#include <QWidget>
 
-class MainWindow : public QMainWindow
+class GLWidget : public QWidget
 {
     Q_OBJECT
 public:
-    MainWindow();
+    GLWidget();
 
     virtual QPaintEngine * paintEngine() const override;
 protected:

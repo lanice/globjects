@@ -58,10 +58,10 @@ set(libs
 
 set(sources
     main.cpp
-    mainwindow.cpp
-    mainwindow.h
     context.cpp
     context.h
+    glwidget.cpp
+    glwidget.h
     rendergles.cpp
     rendergles.h
 )
