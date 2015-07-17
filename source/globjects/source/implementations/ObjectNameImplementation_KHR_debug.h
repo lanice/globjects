@@ -2,10 +2,13 @@
 
 #include "AbstractObjectNameImplementation.h"
 
+#include <globjects/base/Singleton.h>
+
 namespace globjects
 {
 
 class ObjectNameImplementation_KHR_debug : public AbstractObjectNameImplementation
+    , public Singleton<ObjectNameImplementation_KHR_debug>
 {
 public:
     ObjectNameImplementation_KHR_debug();

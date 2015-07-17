@@ -31,11 +31,11 @@ AbstractObjectNameImplementation * AbstractObjectNameImplementation::get(const O
     if (impl == Object::NameImplementation::DebugKHR
      && hasExtension(GLextension::GL_KHR_debug))
     {
-        return new ObjectNameImplementation_KHR_debug::instance();
+        return ObjectNameImplementation_KHR_debug::instance();
     }
     else
     {
-        return new ObjectNameImplementation_Legacy::instance();
+        return ObjectNameImplementation_Legacy::instance();
     }
 
 #else
