@@ -1,5 +1,5 @@
 
-set(target gles-example-qt)
+set(target example-qt)
 
 # Qt5
 
@@ -62,8 +62,8 @@ set(sources
     context.h
     glwidget.cpp
     glwidget.h
-    rendergles.cpp
-    rendergles.h
+    render.cpp
+    render.h
 )
 
 # Build executable

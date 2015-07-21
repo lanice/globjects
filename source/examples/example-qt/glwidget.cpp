@@ -1,15 +1,24 @@
 #include "glwidget.h"
 
 #include <QPaintEvent>
-#include <QResizeEvent>
 
 #include "context.h"
-#include "rendergles.h"
+#include "render.h"
 
 GLWidget::GLWidget()
-: m_initialized(false)
+: m_displayInitialized(false)
+, m_initialized(false)
 {
     setAttribute(Qt::WA_PaintOnScreen);
+    setFocusPolicy(Qt::StrongFocus);
+}
+
+GLWidget::~GLWidget()
+{
+    if (m_displayInitialized)
+    {
+        ::uninitializeDisplay();
+    }
 }
 
 void GLWidget::showEvent(QShowEvent *)
@@ -28,7 +37,8 @@ void GLWidget::paintEvent(QPaintEvent * /*pe*/)
     }
 
     ::makeCurrent();
-    ::renderGLES();
+    ::render();
+    ::waitClient();
     ::swapBuffers();
     ::doneCurrent();
 }
@@ -41,7 +51,7 @@ void GLWidget::resizeEvent(QResizeEvent * re)
     }
 
     ::makeCurrent();
-    ::resizeGLES(re->size().width(), re->size().height());
+    ::resize(re->size().width(), re->size().height());
     ::doneCurrent();
 
     update();
@@ -49,8 +59,19 @@ void GLWidget::resizeEvent(QResizeEvent * re)
 
 void GLWidget::initialize()
 {
-    ::createGLESContext(winId());
-    ::initializeGLES();
+    if (!m_displayInitialized)
+    {
+        ::initializeDisplay(winId());
+        m_displayInitialized = true;
+    }
+
+#ifdef GLOBJECTS_GL_BINDING
+    ::createGLContext();
+#else
+    ::createGLESContext();
+#endif
+    ::makeCurrent();
+    ::initialize();
     ::doneCurrent();
 
     m_initialized = true;
@@ -59,7 +80,7 @@ void GLWidget::initialize()
 void GLWidget::uninitialize()
 {
     ::makeCurrent();
-    ::uninitializeGLES();
+    ::uninitialize();
     ::doneCurrent();
     ::releaseContext();
 

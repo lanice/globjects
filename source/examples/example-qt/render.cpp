@@ -1,4 +1,4 @@
-#include "rendergles.h"
+#include "render.h"
 
 #include <glm/vec2.hpp>
 
@@ -19,7 +19,7 @@
 namespace
 {
     const char * vertexShaderCode = R"(
-#version 300 es
+#version 150
 
 precision mediump float;
 
@@ -35,7 +35,7 @@ void main()
 
 )";
     const char * fragmentShaderCode = R"(
-#version 300 es
+#version 150
 
 precision mediump float;
 
@@ -59,9 +59,13 @@ void main()
 using namespace globjects;
 using namespace globjects::binding;
 
-void initializeGLES()
+void initialize()
 {
     globjects::init();
+
+#ifdef GLOBJECTS_GLES_BINDING
+    Shader::globalReplace("#version 150", "#version 300 es\n\nprecision mediump float;");
+#endif
 
     glClearColor(0.2f, 0.3f, 0.4f, 1.f);
 
@@ -82,21 +86,19 @@ void initializeGLES()
     m_vao->enable(0);
 }
 
-void uninitializeGLES()
+void uninitialize()
 {
 }
 
-void resizeGLES(int width, int height)
+void resize(int width, int height)
 {
     glViewport(0, 0, width, height);
 }
 
-void renderGLES()
+void render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     m_program->use();
     m_vao->drawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-    glFlush();
 }

@@ -47,9 +47,12 @@ if(OPTION_BUILD_EXAMPLES)
         install(FILES ${GLBINDING_BINARY_DEBUG} DESTINATION ${INSTALL_EXAMPLES}
             CONFIGURATIONS Debug COMPONENT examples)
     endif()
+    
+    # Examples that works with both OpenGL and OpenGL ES
+    add_subdirectory("example-qt")
 
     if (OPTION_GLES_BINDING)
-        add_subdirectory("gles-example-qt")
+        
     else ()
         add_subdirectory("bindless-textures")
         add_subdirectory("commandlineoutput")
